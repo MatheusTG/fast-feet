@@ -1,0 +1,55 @@
+{
+  "name": "fast-feet",
+  "version": "1.0.0",
+  "description": "Fullstack monorepo for the FastFeet logistics platform, built with PNPM workspaces, NestJS for the backend, Next.js for the frontend, and Docker for containerized development and deployment.",
+  "author": "Matheus Teodoro Garcia <https://github.com/MatheusTG>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MatheusTG/fast-feet"
+  },
+  "keywords": [
+    "monorepo",
+    "pnpm",
+    "pnpm-workspaces",
+    "fullstack",
+    "nodejs",
+    "nestjs",
+    "nextjs",
+    "typescript",
+    "backend",
+    "frontend",
+    "api",
+    "rest-api",
+    "logistics",
+    "delivery",
+    "docker",
+    "docker-compose",
+    "authentication",
+    "authorization",
+    "rbac",
+    "clean-architecture",
+    "ddd",
+    "domain-driven-design",
+    "prisma",
+    "postgresql",
+    "jwt"
+  ],
+  "scripts": {
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
+  },
+  "packageManager": "pnpm@10.28.2",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:nodeTypes",
+    "@types/supertest": "catalog:supertestTypes",
+    "typescript": "catalog:typescript",
+    "eslint": "catalog:eslint",
+    "prettier": "catalog:prettier",
+    "vitest": "catalog:vitest",
+    "supertest": "catalog:supertest"
+  }
+}

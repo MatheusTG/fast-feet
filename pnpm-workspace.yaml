@@ -1,0 +1,33 @@
+packages:
+  - apps/*
+  - packages/*
+
+catalogs:
+  nodeTypes:
+    "@types/node": "^25.2.1"
+
+  typescript:
+    "typescript": "^5.4.0"
+
+  eslint:
+    "eslint": "^9.39.2"
+
+  prettier:
+    "prettier": "^3.8.1"
+
+  vitest:
+    "vitest": "^4.0.18"
+
+  supertest:
+    "supertest": "^7.2.2"
+
+  supertestTypes:
+    "@types/supertest": "^6.0.3"
+
+  zod:
+    "zod": "^4.3.6"
+
+  dotenv:
+    "dotenv": "^17.2.4"
+
+injectWorkspacePackages: true
