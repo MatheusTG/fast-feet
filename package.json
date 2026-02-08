@@ -46,10 +46,13 @@
   "devDependencies": {
     "@types/node": "catalog:nodeTypes",
     "@types/supertest": "catalog:supertestTypes",
-    "typescript": "catalog:typescript",
     "eslint": "catalog:eslint",
     "prettier": "catalog:prettier",
-    "vitest": "catalog:vitest",
-    "supertest": "catalog:supertest"
+    "supertest": "catalog:supertest",
+    "typescript": "catalog:typescript",
+    "vitest": "catalog:vitest"
+  },
+  "dependencies": {
+    "turbo": "^2.8.3"
   }
 }
