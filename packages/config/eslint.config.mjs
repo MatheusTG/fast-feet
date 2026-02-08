@@ -4,7 +4,6 @@ import json from "@eslint/json";
 import markdown from "@eslint/markdown";
 import { defineConfig } from "eslint/config";
 import globals from "globals";
-import tseslint from "typescript-eslint";
 
 export default defineConfig([
   {
@@ -13,7 +12,6 @@ export default defineConfig([
     extends: ["js/recommended"],
     languageOptions: { globals: globals.node },
   },
-  ...tseslint.configs.recommended,
   {
     files: ["**/*.json"],
     plugins: { json },
