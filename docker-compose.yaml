@@ -42,7 +42,7 @@ services:
       - node_modules:/fast-feet/node_modules
     working_dir: /fast-feet
     ports:
-      - "3333:3333"
+      - "3332:3332"
 
   postgres:
     image: bitnami/postgresql

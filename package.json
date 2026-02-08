@@ -49,10 +49,8 @@
     "eslint": "catalog:eslint",
     "prettier": "catalog:prettier",
     "supertest": "catalog:supertest",
+    "turbo": "^2.8.3",
     "typescript": "catalog:typescript",
     "vitest": "catalog:vitest"
-  },
-  "dependencies": {
-    "turbo": "^2.8.3"
   }
 }
