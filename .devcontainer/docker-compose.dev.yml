@@ -1,0 +1,22 @@
+services:
+  devcontainer:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.cli
+    volumes:
+      - ..:/fast-feet
+      - node_modules:/fast-feet/node_modules
+    working_dir: /fast-feet
+    command: sh -c "tail -f /dev/null"
+
+  postgres:
+    image: bitnami/postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRESQL_USERNAME: docker
+      POSTGRESQL_PASSWORD: docker
+      POSTGRESQL_DATABASE: fastfeet
+
+volumes:
+  node_modules:
