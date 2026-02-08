@@ -1,0 +1,62 @@
+services:
+  setup:
+    container_name: setup
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.cli
+    volumes:
+      - .:/fast-feet
+      - node_modules:/fast-feet/node_modules
+    environment:
+      CI: true
+    command: sh -lc "pnpm install"
+    restart: "no"
+
+  workspace:
+    container_name: workspace
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.cli
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+    volumes:
+      - .:/fast-feet
+      - node_modules:/fast-feet/node_modules
+    command: sh -c "tail -f /dev/null"
+    restart: "no"
+
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+      target: dev
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+      workspace:
+        condition: service_started
+    volumes:
+      - .:/fast-feet
+      - node_modules:/fast-feet/node_modules
+    working_dir: /fast-feet
+    ports:
+      - "3333:3333"
+
+  postgres:
+    image: bitnami/postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRESQL_USERNAME: docker
+      POSTGRESQL_PASSWORD: docker
+      POSTGRESQL_DATABASE: fastfeet
+
+networks:
+  default:
+    name: fast-feet
+    driver: bridge
+
+volumes:
+  node_modules:
