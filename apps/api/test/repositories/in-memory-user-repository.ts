@@ -1,7 +1,7 @@
-import { UserRepository } from "@/domain/user/application/repositories/user-repository";
+import { UsersRepository } from "@/domain/user/application/repositories/users-repository";
 import { User } from "@/domain/user/enterprise/entities/user";
 
-export class InMemoryUserRepository implements UserRepository {
+export class InMemoryUserRepository implements UsersRepository {
   items: User[] = [];
 
   async create(user: User): Promise<void> {
