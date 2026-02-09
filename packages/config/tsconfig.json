@@ -17,6 +17,7 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": false,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "types": ["vitest/globals"]
   }
 }
