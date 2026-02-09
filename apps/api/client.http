@@ -1,0 +1,11 @@
+@baseUrl = http://localhost:3333
+
+# @name register
+POST {{ baseUrl }}/sessions
+Content-Type: application/json
+
+{
+  "name": "Matheus",
+  "cpf": "123.123.122-22",
+  "password": "123456"
+}
