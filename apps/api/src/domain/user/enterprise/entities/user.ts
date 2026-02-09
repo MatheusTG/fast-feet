@@ -1,10 +1,10 @@
+import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Optional } from "@/core/types/optional";
-import { Entity } from "src/core/entities/entity";
 
 export interface UserProps {
-  name: string;
   cpf: string;
+  name: string;
   password: string;
   role: "admin" | "deliveryman";
 }
