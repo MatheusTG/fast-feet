@@ -4,7 +4,7 @@ import { HashGenerator } from "../cryptography/hash-generator";
 import { UserRepository } from "../repositories/user-repository";
 import { UserAlreadyExistsError } from "./errors/UserAlreadyExistsError";
 
-type RegisterUseCaseRequest = Omit<UserProps, "role">;
+type RegisterUseCaseRequest = Optional<UserProps, "role" | "createdAt">;
 
 type RegisterUseCaseResponse = Either<UserAlreadyExistsError, { user: User }>;
 
