@@ -83,7 +83,6 @@ src/
 └── main.ts                  # Application entry point
 ```
 
-
 ## 📜 Functional Requirements
 
 Functional requirements describe what the system must do.
