@@ -6,7 +6,7 @@ import { resolveUseCase } from "../helpers/resolve-use-case";
 import { ZodValidationsPipe } from "../pipes/zod-validation-pipe";
 
 const registerBodySchema = z.object({
-  cpf: z.string().regex(/^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/),
+  cpf: z.string().regex(/^\d{3}(\.?\d{3}){2}[.-]?\d{2}$/),
   name: z.string(),
   password: z.string().min(6),
   role: z.enum(USER_ROLES).optional(),
@@ -16,7 +16,7 @@ const bodyValidationPipe = new ZodValidationsPipe(registerBodySchema);
 
 type RegisterBodySchema = z.infer<typeof registerBodySchema>;
 
-@Controller("/sessions")
+@Controller("/accounts")
 export class RegisterController {
   constructor(private registerUseCase: RegisterUseCase) {}
 
