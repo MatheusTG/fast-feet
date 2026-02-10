@@ -10,6 +10,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
   constructor(envService: EnvService) {
     const databaseUrl = envService.get("DATABASE_URL");
+    const databaseSchema = envService.get("DATABASE_SCHEMA");
 
     if (!databaseUrl) {
       throw new Error("DATABASE_URL is not defined!");
@@ -17,9 +18,10 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
     const pool = new Pool({
       connectionString: databaseUrl,
+      options: `-c search_path=${databaseSchema || "public"}`,
     });
 
-    const adapter = new PrismaPg(pool);
+    const adapter = new PrismaPg(pool, { schema: databaseSchema || "public" });
 
     super({
       adapter,

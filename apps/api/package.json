@@ -16,7 +16,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
-    "test:debug": "vitest --inspect-brk --inspect --logHeapUsage --threads=false"
+    "test:debug": "vitest --inspect-brk --inspect --logHeapUsage --threads=false",
+    "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
+    "test:e2e:watch": "vitest --config ./vitest.config.e2e.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -42,6 +44,7 @@
     "@types/express": "^5.0.0",
     "@types/pg": "^8.16.0",
     "@vitest/coverage-v8": "^4.0.18",
+    "dotenv": "^17.2.4",
     "prisma": "^7.3.0",
     "source-map-support": "^0.5.21",
     "ts-loader": "^9.5.2",
