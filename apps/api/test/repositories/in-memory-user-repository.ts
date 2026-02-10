@@ -8,7 +8,7 @@ export class InMemoryUserRepository implements UsersRepository {
     this.items.push(user);
   }
   async findByCpf(cpf: string): Promise<User | null> {
-    const user = this.items.find((item) => item.cpf === cpf);
+    const user = this.items.find((item) => item.cpf.value === cpf);
 
     if (!user) {
       return null;
