@@ -40,8 +40,6 @@ describe("Register (E2E)", () => {
       },
     });
 
-    console.log(cpf);
-
     expect(userOnDatabase).toBeTruthy();
   });
 });
