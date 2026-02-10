@@ -11,6 +11,14 @@ turbo.log
 .pnpm-debug.log*
 
 # ======================================================
+# Cryptographic keys (RSA / JWT)
+# ======================================================
+private.key
+public.key
+*.key
+*.pem
+
+# ======================================================
 # Diagnostic Reports (Node.js)
 # https://nodejs.org/api/report.html
 # ======================================================
