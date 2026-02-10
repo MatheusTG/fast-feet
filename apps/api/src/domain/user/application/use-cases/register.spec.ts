@@ -1,25 +1,62 @@
 import { FakeHasher } from "@test/cryptography/fake-hasher";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryUserRepository } from "@test/repositories/in-memory-user-repository";
+import { InvalidCpfError } from "./errors/InvalidCpfError";
 import { RegisterUseCase } from "./register";
 
 describe("Register", () => {
-  let userRepository: InMemoryUserRepository;
-  let hashGenerator: FakeHasher;
+  let usersRepository: InMemoryUserRepository;
+  let fakeHasher: FakeHasher;
+
   let sut: RegisterUseCase;
 
   beforeEach(() => {
-    userRepository = new InMemoryUserRepository();
-    hashGenerator = new FakeHasher();
-    sut = new RegisterUseCase(userRepository, hashGenerator);
+    usersRepository = new InMemoryUserRepository();
+    fakeHasher = new FakeHasher();
+    sut = new RegisterUseCase(usersRepository, fakeHasher);
   });
 
-  it("should be able to register.", async () => {
+  it("should be able to register", async () => {
     const user = makeUser();
 
-    const result = await sut.execute(user);
+    const result = await sut.execute({
+      cpf: user.cpf.value,
+      name: user.name,
+      password: user.password,
+      role: user.role,
+    });
 
     expect(result.isRight()).toBe(true);
-    expect(result.value).toEqual({ user: userRepository.items[0] });
+    expect(result.value).toEqual({ user: usersRepository.items[0] });
+  });
+
+  it("should hash user password upon registration", async () => {
+    const user = makeUser();
+
+    await sut.execute({
+      cpf: user.cpf.value,
+      name: user.name,
+      password: user.password,
+      role: user.role,
+    });
+
+    const hashedPassword = await fakeHasher.hash(user.password);
+
+    expect(usersRepository.items[0]?.password).toEqual(hashedPassword);
+  });
+
+  it("should not be able to register with an invalid CPF", async () => {
+    const user = makeUser();
+    const cpf = "111.111.111-11";
+
+    const result = await sut.execute({
+      cpf,
+      name: user.name,
+      password: user.password,
+      role: user.role,
+    });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.value).toBeInstanceOf(InvalidCpfError);
   });
 });
