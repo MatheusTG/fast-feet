@@ -1,15 +1,16 @@
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryUserRepository } from "@test/repositories/in-memory-user-repository";
-import { FetchUsersByRoleUseCase } from "./fetch-users-by-role";
+import { expectRight } from "@test/utils/expect-right";
+import { FetchUsersUseCase } from "./fetch-users";
 
 describe("Fetch Users By Role", () => {
   let usersRepository: InMemoryUserRepository;
 
-  let sut: FetchUsersByRoleUseCase;
+  let sut: FetchUsersUseCase;
 
   beforeEach(() => {
     usersRepository = new InMemoryUserRepository();
-    sut = new FetchUsersByRoleUseCase(usersRepository);
+    sut = new FetchUsersUseCase(usersRepository);
   });
 
   it("should be able to fetch deliverymen", async () => {
@@ -21,9 +22,10 @@ describe("Fetch Users By Role", () => {
       page: 1,
     });
 
-    expect(result.isRight()).toBe(true);
-    expect(result.value?.users).toHaveLength(2);
-    expect(result.value?.users).toEqual(
+    const { users } = expectRight(result, FetchUsersUseCase.name);
+
+    expect(users).toHaveLength(2);
+    expect(users).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ name: "John Doe" }),
         expect.objectContaining({ name: "Richard Roe" }),
@@ -40,9 +42,9 @@ describe("Fetch Users By Role", () => {
       page: 1,
     });
 
-    expect(result.isRight()).toBe(true);
-    expect(result.value?.users).toHaveLength(2);
-    expect(result.value?.users).toEqual(
+    const { users } = expectRight(result, FetchUsersUseCase.name);
+
+    expect(users).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ name: "John Doe" }),
         expect.objectContaining({ name: "Richard Roe" }),
@@ -60,11 +62,10 @@ describe("Fetch Users By Role", () => {
       page: 2,
     });
 
-    expect(result.isRight()).toBe(true);
-    expect(result.value?.users).toHaveLength(2);
-    expect(result.value?.users).toEqual(
-      expect.arrayContaining([expect.objectContaining({ name: "John Doe" })])
-    );
+    const { users } = expectRight(result, FetchUsersUseCase.name);
+
+    expect(users).toHaveLength(2);
+    expect(users).toEqual(expect.arrayContaining([expect.objectContaining({ name: "John Doe" })]));
   });
 
   it("should be able to fetch all users when the role query is empty", async () => {
@@ -75,8 +76,9 @@ describe("Fetch Users By Role", () => {
       page: 1,
     });
 
-    expect(result.isRight()).toBe(true);
-    expect(result.value?.users).toHaveLength(2);
+    const { users } = expectRight(result, FetchUsersUseCase.name);
+
+    expect(users).toHaveLength(2);
   });
 
   it("should not be able to fetch admin users when role query is `DELIVERYMAN`", async () => {
@@ -88,9 +90,8 @@ describe("Fetch Users By Role", () => {
       page: 1,
     });
 
-    expect(result.isRight()).toBe(true);
-    expect(result.value?.users).toEqual(
-      expect.arrayContaining([expect.objectContaining({ name: "John Doe" })])
-    );
+    const { users } = expectRight(result, FetchUsersUseCase.name);
+
+    expect(users).toEqual(expect.arrayContaining([expect.objectContaining({ name: "John Doe" })]));
   });
 });
