@@ -17,13 +17,12 @@ describe("Register (E2E)", () => {
     }).compile();
 
     app = moduleRef.createNestApplication();
-
     prisma = moduleRef.get(PrismaService);
 
     await app.init();
   });
 
-  test("[POST] /sessions", async () => {
+  test("[POST] /accounts", async () => {
     const cpf = cpfGenerator();
 
     const response = await request(app.getHttpServer()).post("/accounts").send({
