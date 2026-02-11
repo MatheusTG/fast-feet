@@ -88,7 +88,7 @@ src/
 Functional requirements describe what the system must do.
 
 - [x] **FR001 - Users:** The system must allow users to be created with roles: `admin` and `deliveryman`.
-- [ ] **FR002 - Authentication:** The system must allow users to authenticate using CPF and password.
+- [x] **FR002 - Authentication:** The system must allow users to authenticate using CPF and password.
 - [ ] **FR003 - Authentication:** The system must identify the authenticated user across requests (e.g., JWT tokens).
 - [ ] **FR004 - Users:** The system must allow listing, updating, and deleting deliverymen (admin only).
 - [ ] **FR005 - Recipients:** The system must allow CRUD operations for recipients (admin only).
