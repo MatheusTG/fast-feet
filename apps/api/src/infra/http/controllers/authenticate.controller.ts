@@ -1,5 +1,5 @@
 import { AuthenticateUseCase } from "@/domain/user/application/use-cases/authenticate";
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { z } from "zod";
 import { resolveUseCase } from "../helpers/resolve-use-case";
 import { ZodValidationsPipe } from "../pipes/zod-validation-pipe";
@@ -18,6 +18,7 @@ export class AuthenticateController {
   constructor(private authenticateUseCase: AuthenticateUseCase) {}
 
   @Post()
+  @HttpCode(200)
   async handle(@Body(bodyValidationPipe) body: AuthenticateBodySchema) {
     const { cpf, password } = body;
 
@@ -29,7 +30,7 @@ export class AuthenticateController {
     const { accessToken } = resolveUseCase(result);
 
     return {
-      accessToken,
+      access_token: accessToken,
     };
   }
 }

@@ -1,45 +1,48 @@
 import { AppModule } from "@/infra/app.module";
 import { DatabaseModule } from "@/infra/database/database.module";
-import { PrismaService } from "@/infra/database/prisma/prisma.service";
+import { EnvModule } from "@/infra/env/env.module";
+import { EnvService } from "@/infra/env/env.service";
 import { INestApplication } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
-import { cpfGenerator } from "@test/utils/cpf-generator";
+import { UserFactory } from "@test/factories/make-user";
+import { hash } from "bcryptjs";
 import request from "supertest";
 
-describe("Register (E2E)", () => {
+describe("Authenticate (E2E)", () => {
   let app: INestApplication;
-  let prisma: PrismaService;
+  let envService: EnvService;
+
+  let userFactory: UserFactory;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule, DatabaseModule],
-      providers: [],
+      imports: [AppModule, DatabaseModule, EnvModule],
+      providers: [UserFactory, EnvService],
     }).compile();
 
     app = moduleRef.createNestApplication();
+    envService = moduleRef.get(EnvService);
 
-    prisma = moduleRef.get(PrismaService);
+    userFactory = moduleRef.get(UserFactory);
 
     await app.init();
   });
 
   test("[POST] /sessions", async () => {
-    const cpf = cpfGenerator();
+    const plainPassword = "123456";
+
+    const user = await userFactory.makePrismaUser({
+      password: await hash(plainPassword, envService.get("HASH_SALT_ROUNDS")),
+    });
 
     const response = await request(app.getHttpServer()).post("/sessions").send({
-      cpf,
-      name: "John Doe",
-      password: "123456",
+      cpf: user.cpf.value,
+      password: plainPassword,
     });
 
-    expect(response.statusCode).toEqual(201);
-
-    const userOnDatabase = prisma.user.findUnique({
-      where: {
-        cpf,
-      },
+    expect(response.statusCode).toEqual(200);
+    expect(response.body).toEqual({
+      access_token: expect.any(String),
     });
-
-    expect(userOnDatabase).toBeTruthy();
   });
 });
