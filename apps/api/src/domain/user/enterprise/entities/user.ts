@@ -5,13 +5,13 @@ import { Cpf } from "./value-objects/cpf";
 
 export const USER_ROLES = ["ADMIN", "DELIVERYMAN"] as const;
 
-export type UserRoles = (typeof USER_ROLES)[number];
+export type UserRole = (typeof USER_ROLES)[number];
 
 export interface UserProps {
   cpf: Cpf;
   name: string;
   password: string;
-  role: UserRoles;
+  role: UserRole;
   createdAt: Date;
   updatedAt?: Date;
 }

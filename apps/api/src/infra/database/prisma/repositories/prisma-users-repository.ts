@@ -1,5 +1,7 @@
+import { PaginationParams } from "@/core/repositories/pagination-params";
 import { UsersRepository } from "@/domain/user/application/repositories/users-repository";
 import { User } from "@/domain/user/enterprise/entities/user";
+import { UserRole } from "@/generated/prisma/enums";
 import { Injectable } from "@nestjs/common";
 import { PrismaUserMapper } from "../mappers/prisma-user-mapper";
 import { PrismaService } from "../prisma.service";
@@ -15,6 +17,7 @@ export class PrismaUsersRepository implements UsersRepository {
       data,
     });
   }
+
   async findByCpf(cpf: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: {
@@ -27,5 +30,17 @@ export class PrismaUsersRepository implements UsersRepository {
     }
 
     return PrismaUserMapper.toDomain(user);
+  }
+
+  async findMany(filters: { role: UserRole }, params: PaginationParams): Promise<User[]> {
+    const { role } = filters;
+
+    const deliveryman = await this.prisma.user.findMany({
+      where: role ? { role } : undefined,
+      take: 20,
+      skip: (params.page - 1) * 20,
+    });
+
+    return deliveryman.map(PrismaUserMapper.toDomain);
   }
 }
