@@ -4,8 +4,10 @@ import { HashGenerator } from "@/domain/user/application/cryptography/hash-gener
 import { Module } from "@nestjs/common";
 import { BcryptHasher } from "./bcrypt-hasher";
 import { JwtEncrypter } from "./jwt-encrypter";
+import { EnvModule } from "../env/env.module";
 
 @Module({
+  imports: [EnvModule],
   providers: [
     { provide: Encrypter, useClass: JwtEncrypter },
     { provide: HashGenerator, useClass: BcryptHasher },

@@ -9,6 +9,8 @@ export const envSchema = z.object({
 
   JWT_PRIVATE_KEY: z.string(),
   JWT_PUBLIC_KEY: z.string(),
+
+  HASH_SALT_ROUNDS: z.coerce.number().optional().default(10),
 });
 
 export type Env = z.infer<typeof envSchema>;
