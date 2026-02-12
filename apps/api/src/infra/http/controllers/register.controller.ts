@@ -1,5 +1,6 @@
 import { RegisterUseCase } from "@/domain/user/application/use-cases/register";
 import { USER_ROLES } from "@/domain/user/enterprise/entities/user";
+import { Public } from "@/infra/auth/public";
 import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { z } from "zod";
 import { resolveUseCase } from "../helpers/resolve-use-case";
@@ -16,6 +17,7 @@ const bodyValidationPipe = new ZodValidationsPipe(registerBodySchema);
 
 type RegisterBodySchema = z.infer<typeof registerBodySchema>;
 
+@Public()
 @Controller("/accounts")
 export class RegisterController {
   constructor(private registerUseCase: RegisterUseCase) {}

@@ -1,4 +1,5 @@
 import { AuthenticateUseCase } from "@/domain/user/application/use-cases/authenticate";
+import { Public } from "@/infra/auth/public";
 import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { z } from "zod";
 import { resolveUseCase } from "../helpers/resolve-use-case";
@@ -13,6 +14,7 @@ const bodyValidationPipe = new ZodValidationsPipe(authenticateBodySchema);
 
 type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>;
 
+@Public()
 @Controller("/sessions")
 export class AuthenticateController {
   constructor(private authenticateUseCase: AuthenticateUseCase) {}
