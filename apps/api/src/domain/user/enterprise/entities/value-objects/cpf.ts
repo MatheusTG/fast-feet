@@ -1,14 +1,16 @@
 import { SimpleValueObject } from "@/core/entities/simple-value-object";
+import { Either, left, right } from "@/core/errors/either";
+import { InvalidCpfError } from "@/domain/user/application/use-cases/errors/InvalidCpfError";
 
 export class Cpf extends SimpleValueObject<string> {
-  static create(cpf: string): Cpf | null {
+  static create(cpf: string): Either<InvalidCpfError, Cpf> {
     const normalizedCpf = Cpf.normalize(cpf);
 
     if (!Cpf.isValid(normalizedCpf)) {
-      return null;
+      return left(new InvalidCpfError(cpf));
     }
 
-    return new Cpf(normalizedCpf);
+    return right(new Cpf(normalizedCpf));
   }
 
   /**

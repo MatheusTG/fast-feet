@@ -51,11 +51,13 @@ export class RegisterUseCase {
       }
     }
 
-    const cpf = Cpf.create(uncheckedCpf);
+    const cpfOrError = Cpf.create(uncheckedCpf);
 
-    if (!cpf) {
-      return left(new InvalidCpfError(uncheckedCpf));
+    if (cpfOrError.isLeft()) {
+      return left(cpfOrError.value);
     }
+
+    const cpf = cpfOrError.value;
 
     const userWithSameCpf = await this.userRepository.findByCpf(cpf.value);
 

@@ -10,11 +10,13 @@ import { cpfGenerator } from "@test/utils/cpf-generator";
 export function makeUser(override?: Partial<UserProps>, id?: UniqueEntityId) {
   const uncheckedCpf = cpfGenerator();
 
-  const cpf = Cpf.create(uncheckedCpf);
+  const cpfOrError = Cpf.create(uncheckedCpf);
 
-  if (!cpf) {
+  if (cpfOrError.isLeft()) {
     throw new Error(`Test setup failed: generated invalid CPF (${uncheckedCpf})`);
   }
+
+  const cpf = cpfOrError.value;
 
   const user = User.create(
     {

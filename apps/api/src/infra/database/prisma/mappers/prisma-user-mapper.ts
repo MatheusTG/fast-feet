@@ -9,14 +9,16 @@ export class PrismaUserMapper {
   static toDomain(raw: PrismaUser): User {
     const uncheckedCpf = cpfGenerator();
 
-    const cpf = Cpf.create(uncheckedCpf);
+    const cpfOrError = Cpf.create(uncheckedCpf);
 
-    if (!cpf) {
+    if (cpfOrError.isLeft()) {
       throw new Error(`Invalid CPF stored in database: ${raw.cpf}`);
     }
 
+    const cpf = cpfOrError.value;
+
     return User.create({
-      cpf,
+      cpf: cpf,
       name: raw.name,
       password: raw.password,
       role: raw.role,
