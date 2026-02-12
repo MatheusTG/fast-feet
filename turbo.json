@@ -2,15 +2,58 @@
   "$schema": "https://turbo.build/schema.json",
   "envMode": "strict",
   "tasks": {
+    // Build
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
+    },
+
+    // Runtime
+    "start": {
+      "cache": false
     },
     "start:dev": {
       "persistent": true,
       "cache": false
     },
-    "format": {},
-    "format:check": {}
+    "start:debug": {
+      "persistent": true,
+      "cache": false
+    },
+    "start:prod": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+
+    // Code Quality
+    "lint": {
+      "outputs": []
+    },
+    "format": {
+      "outputs": []
+    },
+    "format:check": {
+      "outputs": []
+    },
+
+    // Tests
+    "test": {
+      "outputs": ["coverage/**"]
+    },
+    "test:watch": {
+      "persistent": true,
+      "cache": false
+    },
+    "test:cov": {
+      "outputs": ["coverage/**"]
+    },
+    "test:debug": {
+      "cache": false
+    },
+    "test:e2e": {},
+    "test:e2e:watch": {
+      "persistent": true,
+      "cache": false
+    }
   }
 }
