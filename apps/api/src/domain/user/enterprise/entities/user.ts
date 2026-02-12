@@ -17,12 +17,20 @@ export interface UserProps {
 }
 
 export class User extends Entity<UserProps> {
+  get cpf() {
+    return this.props.cpf;
+  }
+
+  set cpf(cpf: Cpf) {
+    this.props.cpf = cpf;
+  }
+
   get name() {
     return this.props.name;
   }
 
-  get cpf() {
-    return this.props.cpf;
+  set name(name: string) {
+    this.props.name = name;
   }
 
   get password() {

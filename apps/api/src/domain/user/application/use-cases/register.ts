@@ -27,7 +27,7 @@ type RegisterUseCaseResponse = Either<
 @Injectable()
 export class RegisterUseCase {
   constructor(
-    private userRepository: UsersRepository,
+    private usersRepository: UsersRepository,
     private hashGenerator: HashGenerator,
     private userRoleAuthorizationService: UserRoleAuthorizationService
   ) {}
@@ -54,7 +54,7 @@ export class RegisterUseCase {
 
     const cpf = cpfOrError.value;
 
-    const userWithSameCpf = await this.userRepository.findByCpf(cpf.value);
+    const userWithSameCpf = await this.usersRepository.findByCpf(cpf.value);
 
     if (userWithSameCpf) {
       return left(new UserAlreadyExistsError(cpf.value));
@@ -69,7 +69,7 @@ export class RegisterUseCase {
       role: role ?? "DELIVERYMAN",
     });
 
-    await this.userRepository.create(user);
+    await this.usersRepository.create(user);
 
     return right({
       user,
