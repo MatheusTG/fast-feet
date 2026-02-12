@@ -5,17 +5,23 @@ import { User } from "../../enterprise/entities/user";
 import { Cpf } from "../../enterprise/entities/value-objects/cpf";
 import { HashGenerator } from "../cryptography/hash-generator";
 import { UsersRepository } from "../repositories/users-repository";
+import { ForbiddenError } from "./errors/Forbidden-error";
 import { InvalidCpfError } from "./errors/InvalidCpfError";
 import { UserAlreadyExistsError } from "./errors/UserAlreadyExistsError";
+import { UnauthorizedError } from "./errors/unauthorized-error";
 
 type RegisterUseCaseRequest = {
   cpf: string;
   name: string;
   password: string;
   role?: UserRole;
+  creatorId?: string;
 };
 
-type RegisterUseCaseResponse = Either<UserAlreadyExistsError, { user: User }>;
+type RegisterUseCaseResponse = Either<
+  UnauthorizedError | ForbiddenError | InvalidCpfError | UserAlreadyExistsError,
+  { user: User }
+>;
 
 @Injectable()
 export class RegisterUseCase {
@@ -25,7 +31,25 @@ export class RegisterUseCase {
   ) {}
 
   async execute(request: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
-    const { name, cpf: uncheckedCpf, password } = request;
+    const { name, cpf: uncheckedCpf, password, role, creatorId } = request;
+
+    if (role === "ADMIN") {
+      if (!creatorId) {
+        return left(
+          new UnauthorizedError("Unauthorized: only authenticated admins can create other admins")
+        );
+      }
+
+      const creatorUser = await this.userRepository.findById(creatorId);
+
+      if (!creatorUser) {
+        return left(new UnauthorizedError());
+      }
+
+      if (creatorUser.role !== "ADMIN") {
+        return left(new ForbiddenError("Forbidden: only admins can create other admins"));
+      }
+    }
 
     const cpf = Cpf.create(uncheckedCpf);
 
@@ -45,9 +69,10 @@ export class RegisterUseCase {
       name,
       cpf,
       password: hashedPassword,
+      role: role ?? "DELIVERYMAN",
     });
 
-    this.userRepository.create(user);
+    await this.userRepository.create(user);
 
     return right({
       user,

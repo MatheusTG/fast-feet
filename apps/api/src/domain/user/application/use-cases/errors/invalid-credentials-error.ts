@@ -1,9 +1,9 @@
 import { UseCaseError } from "@/core/errors/use-case-error";
 
 export class InvalidCredentialsError extends UseCaseError {
-  constructor() {
+  constructor(message = "Invalid credentials.") {
     super({
-      message: "Invalid credentials.",
+      message: message,
       statusCode: 401,
       code: "INVALID_CREDENTIALS",
     });
