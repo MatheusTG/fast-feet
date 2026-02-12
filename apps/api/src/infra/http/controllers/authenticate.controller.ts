@@ -25,7 +25,7 @@ export class AuthenticateController {
     const { cpf, password } = body;
 
     const result = await this.authenticateUseCase.execute({
-      cpf,
+      cpf: cpf.replace(/\D/g, ""),
       password,
     });
 

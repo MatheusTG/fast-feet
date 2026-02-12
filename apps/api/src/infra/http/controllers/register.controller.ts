@@ -1,5 +1,7 @@
 import { RegisterUseCase } from "@/domain/user/application/use-cases/register";
 import { USER_ROLES } from "@/domain/user/enterprise/entities/user";
+import { CurrentUser } from "@/infra/auth/current-user-decorator";
+import { UserPayload } from "@/infra/auth/jwt.strategy";
 import { Public } from "@/infra/auth/public";
 import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { z } from "zod";
@@ -24,13 +26,18 @@ export class RegisterController {
 
   @Post()
   @HttpCode(201)
-  async handle(@Body(bodyValidationPipe) body: RegisterBodySchema) {
-    const { cpf, name, password } = body;
+  async handle(
+    @Body(bodyValidationPipe) body: RegisterBodySchema,
+    @CurrentUser() user?: UserPayload
+  ) {
+    const { cpf, name, password, role } = body;
 
     const result = await this.registerUseCase.execute({
       cpf,
       name,
       password,
+      role,
+      creatorId: user?.sub,
     });
 
     resolveUseCase(result);
