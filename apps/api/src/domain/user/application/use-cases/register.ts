@@ -5,6 +5,7 @@ import { User } from "../../enterprise/entities/user";
 import { Cpf } from "../../enterprise/entities/value-objects/cpf";
 import { HashGenerator } from "../cryptography/hash-generator";
 import { UsersRepository } from "../repositories/users-repository";
+import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
 import { ForbiddenError } from "./errors/Forbidden-error";
 import { InvalidCpfError } from "./errors/InvalidCpfError";
 import { UserAlreadyExistsError } from "./errors/UserAlreadyExistsError";
@@ -27,27 +28,21 @@ type RegisterUseCaseResponse = Either<
 export class RegisterUseCase {
   constructor(
     private userRepository: UsersRepository,
-    private hashGenerator: HashGenerator
+    private hashGenerator: HashGenerator,
+    private userRoleAuthorizationService: UserRoleAuthorizationService
   ) {}
 
   async execute(request: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
     const { name, cpf: uncheckedCpf, password, role, creatorId } = request;
 
     if (role === "ADMIN") {
-      if (!creatorId) {
-        return left(
-          new UnauthorizedError("Unauthorized: only authenticated admins can create other admins")
-        );
-      }
+      const authorization = await this.userRoleAuthorizationService.ensureUserHasRole(
+        creatorId,
+        role
+      );
 
-      const creatorUser = await this.userRepository.findById(creatorId);
-
-      if (!creatorUser) {
-        return left(new UnauthorizedError());
-      }
-
-      if (creatorUser.role !== "ADMIN") {
-        return left(new ForbiddenError("Forbidden: only admins can create other admins"));
+      if (authorization.isLeft()) {
+        return left(authorization.value);
       }
     }
 
