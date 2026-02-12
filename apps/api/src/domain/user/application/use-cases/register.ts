@@ -1,4 +1,6 @@
-import { Either, left, right } from "@/core/errors/either";
+import { Either, left, right } from "@/core/errors/abstractions/either";
+import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
+import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { UserRole } from "@/generated/prisma/enums";
 import { Injectable } from "@nestjs/common";
 import { User } from "../../enterprise/entities/user";
@@ -6,10 +8,8 @@ import { Cpf } from "../../enterprise/entities/value-objects/cpf";
 import { HashGenerator } from "../cryptography/hash-generator";
 import { UsersRepository } from "../repositories/users-repository";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
-import { ForbiddenError } from "./errors/Forbidden-error";
 import { InvalidCpfError } from "./errors/InvalidCpfError";
 import { UserAlreadyExistsError } from "./errors/UserAlreadyExistsError";
-import { UnauthorizedError } from "./errors/unauthorized-error";
 
 type RegisterUseCaseRequest = {
   cpf: string;

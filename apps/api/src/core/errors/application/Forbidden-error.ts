@@ -1,4 +1,4 @@
-import { UseCaseError } from "@/core/errors/use-case-error";
+import { UseCaseError } from "@/core/errors/abstractions/use-case-error";
 
 export class ForbiddenError extends UseCaseError {
   constructor(message = "Forbidden.") {

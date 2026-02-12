@@ -1,5 +1,5 @@
-import { Either } from "@/core/errors/either";
-import { UseCaseError } from "@/core/errors/use-case-error";
+import { Either } from "@/core/errors/abstractions/either";
+import { UseCaseError } from "@/core/errors/abstractions/use-case-error";
 import { HttpException } from "@nestjs/common";
 
 export function resolveUseCase<T>(result: Either<UseCaseError, T>): T {

@@ -1,4 +1,4 @@
-import { Either, left, right } from "@/core/errors/either";
+import { Either, left, right } from "@/core/errors/abstractions/either";
 import { Injectable } from "@nestjs/common";
 import { Encrypter } from "../cryptography/encrypter";
 import { HashComparer } from "../cryptography/hash-comparer";

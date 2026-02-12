@@ -1,5 +1,5 @@
-import { Either } from "@/core/errors/either";
-import { UseCaseError } from "@/core/errors/use-case-error";
+import { Either } from "@/core/errors/abstractions/either";
+import { UseCaseError } from "@/core/errors/abstractions/use-case-error";
 
 /**
  * Ensures a Use Case returned a successful (Right) result.

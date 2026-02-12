@@ -1,4 +1,4 @@
-import { Either, right } from "@/core/errors/either";
+import { Either, right } from "@/core/errors/abstractions/either";
 import { Injectable } from "@nestjs/common";
 import { User, UserRole } from "../../enterprise/entities/user";
 import { UsersRepository } from "../repositories/users-repository";
