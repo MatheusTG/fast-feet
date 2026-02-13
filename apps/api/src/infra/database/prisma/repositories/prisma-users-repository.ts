@@ -41,13 +41,13 @@ export class PrismaUsersRepository implements UsersRepository {
   async findMany(filters: { role: UserRole }, params: PaginationParams): Promise<User[]> {
     const { role } = filters;
 
-    const deliveryman = await this.prisma.user.findMany({
+    const users = await this.prisma.user.findMany({
       where: role ? { role } : undefined,
       take: 20,
       skip: (params.page - 1) * 20,
     });
 
-    return deliveryman.map(PrismaUserMapper.toDomain);
+    return users.map(PrismaUserMapper.toDomain);
   }
 
   async create(user: User): Promise<void> {

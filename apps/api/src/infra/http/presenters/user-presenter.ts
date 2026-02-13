@@ -6,7 +6,6 @@ export class UserPresenter {
       id: user.id.toString(),
       cpf: user.cpf.value,
       name: user.name,
-      password: user.password,
       role: user.role,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
