@@ -2,6 +2,7 @@ import { UserRoleAuthorizationService } from "@/domain/user/application/services
 import { AuthenticateUseCase } from "@/domain/user/application/use-cases/authenticate";
 import { ChangeUserPasswordUseCase } from "@/domain/user/application/use-cases/change-user-password";
 import { ChangeUserRoleUseCase } from "@/domain/user/application/use-cases/change-user-role";
+import { DeleteUserUseCase } from "@/domain/user/application/use-cases/delete-user";
 import { FetchUsersUseCase } from "@/domain/user/application/use-cases/fetch-users";
 import { RegisterUseCase } from "@/domain/user/application/use-cases/register";
 import { UpdateUserUseCase } from "@/domain/user/application/use-cases/update-user";
@@ -11,6 +12,7 @@ import { DatabaseModule } from "../database/database.module";
 import { AuthenticateController } from "./controllers/authenticate.controller";
 import { ChangeUserPasswordController } from "./controllers/change-user-password.controller";
 import { ChangeUserRoleController } from "./controllers/change-user-role.controller";
+import { DeleteUserController } from "./controllers/delete-user.controller";
 import { FetchUsersController } from "./controllers/fetch-users.controller";
 import { RegisterController } from "./controllers/register.controller";
 import { UpdateUserController } from "./controllers/update-user.controller";
@@ -22,6 +24,7 @@ const controllerDependencies = [
   UpdateUserController,
   ChangeUserPasswordController,
   ChangeUserRoleController,
+  DeleteUserController,
 ];
 const useCasesDependencies = [
   RegisterUseCase,
@@ -30,6 +33,7 @@ const useCasesDependencies = [
   UpdateUserUseCase,
   ChangeUserPasswordUseCase,
   ChangeUserRoleUseCase,
+  DeleteUserUseCase,
 ];
 const servicesDependencies = [UserRoleAuthorizationService];
 

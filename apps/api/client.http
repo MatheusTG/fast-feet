@@ -62,3 +62,9 @@ Authorization: Bearer {{ authToken }}
 {
   "role": "ADMIN"
 }
+
+###
+
+# @name delete_user
+DELETE {{ baseUrl }}/users/c3540ab4-39f2-4d4a-8e43-dc5fdb76e89c/delete
+Authorization: Bearer {{ authToken }}
