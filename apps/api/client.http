@@ -51,3 +51,14 @@ Authorization: Bearer {{ authToken }}
   "currentPassword": "123456",
   "newPassword": "654321"
 }
+
+###
+
+# @name change_user_role
+PATCH {{ baseUrl }}/users/cd79f8ea-dd67-4640-a9fc-645f35d8d522/role
+Content-Type: application/json
+Authorization: Bearer {{ authToken }}
+
+{
+  "role": "ADMIN"
+}
