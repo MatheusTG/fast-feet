@@ -4,23 +4,44 @@ import { Injectable } from "@nestjs/common";
 import { User } from "../../enterprise/entities/user";
 import { Cpf } from "../../enterprise/entities/value-objects/cpf";
 import { UsersRepository } from "../repositories/users-repository";
+import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
+import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
+import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 
 type UpdateUserUseCaseRequest = {
-  userId: string;
+  actorId: string | undefined;
+  targetUserId: string;
   cpf?: string;
   name?: string;
 };
 
-type UpdateUserUseCaseResponse = Either<ResourceNotFoundError, { user: User }>;
+type UpdateUserUseCaseResponse = Either<
+  ResourceNotFoundError | UnauthorizedError | ForbiddenError,
+  { user: User }
+>;
 
 @Injectable()
 export class UpdateUserUseCase {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private userRoleAuthorizationService: UserRoleAuthorizationService
+  ) {}
 
   async execute(request: UpdateUserUseCaseRequest): Promise<UpdateUserUseCaseResponse> {
-    const { userId, name, cpf: uncheckedCpf } = request;
+    const { actorId, targetUserId, name, cpf: uncheckedCpf } = request;
 
-    const user = await this.usersRepository.findById(userId);
+    if (actorId !== targetUserId) {
+      const authorization = await this.userRoleAuthorizationService.ensureUserHasRole(
+        actorId,
+        "ADMIN"
+      );
+
+      if (authorization.isLeft()) {
+        return left(authorization.value);
+      }
+    }
+
+    const user = await this.usersRepository.findById(targetUserId);
 
     if (!user) {
       return left(new ResourceNotFoundError());

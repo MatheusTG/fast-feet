@@ -5,17 +5,25 @@ import { User } from "../../enterprise/entities/user";
 import { HashComparer } from "../cryptography/hash-comparer";
 import { HashGenerator } from "../cryptography/hash-generator";
 import { UsersRepository } from "../repositories/users-repository";
+import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 import { NewPasswordMustBeDifferentError } from "./errors/new-password-must-be-different-error";
+import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
+import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 
 type ChangeUserPasswordUseCaseRequest = {
-  userId: string;
+  actorId: string | undefined;
+  targetUserId: string;
   currentPassword: string;
   newPassword: string;
 };
 
 type ChangeUserPasswordUseCaseResponse = Either<
-  NewPasswordMustBeDifferentError | ResourceNotFoundError | InvalidCredentialsError,
+  | NewPasswordMustBeDifferentError
+  | ResourceNotFoundError
+  | InvalidCredentialsError
+  | UnauthorizedError
+  | ForbiddenError,
   { user: User }
 >;
 
@@ -23,6 +31,7 @@ type ChangeUserPasswordUseCaseResponse = Either<
 export class ChangeUserPasswordUseCase {
   constructor(
     private usersRepository: UsersRepository,
+    private userRoleAuthorizationService: UserRoleAuthorizationService,
     private hashGenerator: HashGenerator,
     private hashComparer: HashComparer
   ) {}
@@ -30,13 +39,24 @@ export class ChangeUserPasswordUseCase {
   async execute(
     request: ChangeUserPasswordUseCaseRequest
   ): Promise<ChangeUserPasswordUseCaseResponse> {
-    const { userId, currentPassword, newPassword } = request;
+    const { actorId, targetUserId, currentPassword, newPassword } = request;
+
+    if (actorId !== targetUserId) {
+      const authorization = await this.userRoleAuthorizationService.ensureUserHasRole(
+        actorId,
+        "ADMIN"
+      );
+
+      if (authorization.isLeft()) {
+        return left(authorization.value);
+      }
+    }
 
     if (currentPassword === newPassword) {
       return left(new NewPasswordMustBeDifferentError());
     }
 
-    const user = await this.usersRepository.findById(userId);
+    const user = await this.usersRepository.findById(targetUserId);
 
     if (!user) {
       return left(new ResourceNotFoundError());
