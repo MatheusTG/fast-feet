@@ -7,4 +7,5 @@ export abstract class UsersRepository {
   abstract findMany(filters: { role?: UserRole }, params?: PaginationParams): Promise<User[]>;
   abstract create(user: User): Promise<void>;
   abstract update(user: User): Promise<void>;
+  abstract delete(user: User): Promise<void>;
 }
