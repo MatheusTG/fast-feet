@@ -2,15 +2,27 @@ import { UserRoleAuthorizationService } from "@/domain/user/application/services
 import { AuthenticateUseCase } from "@/domain/user/application/use-cases/authenticate";
 import { FetchUsersUseCase } from "@/domain/user/application/use-cases/fetch-users";
 import { RegisterUseCase } from "@/domain/user/application/use-cases/register";
+import { UpdateUserUseCase } from "@/domain/user/application/use-cases/update-user";
 import { Module } from "@nestjs/common";
 import { CryptographyModule } from "../cryptography/cryptography.module";
 import { DatabaseModule } from "../database/database.module";
 import { AuthenticateController } from "./controllers/authenticate.controller";
 import { FetchUsersController } from "./controllers/fetch-users.controller";
 import { RegisterController } from "./controllers/register.controller";
+import { UpdateUserController } from "./controllers/update-user.controller";
 
-const controllerDependencies = [RegisterController, AuthenticateController, FetchUsersController];
-const useCasesDependencies = [RegisterUseCase, AuthenticateUseCase, FetchUsersUseCase];
+const controllerDependencies = [
+  RegisterController,
+  AuthenticateController,
+  FetchUsersController,
+  UpdateUserController,
+];
+const useCasesDependencies = [
+  RegisterUseCase,
+  AuthenticateUseCase,
+  FetchUsersUseCase,
+  UpdateUserUseCase,
+];
 const servicesDependencies = [UserRoleAuthorizationService];
 
 @Module({

@@ -27,3 +27,15 @@ Content-Type: application/json
 # @name fetch_users
 GET {{ baseUrl }}/users?role=DELIVERYMAN
 Authorization: Bearer {{ authToken }}
+
+###
+
+# @name update_user
+PATCH {{ baseUrl }}/users/7a988776-affb-490a-b869-0778450bef73
+Content-Type: application/json
+Authorization: Bearer {{ authToken }}
+
+{
+  "name": "Amanda",
+  "cpf": "234.205.000-33"
+}
