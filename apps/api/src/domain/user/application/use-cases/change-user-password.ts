@@ -1,5 +1,7 @@
 import { Either, left, right } from "@/core/errors/abstractions/either";
+import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
 import { ResourceNotFoundError } from "@/core/errors/application/resource-not-found.error";
+import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { Injectable } from "@nestjs/common";
 import { User } from "../../enterprise/entities/user";
 import { HashComparer } from "../cryptography/hash-comparer";
@@ -8,8 +10,6 @@ import { UsersRepository } from "../repositories/users-repository";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 import { NewPasswordMustBeDifferentError } from "./errors/new-password-must-be-different-error";
-import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
-import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 
 type ChangeUserPasswordUseCaseRequest = {
   actorId: string | undefined;

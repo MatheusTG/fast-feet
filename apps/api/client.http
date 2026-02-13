@@ -39,3 +39,15 @@ Authorization: Bearer {{ authToken }}
   "name": "Amanda",
   "cpf": "234.205.000-33"
 }
+
+###
+
+# @name change_user_password
+PATCH {{ baseUrl }}/users/c3540ab4-39f2-4d4a-8e43-dc5fdb76e89c/password
+Content-Type: application/json
+Authorization: Bearer {{ authToken }}
+
+{
+  "currentPassword": "123456",
+  "newPassword": "654321"
+}
