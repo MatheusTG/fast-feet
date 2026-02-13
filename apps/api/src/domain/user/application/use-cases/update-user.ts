@@ -1,12 +1,12 @@
 import { Either, left, right } from "@/core/errors/abstractions/either";
+import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
 import { ResourceNotFoundError } from "@/core/errors/application/resource-not-found.error";
+import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { Injectable } from "@nestjs/common";
 import { User } from "../../enterprise/entities/user";
 import { Cpf } from "../../enterprise/entities/value-objects/cpf";
 import { UsersRepository } from "../repositories/users-repository";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
-import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
-import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 
 type UpdateUserUseCaseRequest = {
   actorId: string | undefined;
