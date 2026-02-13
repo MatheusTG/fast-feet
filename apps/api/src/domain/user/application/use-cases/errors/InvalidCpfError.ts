@@ -1,11 +1,7 @@
-import { UseCaseError } from "@/core/errors/abstractions/use-case-error";
+import { DomainError } from "@/core/errors/abstractions/domain-error";
 
-export class InvalidCpfError extends UseCaseError {
-  constructor(cpf: string) {
-    super({
-      message: `Invalid CPF: ${cpf}`,
-      statusCode: 400,
-      code: "INVALID_CPF",
-    });
+export class InvalidCpfError extends DomainError {
+  constructor(cpf?: string) {
+    super(cpf ? `Invalid CPF: "${cpf}".` : "Invalid CPF.");
   }
 }

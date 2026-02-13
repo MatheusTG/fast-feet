@@ -1,11 +1,7 @@
-import { UseCaseError } from "@/core/errors/abstractions/use-case-error";
+import { DomainError } from "../abstractions/domain-error";
 
-export class UnauthorizedError extends UseCaseError {
-  constructor(message = "Unauthorized: Invalid or expired token.") {
-    super({
-      message: message,
-      statusCode: 401,
-      code: "INVALID_TOKEN",
-    });
+export class UnauthorizedError extends DomainError {
+  constructor(reason: string = "authentication required") {
+    super(`Unauthorized: ${reason}.`);
   }
 }

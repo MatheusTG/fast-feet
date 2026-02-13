@@ -1,7 +1,7 @@
 import { Either, left, right } from "@/core/errors/abstractions/either";
-import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
-import { ResourceNotFoundError } from "@/core/errors/application/resource-not-found.error";
+import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
+import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { Injectable } from "@nestjs/common";
 import { UsersRepository } from "../repositories/users-repository";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
@@ -12,7 +12,7 @@ type DeleteUserUseCaseRequest = {
 };
 
 type DeleteUserUseCaseResponse = Either<
-  ResourceNotFoundError | UnauthorizedError | ForbiddenError,
+  UserNotFoundError | UnauthorizedError | ForbiddenError,
   null
 >;
 
@@ -40,7 +40,7 @@ export class DeleteUserUseCase {
     const user = await this.usersRepository.findById(targetUserId);
 
     if (!user) {
-      return left(new ResourceNotFoundError());
+      return left(new UserNotFoundError("id", targetUserId));
     }
 
     await this.usersRepository.delete(user);

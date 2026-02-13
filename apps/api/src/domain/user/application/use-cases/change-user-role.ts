@@ -1,7 +1,7 @@
 import { Either, left, right } from "@/core/errors/abstractions/either";
-import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
-import { ResourceNotFoundError } from "@/core/errors/application/resource-not-found.error";
+import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
+import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { Injectable } from "@nestjs/common";
 import { User, UserRole } from "../../enterprise/entities/user";
 import { UsersRepository } from "../repositories/users-repository";
@@ -14,7 +14,7 @@ type ChangeUserRoleUseCaseRequest = {
 };
 
 type ChangeUserRoleUseCaseResponse = Either<
-  UnauthorizedError | ForbiddenError | ResourceNotFoundError,
+  UnauthorizedError | ForbiddenError | UserNotFoundError,
   { user: User }
 >;
 
@@ -40,7 +40,7 @@ export class ChangeUserRoleUseCase {
     const user = await this.usersRepository.findById(targetUserId);
 
     if (!user) {
-      return left(new ResourceNotFoundError());
+      return left(new UserNotFoundError("id", targetUserId));
     }
 
     user.role = newRole;

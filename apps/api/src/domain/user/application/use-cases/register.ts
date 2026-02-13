@@ -1,5 +1,5 @@
 import { Either, left, right } from "@/core/errors/abstractions/either";
-import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
+import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { UserRole } from "@/generated/prisma/enums";
 import { Injectable } from "@nestjs/common";
@@ -57,7 +57,7 @@ export class RegisterUseCase {
     const userWithSameCpf = await this.usersRepository.findByCpf(cpf.value);
 
     if (userWithSameCpf) {
-      return left(new UserAlreadyExistsError(cpf.value));
+      return left(new UserAlreadyExistsError("cpf", cpf.value));
     }
 
     const hashedPassword = await this.hashGenerator.hash(password);

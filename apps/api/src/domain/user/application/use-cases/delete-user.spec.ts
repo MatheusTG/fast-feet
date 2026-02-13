@@ -1,4 +1,4 @@
-import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
+import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryUserRepository } from "@test/repositories/in-memory-user-repository";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";

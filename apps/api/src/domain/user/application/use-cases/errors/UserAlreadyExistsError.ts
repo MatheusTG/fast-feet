@@ -1,11 +1,7 @@
-import { UseCaseError } from "@/core/errors/abstractions/use-case-error";
+import { DomainError } from "@/core/errors/abstractions/domain-error";
 
-export class UserAlreadyExistsError extends UseCaseError {
-  constructor(identifier: string) {
-    super({
-      message: `Conflict: user ${identifier} already exists.`,
-      statusCode: 409,
-      code: "USER_ALREADY_EXISTS",
-    });
+export class UserAlreadyExistsError extends DomainError {
+  constructor(field: string, value: string) {
+    super(`User with ${field} "${value}" already exists.`);
   }
 }

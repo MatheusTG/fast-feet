@@ -1,5 +1,5 @@
-import { ForbiddenError } from "@/core/errors/application/Forbidden-error";
-import { ResourceNotFoundError } from "@/core/errors/application/resource-not-found.error";
+import { ForbiddenError } from "@/core/errors/application/forbidden-error";
+import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryUserRepository } from "@test/repositories/in-memory-user-repository";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
@@ -57,7 +57,7 @@ describe("Update user", () => {
     });
 
     expect(result.isLeft()).toBe(true);
-    expect(result.value).toBeInstanceOf(ResourceNotFoundError);
+    expect(result.value).toBeInstanceOf(UserNotFoundError);
   });
 
   it("should not be able to update an user with an invalid CPF", async () => {

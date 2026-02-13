@@ -1,11 +1,7 @@
-import { UseCaseError } from "@/core/errors/abstractions/use-case-error";
+import { DomainError } from "@/core/errors/abstractions/domain-error";
 
-export class InvalidCredentialsError extends UseCaseError {
+export class InvalidCredentialsError extends DomainError {
   constructor(message = "Invalid credentials.") {
-    super({
-      message: message,
-      statusCode: 401,
-      code: "INVALID_CREDENTIALS",
-    });
+    super(message);
   }
 }
