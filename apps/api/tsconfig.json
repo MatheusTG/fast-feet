@@ -1,6 +1,8 @@
 {
   "extends": "@fast-feet/config/typescript",
   "compilerOptions": {
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
