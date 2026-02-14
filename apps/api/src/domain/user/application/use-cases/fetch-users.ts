@@ -1,15 +1,16 @@
+import { DomainError } from "@/core/errors/abstractions/domain-error";
 import { Either, right } from "@/core/errors/abstractions/either";
+import { UseCaseError } from "@/core/errors/abstractions/use-case-error";
 import { Injectable } from "@nestjs/common";
 import { User, UserRole } from "../../enterprise/entities/user";
 import { UsersRepository } from "../repositories/users-repository";
-import { UserAlreadyExistsError } from "./errors/UserAlreadyExistsError";
 
 type FetchUsersUseCaseRequest = {
   role?: UserRole;
   page: number;
 };
 
-type FetchUsersUseCaseResponse = Either<UserAlreadyExistsError, { users: User[] }>;
+type FetchUsersUseCaseResponse = Either<DomainError | UseCaseError, { users: User[] }>;
 
 @Injectable()
 export class FetchUsersUseCase {
