@@ -53,13 +53,6 @@ export class Address extends CompositeValueObject<AddressProps> {
   }
 
   static create(props: AddressProps): Either<DomainError, Address> {
-    if (!props.street) return left(new InvalidAddressError("Street is required!"));
-    if (!props.number) return left(new InvalidAddressError("Number is required!"));
-    if (!props.neighborhood) return left(new InvalidAddressError("Neighborhood is required!"));
-    if (!props.city) return left(new InvalidAddressError("City is required!"));
-    if (!props.state) return left(new InvalidAddressError("State is required!"));
-    if (!props.zipCode) return left(new InvalidAddressError("ZipCode is required!"));
-
     if ((props.latitude && !props.longitude) || (!props.latitude && props.longitude)) {
       return left(new InvalidAddressError("Latitude and longitude must be provided together"));
     }

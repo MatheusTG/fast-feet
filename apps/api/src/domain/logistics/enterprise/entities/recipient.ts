@@ -3,7 +3,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Optional } from "@/core/types/optional";
 import { Address } from "./value-objects/address";
 
-export interface RecipientsProps {
+export interface RecipientProps {
   name: string;
   phone: string;
   email: string;
@@ -14,7 +14,7 @@ export interface RecipientsProps {
   updatedAt?: Date;
 }
 
-export class Recipients extends Entity<RecipientsProps> {
+export class Recipient extends Entity<RecipientProps> {
   get name() {
     return this.props.name;
   }
@@ -48,12 +48,13 @@ export class Recipients extends Entity<RecipientsProps> {
   }
 
   static create(
-    props: Optional<RecipientsProps, "deliveryInstructions" | "isProblematic">,
+    props: Optional<RecipientProps, "createdAt" | "isProblematic">,
     id?: UniqueEntityId
   ) {
-    const recipients = new Recipients(
+    const recipients = new Recipient(
       {
         ...props,
+        isProblematic: props.isProblematic ?? false,
         createdAt: props.createdAt ?? new Date(),
       },
       id
