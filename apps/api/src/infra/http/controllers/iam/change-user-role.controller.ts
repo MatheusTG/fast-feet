@@ -4,8 +4,8 @@ import { CurrentUser } from "@/infra/auth/current-user-decorator";
 import { UserPayload } from "@/infra/auth/jwt.strategy";
 import { Body, Controller, HttpCode, Param, Patch } from "@nestjs/common";
 import { z } from "zod";
-import { resolveUseCase } from "../helpers/resolve-use-case";
-import { ZodValidationsPipe } from "../pipes/zod-validation-pipe";
+import { resolveUseCase } from "../../helpers/resolve-use-case";
+import { ZodValidationsPipe } from "../../pipes/zod-validation-pipe";
 
 const ChangeUserRoleBodySchema = z.object({
   role: z.enum(USER_ROLES),

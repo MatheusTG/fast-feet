@@ -9,13 +9,13 @@ import { UpdateUserUseCase } from "@/domain/user/application/use-cases/update-us
 import { Module } from "@nestjs/common";
 import { CryptographyModule } from "../cryptography/cryptography.module";
 import { DatabaseModule } from "../database/database.module";
-import { AuthenticateController } from "./controllers/authenticate.controller";
-import { ChangeUserPasswordController } from "./controllers/change-user-password.controller";
-import { ChangeUserRoleController } from "./controllers/change-user-role.controller";
-import { DeleteUserController } from "./controllers/delete-user.controller";
-import { FetchUsersController } from "./controllers/fetch-users.controller";
-import { RegisterController } from "./controllers/register.controller";
-import { UpdateUserController } from "./controllers/update-user.controller";
+import { AuthenticateController } from "./controllers/iam/authenticate.controller";
+import { ChangeUserPasswordController } from "./controllers/iam/change-user-password.controller";
+import { ChangeUserRoleController } from "./controllers/iam/change-user-role.controller";
+import { DeleteUserController } from "./controllers/iam/delete-user.controller";
+import { FetchUsersController } from "./controllers/iam/fetch-users.controller";
+import { RegisterController } from "./controllers/iam/register.controller";
+import { UpdateUserController } from "./controllers/iam/update-user.controller";
 
 const controllerDependencies = [
   RegisterController,

@@ -2,7 +2,7 @@ import { DeleteUserUseCase } from "@/domain/user/application/use-cases/delete-us
 import { CurrentUser } from "@/infra/auth/current-user-decorator";
 import { UserPayload } from "@/infra/auth/jwt.strategy";
 import { Controller, Delete, HttpCode, Param } from "@nestjs/common";
-import { resolveUseCase } from "../helpers/resolve-use-case";
+import { resolveUseCase } from "../../helpers/resolve-use-case";
 
 @Controller("/users/:id/delete")
 export class DeleteUserController {

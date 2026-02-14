@@ -5,8 +5,8 @@ import { UserPayload } from "@/infra/auth/jwt.strategy";
 import { Public } from "@/infra/auth/public";
 import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { z } from "zod";
-import { resolveUseCase } from "../helpers/resolve-use-case";
-import { ZodValidationsPipe } from "../pipes/zod-validation-pipe";
+import { resolveUseCase } from "../../helpers/resolve-use-case";
+import { ZodValidationsPipe } from "../../pipes/zod-validation-pipe";
 
 const registerBodySchema = z.object({
   cpf: z.string().regex(/^\d{3}(\.?\d{3}){2}[.-]?\d{2}$/),
