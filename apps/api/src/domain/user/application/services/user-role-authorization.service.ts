@@ -1,8 +1,8 @@
 import { Either, left, right } from "@/core/errors/abstractions/either";
 import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
-import { UserRole } from "@/generated/prisma/enums";
 import { Injectable } from "@nestjs/common";
+import { UserRole } from "../../enterprise/entities/user";
 import { UsersRepository } from "../repositories/users-repository";
 
 type AuthorizationError = UnauthorizedError | ForbiddenError;

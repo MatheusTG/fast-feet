@@ -2,8 +2,8 @@ import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
+import { InvalidCpfError } from "../../enterprise/entities/errors/Invalid-cpf-error";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
-import { InvalidCpfError } from "./errors/InvalidCpfError";
 import { UpdateUserUseCase } from "./update-user";
 
 describe("Update user", () => {

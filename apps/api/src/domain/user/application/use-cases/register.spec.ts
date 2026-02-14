@@ -1,8 +1,8 @@
 import { FakeHasher } from "@test/cryptography/fake-hasher";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
+import { InvalidCpfError } from "../../enterprise/entities/errors/Invalid-cpf-error";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
-import { InvalidCpfError } from "./errors/InvalidCpfError";
 import { RegisterUseCase } from "./register";
 
 describe("Register", () => {

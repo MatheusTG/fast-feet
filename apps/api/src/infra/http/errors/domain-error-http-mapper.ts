@@ -2,10 +2,10 @@ import { DomainError } from "@/core/errors/abstractions/domain-error";
 import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { InvalidCredentialsError } from "@/domain/user/application/use-cases/errors/invalid-credentials-error";
-import { InvalidCpfError } from "@/domain/user/application/use-cases/errors/InvalidCpfError";
 import { NewPasswordMustBeDifferentError } from "@/domain/user/application/use-cases/errors/new-password-must-be-different-error";
 import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { UserAlreadyExistsError } from "@/domain/user/application/use-cases/errors/UserAlreadyExistsError";
+import { InvalidCpfError } from "@/domain/user/enterprise/entities/errors/Invalid-cpf-error";
 
 import {
   BadRequestException,

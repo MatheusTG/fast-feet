@@ -1,6 +1,6 @@
 import { SimpleValueObject } from "@/core/entities/simple-value-object";
 import { Either, left, right } from "@/core/errors/abstractions/either";
-import { InvalidCpfError } from "@/domain/user/application/use-cases/errors/InvalidCpfError";
+import { InvalidCpfError } from "@/domain/user/enterprise/entities/errors/Invalid-cpf-error";
 
 export class Cpf extends SimpleValueObject<string> {
   static create(cpf: string): Either<InvalidCpfError, Cpf> {

@@ -1,7 +1,6 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { UsersRepository } from "@/domain/user/application/repositories/users-repository";
-import { User } from "@/domain/user/enterprise/entities/user";
-import { UserRole } from "@/generated/prisma/enums";
+import { User, UserRole } from "@/domain/user/enterprise/entities/user";
 import { Injectable } from "@nestjs/common";
 import { PrismaUserMapper } from "../mappers/prisma-user-mapper";
 import { PrismaService } from "../prisma.service";
