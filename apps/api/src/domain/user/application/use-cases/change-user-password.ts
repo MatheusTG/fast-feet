@@ -3,11 +3,11 @@ import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { Injectable } from "@nestjs/common";
+import { UserRoleAuthorizationService } from "../../../../core/security/user-role-authorization.service";
 import { User } from "../../enterprise/entities/user";
 import { HashComparer } from "../cryptography/hash-comparer";
 import { HashGenerator } from "../cryptography/hash-generator";
 import { UsersRepository } from "../repositories/users-repository";
-import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 import { NewPasswordMustBeDifferentError } from "./errors/new-password-must-be-different-error";
 

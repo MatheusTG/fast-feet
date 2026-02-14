@@ -2,8 +2,8 @@ import { Either, left, right } from "@/core/errors/abstractions/either";
 import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { Injectable } from "@nestjs/common";
-import { UserRole } from "../../enterprise/entities/user";
-import { UsersRepository } from "../repositories/users-repository";
+import { UsersRepository } from "../../domain/user/application/repositories/users-repository";
+import { UserRole } from "../../domain/user/enterprise/entities/user";
 
 type AuthorizationError = UnauthorizedError | ForbiddenError;
 
@@ -24,7 +24,7 @@ export class UserRoleAuthorizationService {
     const user = await this.usersRepository.findById(actorId);
 
     if (!user) {
-      return left(new UnauthorizedError());
+      return left(new UnauthorizedError("expired or invalid token."));
     }
 
     if (user.role !== requiredRole) {

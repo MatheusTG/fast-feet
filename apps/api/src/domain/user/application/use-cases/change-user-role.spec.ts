@@ -2,7 +2,7 @@ import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
-import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
+import { UserRoleAuthorizationService } from "../../../../core/security/user-role-authorization.service";
 import { ChangeUserRoleUseCase } from "./change-user-role";
 
 describe("Change user role", () => {

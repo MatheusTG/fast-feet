@@ -1,7 +1,7 @@
 import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
-import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
+import { UserRoleAuthorizationService } from "../../../../core/security/user-role-authorization.service";
 import { DeleteUserUseCase } from "./delete-user";
 
 describe("Delete user", () => {

@@ -3,7 +3,7 @@ import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/us
 import { FakeHasher } from "@test/cryptography/fake-hasher";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
-import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
+import { UserRoleAuthorizationService } from "../../../../core/security/user-role-authorization.service";
 import { ChangeUserPasswordUseCase } from "./change-user-password";
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 import { NewPasswordMustBeDifferentError } from "./errors/new-password-must-be-different-error";

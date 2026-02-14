@@ -1,4 +1,4 @@
-import { UserRoleAuthorizationService } from "@/domain/user/application/services/user-role-authorization.service";
+import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { AuthenticateUseCase } from "@/domain/user/application/use-cases/authenticate";
 import { ChangeUserPasswordUseCase } from "@/domain/user/application/use-cases/change-user-password";
 import { ChangeUserRoleUseCase } from "@/domain/user/application/use-cases/change-user-role";

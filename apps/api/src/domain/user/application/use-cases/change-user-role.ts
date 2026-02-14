@@ -3,9 +3,9 @@ import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { Injectable } from "@nestjs/common";
+import { UserRoleAuthorizationService } from "../../../../core/security/user-role-authorization.service";
 import { User, UserRole } from "../../enterprise/entities/user";
 import { UsersRepository } from "../repositories/users-repository";
-import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
 
 type ChangeUserRoleUseCaseRequest = {
   actorId: string | undefined;
