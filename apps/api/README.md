@@ -123,11 +123,11 @@ Business rules define mandatory constraints and behaviors.
 
 Non-functional requirements describe how the system should operate.
 
-- [ ] **NFR001 - Architecture:** The API must follow RESTful principles.
-- [ ] **NFR002 - Security:** The system must ensure authentication and authorization using JWT.
-- [ ] **NFR003 - Access Control:** The system must use role-based access control (RBAC).
-- [ ] **NFR004 - Data Management:** Data must be persisted in a relational database.
-- [ ] **NFR005 - Maintainability:** The codebase must be clean, modular, and maintainable.
-- [ ] **NFR006 - Testability:** The application must support automated unit and integration tests.
+- [x] **NFR001 - Architecture:** The API must follow RESTful principles.
+- [x] **NFR002 - Security:** The system must ensure authentication and authorization using JWT.
+- [x] **NFR003 - Access Control:** The system must use role-based access control (RBAC).
+- [x] **NFR004 - Data Management:** Data must be persisted in a relational database.
+- [x] **NFR005 - Maintainability:** The codebase must be clean, modular, and maintainable.
+- [x] **NFR006 - Testability:** The application must support automated unit and integration tests.
 - [ ] **NFR007 - File Storage:** Delivery photos must be stored using a scalable storage solution.
-- [ ] **NFR008 - Performance:** The API must handle concurrent requests efficiently.
+- [x] **NFR008 - Performance:** The API must handle concurrent requests efficiently.
