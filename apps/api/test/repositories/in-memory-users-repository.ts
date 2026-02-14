@@ -2,7 +2,7 @@ import { PaginationParams } from "@/core/repositories/pagination-params";
 import { UsersRepository } from "@/domain/user/application/repositories/users-repository";
 import { User, UserRole } from "@/domain/user/enterprise/entities/user";
 
-export class InMemoryUserRepository implements UsersRepository {
+export class InMemoryUsersRepository implements UsersRepository {
   items: User[] = [];
 
   async findByCpf(cpf: string): Promise<User | null> {

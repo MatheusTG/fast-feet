@@ -2,21 +2,21 @@ import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { FakeHasher } from "@test/cryptography/fake-hasher";
 import { makeUser } from "@test/factories/make-user";
-import { InMemoryUserRepository } from "@test/repositories/in-memory-user-repository";
+import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
 import { ChangeUserPasswordUseCase } from "./change-user-password";
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 import { NewPasswordMustBeDifferentError } from "./errors/new-password-must-be-different-error";
 
 describe("Change user password", () => {
-  let usersRepository: InMemoryUserRepository;
+  let usersRepository: InMemoryUsersRepository;
   let userRoleAuthorizationService: UserRoleAuthorizationService;
   let fakeHasher: FakeHasher;
 
   let sut: ChangeUserPasswordUseCase;
 
   beforeEach(() => {
-    usersRepository = new InMemoryUserRepository();
+    usersRepository = new InMemoryUsersRepository();
     userRoleAuthorizationService = new UserRoleAuthorizationService(usersRepository);
     fakeHasher = new FakeHasher();
 

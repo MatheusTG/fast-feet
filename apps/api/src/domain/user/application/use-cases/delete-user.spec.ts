@@ -1,17 +1,17 @@
 import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { makeUser } from "@test/factories/make-user";
-import { InMemoryUserRepository } from "@test/repositories/in-memory-user-repository";
+import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
 import { DeleteUserUseCase } from "./delete-user";
 
 describe("Delete user", () => {
-  let usersRepository: InMemoryUserRepository;
+  let usersRepository: InMemoryUsersRepository;
   let userRoleAuthorizationService: UserRoleAuthorizationService;
 
   let sut: DeleteUserUseCase;
 
   beforeEach(() => {
-    usersRepository = new InMemoryUserRepository();
+    usersRepository = new InMemoryUsersRepository();
     userRoleAuthorizationService = new UserRoleAuthorizationService(usersRepository);
 
     sut = new DeleteUserUseCase(usersRepository, userRoleAuthorizationService);

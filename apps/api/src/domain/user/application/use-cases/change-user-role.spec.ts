@@ -1,18 +1,18 @@
 import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { makeUser } from "@test/factories/make-user";
-import { InMemoryUserRepository } from "@test/repositories/in-memory-user-repository";
+import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
 import { ChangeUserRoleUseCase } from "./change-user-role";
 
 describe("Change user role", () => {
-  let usersRepository: InMemoryUserRepository;
+  let usersRepository: InMemoryUsersRepository;
   let userRoleAuthorizationService: UserRoleAuthorizationService;
 
   let sut: ChangeUserRoleUseCase;
 
   beforeEach(() => {
-    usersRepository = new InMemoryUserRepository();
+    usersRepository = new InMemoryUsersRepository();
     userRoleAuthorizationService = new UserRoleAuthorizationService(usersRepository);
 
     sut = new ChangeUserRoleUseCase(usersRepository, userRoleAuthorizationService);

@@ -1,15 +1,15 @@
 import { makeUser } from "@test/factories/make-user";
-import { InMemoryUserRepository } from "@test/repositories/in-memory-user-repository";
+import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
 import { expectRight } from "@test/utils/expect-right";
 import { FetchUsersUseCase } from "./fetch-users";
 
 describe("Fetch Users By Role", () => {
-  let usersRepository: InMemoryUserRepository;
+  let usersRepository: InMemoryUsersRepository;
 
   let sut: FetchUsersUseCase;
 
   beforeEach(() => {
-    usersRepository = new InMemoryUserRepository();
+    usersRepository = new InMemoryUsersRepository();
     sut = new FetchUsersUseCase(usersRepository);
   });
 

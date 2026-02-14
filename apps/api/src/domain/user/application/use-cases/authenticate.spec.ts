@@ -1,19 +1,19 @@
 import { FakeEncrypter } from "@test/cryptography/fake-encrypter";
 import { FakeHasher } from "@test/cryptography/fake-hasher";
 import { makeUser } from "@test/factories/make-user";
-import { InMemoryUserRepository } from "@test/repositories/in-memory-user-repository";
+import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
 import { AuthenticateUseCase } from "./authenticate";
 import { InvalidCredentialsError } from "./errors/invalid-credentials-error";
 
 describe("Authenticate", () => {
-  let usersRepository: InMemoryUserRepository;
+  let usersRepository: InMemoryUsersRepository;
   let fakeHasher: FakeHasher;
   let fakeEncrypter: FakeEncrypter;
 
   let sut: AuthenticateUseCase;
 
   beforeEach(() => {
-    usersRepository = new InMemoryUserRepository();
+    usersRepository = new InMemoryUsersRepository();
 
     fakeHasher = new FakeHasher();
     fakeEncrypter = new FakeEncrypter();

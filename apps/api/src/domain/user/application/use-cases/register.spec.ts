@@ -1,19 +1,19 @@
 import { FakeHasher } from "@test/cryptography/fake-hasher";
 import { makeUser } from "@test/factories/make-user";
-import { InMemoryUserRepository } from "@test/repositories/in-memory-user-repository";
+import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
 import { UserRoleAuthorizationService } from "../services/user-role-authorization.service";
 import { InvalidCpfError } from "./errors/InvalidCpfError";
 import { RegisterUseCase } from "./register";
 
 describe("Register", () => {
-  let usersRepository: InMemoryUserRepository;
+  let usersRepository: InMemoryUsersRepository;
   let fakeHasher: FakeHasher;
   let userRoleAuthorizationService: UserRoleAuthorizationService;
 
   let sut: RegisterUseCase;
 
   beforeEach(() => {
-    usersRepository = new InMemoryUserRepository();
+    usersRepository = new InMemoryUsersRepository();
     fakeHasher = new FakeHasher();
     userRoleAuthorizationService = new UserRoleAuthorizationService(usersRepository);
 
