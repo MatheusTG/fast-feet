@@ -1,32 +1,19 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Recipient, RecipientProps } from "@/domain/logistics/enterprise/entities/recipient";
-import { Address } from "@/domain/logistics/enterprise/entities/value-objects/address";
 import { PrismaRecipientMapper } from "@/infra/database/prisma/mappers/prisma-recipient-mapper";
 import { PrismaService } from "@/infra/database/prisma/prisma.service";
 import { fakerPT_BR as faker } from "@faker-js/faker";
 import { Injectable } from "@nestjs/common";
+import { makeAddress } from "./make-address";
 
-export function makeRecipient(override?: Partial<RecipientProps>, id?: UniqueEntityId) {
-  const uncheckedAddress = {
-    street: faker.location.street(),
-    number: faker.location.buildingNumber(),
-    complement: faker.helpers.maybe(() => faker.location.secondaryAddress()),
-    neighborhood: faker.location.county(),
-    city: faker.location.city(),
-    state: faker.location.state({ abbreviated: true }),
-    zipCode: faker.location.zipCode("#####-###"),
-    latitude: faker.location.latitude(),
-    longitude: faker.location.longitude(),
-    ...override?.address,
-  };
+type Override = Partial<
+  Omit<RecipientProps, "address"> & { address: Partial<RecipientProps["address"]> }
+>;
 
-  const addressOrError = Address.create(uncheckedAddress);
+export function makeRecipient(override?: Override, id?: UniqueEntityId) {
+  const { address: addressOverride, ...rest } = override ?? {};
 
-  if (addressOrError.isLeft()) {
-    throw new Error(`Test setup failed: generated invalid address (${uncheckedAddress})`);
-  }
-
-  const address = addressOrError.value;
+  const address = makeAddress(override?.address);
 
   const recipient = Recipient.create(
     {
@@ -38,7 +25,7 @@ export function makeRecipient(override?: Partial<RecipientProps>, id?: UniqueEnt
       isProblematic: faker.datatype.boolean(),
       createdAt: new Date(),
       updatedAt: faker.helpers.maybe(() => new Date()),
-      ...override,
+      ...rest,
     },
     id
   );
