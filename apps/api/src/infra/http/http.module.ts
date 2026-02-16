@@ -1,5 +1,6 @@
 import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { CreateRecipientUseCase } from "@/domain/logistics/application/use-cases/create-recipient";
+import { FetchRecipientsUseCase } from "@/domain/logistics/application/use-cases/fetch-recipients";
 import { AuthenticateUseCase } from "@/domain/user/application/use-cases/authenticate";
 import { ChangeUserPasswordUseCase } from "@/domain/user/application/use-cases/change-user-password";
 import { ChangeUserRoleUseCase } from "@/domain/user/application/use-cases/change-user-role";
@@ -18,6 +19,7 @@ import { FetchUsersController } from "./controllers/iam/fetch-users.controller";
 import { RegisterController } from "./controllers/iam/register.controller";
 import { UpdateUserController } from "./controllers/iam/update-user.controller";
 import { CreateRecipientController } from "./controllers/logistics/create-recipient.controller";
+import { FetchRecipientsController } from "./controllers/logistics/fetch-recipients.controller";
 
 const controllerDependencies = [
   // IAM
@@ -31,6 +33,7 @@ const controllerDependencies = [
 
   // Logistics
   CreateRecipientController,
+  FetchRecipientsController,
 ];
 const useCasesDependencies = [
   // IAM
@@ -44,6 +47,7 @@ const useCasesDependencies = [
 
   // Logistics
   CreateRecipientUseCase,
+  FetchRecipientsUseCase,
 ];
 const servicesDependencies = [UserRoleAuthorizationService];
 
