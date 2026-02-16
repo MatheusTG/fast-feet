@@ -1,4 +1,5 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { RecipientFilters } from "@/domain/logistics/application/repositories/recipients-repository";
 import { Recipient } from "@/domain/logistics/enterprise/entities/recipient";
 import { Address } from "@/domain/logistics/enterprise/entities/value-objects/address";
 import { Prisma, Recipient as PrismaRecipient } from "@/generated/prisma/client";
@@ -60,5 +61,58 @@ export class PrismaRecipientMapper {
       createdAt: recipient.createdAt,
       updatedAt: recipient.updatedAt,
     };
+  }
+
+  static toPrismaWhere(filters: RecipientFilters): Prisma.RecipientWhereInput {
+    const where: Prisma.RecipientWhereInput = {};
+
+    if (filters.name) {
+      where.name = {
+        contains: filters.name,
+        mode: "insensitive",
+      };
+    }
+
+    if (filters.email) {
+      where.email = {
+        contains: filters.email,
+        mode: "insensitive",
+      };
+    }
+
+    if (filters.phone) {
+      where.phone = {
+        contains: filters.phone,
+      };
+    }
+
+    if (filters.city) {
+      where.city = {
+        equals: filters.city,
+        mode: "insensitive",
+      };
+    }
+
+    if (filters.state) {
+      where.state = filters.state;
+    }
+
+    if (filters.isProblematic !== undefined) {
+      where.isProblematic = filters.isProblematic;
+    }
+
+    if (filters.createdAfter || filters.createdBefore) {
+      where.createdAt = {};
+
+      if (filters.createdAfter) {
+        where.createdAt.gte = filters.createdAfter;
+      }
+
+      if (filters.createdBefore) {
+        where.createdAt.lte = filters.createdBefore;
+      }
+    }
+
+    return where;
   }
 }

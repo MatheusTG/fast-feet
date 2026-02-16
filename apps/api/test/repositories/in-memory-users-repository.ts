@@ -28,11 +28,11 @@ export class InMemoryUsersRepository implements UsersRepository {
   async findMany(filters: { role: UserRole }, params: PaginationParams): Promise<User[]> {
     const { role } = filters;
 
-    const deliverymen = this.items
+    const users = this.items
       .filter((user) => (role ? user.role === role : true))
       .slice((params.page - 1) * 20, params.page * 20);
 
-    return deliverymen;
+    return users;
   }
 
   async create(user: User): Promise<void> {
