@@ -5,9 +5,7 @@ import { Injectable } from "@nestjs/common";
 import { UsersRepository } from "../../domain/user/application/repositories/users-repository";
 import { UserRole } from "../../domain/user/enterprise/entities/user";
 
-type AuthorizationError = UnauthorizedError | ForbiddenError;
-
-type AuthorizationResponse = Either<AuthorizationError, null>;
+type AuthorizationResponse = Either<UnauthorizedError | ForbiddenError, null>;
 
 @Injectable()
 export class UserRoleAuthorizationService {
