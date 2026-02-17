@@ -7,8 +7,10 @@ import { Recipient } from "@/domain/logistics/enterprise/entities/recipient";
 export class InMemoryRecipientsRepository implements RecipientsRepository {
   items: Recipient[] = [];
 
-  async create(recipient: Recipient): Promise<void> {
-    this.items.push(recipient);
+  async findById(id: string): Promise<Recipient | null> {
+    const recipient = this.items.find((recipient) => recipient.id.toString() === id);
+
+    return recipient || null;
   }
 
   async findMany(filters: RecipientFilters, params: { page: number }): Promise<Recipient[]> {
@@ -56,5 +58,17 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
       .slice((params.page - 1) * pageSize, params.page * pageSize);
 
     return recipients;
+  }
+
+  async create(recipient: Recipient): Promise<void> {
+    this.items.push(recipient);
+  }
+
+  async update(recipient: Recipient): Promise<void> {
+    const index = this.items.findIndex((r) => r.id === recipient.id);
+
+    if (index !== -1) {
+      this.items[index] = recipient;
+    }
   }
 }

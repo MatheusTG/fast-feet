@@ -19,6 +19,20 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
     });
   }
 
+  async findById(id: string): Promise<Recipient | null> {
+    const recipient = await this.prisma.recipient.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!recipient) {
+      return null;
+    }
+
+    return PrismaRecipientMapper.toDomain(recipient);
+  }
+
   async findMany(filters: RecipientFilters, params: { page: number }): Promise<Recipient[]> {
     const where = PrismaRecipientMapper.toPrismaWhere(filters);
 
@@ -29,5 +43,16 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
     });
 
     return recipients.map(PrismaRecipientMapper.toDomain);
+  }
+
+  async update(recipient: Recipient): Promise<void> {
+    const data = PrismaRecipientMapper.toPrisma(recipient);
+
+    await this.prisma.recipient.update({
+      where: {
+        id: recipient.id.toString(),
+      },
+      data,
+    });
   }
 }
