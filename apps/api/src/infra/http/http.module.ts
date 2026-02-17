@@ -1,6 +1,7 @@
 import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { CreateRecipientUseCase } from "@/domain/logistics/application/use-cases/create-recipient";
 import { FetchRecipientsUseCase } from "@/domain/logistics/application/use-cases/fetch-recipients";
+import { UpdateRecipientUseCase } from "@/domain/logistics/application/use-cases/update-recipient";
 import { AuthenticateUseCase } from "@/domain/user/application/use-cases/authenticate";
 import { ChangeUserPasswordUseCase } from "@/domain/user/application/use-cases/change-user-password";
 import { ChangeUserRoleUseCase } from "@/domain/user/application/use-cases/change-user-role";
@@ -20,6 +21,7 @@ import { RegisterController } from "./controllers/iam/register.controller";
 import { UpdateUserController } from "./controllers/iam/update-user.controller";
 import { CreateRecipientController } from "./controllers/logistics/create-recipient.controller";
 import { FetchRecipientsController } from "./controllers/logistics/fetch-recipients.controller";
+import { UpdateRecipientController } from "./controllers/logistics/update-recipient.controller";
 
 const controllerDependencies = [
   // IAM
@@ -34,6 +36,7 @@ const controllerDependencies = [
   // Logistics
   CreateRecipientController,
   FetchRecipientsController,
+  UpdateRecipientController,
 ];
 const useCasesDependencies = [
   // IAM
@@ -48,6 +51,7 @@ const useCasesDependencies = [
   // Logistics
   CreateRecipientUseCase,
   FetchRecipientsUseCase,
+  UpdateRecipientUseCase,
 ];
 const servicesDependencies = [UserRoleAuthorizationService];
 
