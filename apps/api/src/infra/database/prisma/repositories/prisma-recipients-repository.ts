@@ -55,4 +55,12 @@ export class PrismaRecipientsRepository implements RecipientsRepository {
       data,
     });
   }
+
+  async delete(recipient: Recipient): Promise<void> {
+    await this.prisma.recipient.delete({
+      where: {
+        id: recipient.id.toString(),
+      },
+    });
+  }
 }

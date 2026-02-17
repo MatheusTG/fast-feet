@@ -15,5 +15,6 @@ export abstract class RecipientsRepository {
   abstract findById(id: string): Promise<Recipient | null>;
   abstract findMany(filters: RecipientFilters, params: { page: number }): Promise<Recipient[]>;
   abstract create(recipient: Recipient): Promise<void>;
-  abstract update(user: Recipient): Promise<void>;
+  abstract update(recipient: Recipient): Promise<void>;
+  abstract delete(recipient: Recipient): Promise<void>;
 }
