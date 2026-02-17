@@ -40,6 +40,8 @@ export class RegisterController {
       creatorId: user?.sub,
     });
 
-    resolveUseCase(result);
+    const { user: createdUser } = resolveUseCase(result);
+
+    return { id: createdUser.id.toString() };
   }
 }

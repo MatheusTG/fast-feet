@@ -39,12 +39,13 @@ export class CreateRecipientController {
     @Body(bodyValidationPipe) body: CreateRecipientBodySchema,
     @CurrentUser() user: UserPayload
   ) {
-      const result = await this.createrecipientUseCase.execute({
-        actorId: user?.sub,
-        recipient: body,
-      });
+    const result = await this.createrecipientUseCase.execute({
+      actorId: user?.sub,
+      recipient: body,
+    });
 
+    const { recipient } = resolveUseCase(result);
 
-    resolveUseCase(result);
+    return { id: recipient.id.toString() };
   }
 }

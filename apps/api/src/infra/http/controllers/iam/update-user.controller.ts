@@ -31,13 +31,13 @@ export class UpdateUserController {
   ) {
     const { cpf, name } = body;
 
-    resolveUseCase(
-      await this.updateUserUseCase.execute({
-        actorId: user.sub,
-        targetUserId,
-        cpf,
-        name,
-      })
-    );
+    const result = await this.updateUserUseCase.execute({
+      actorId: user.sub,
+      targetUserId,
+      cpf,
+      name,
+    });
+
+    resolveUseCase(result);
   }
 }
