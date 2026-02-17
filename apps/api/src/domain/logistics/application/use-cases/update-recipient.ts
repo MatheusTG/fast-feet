@@ -1,5 +1,6 @@
 import { Either, left, right } from "@/core/errors/abstractions/either";
 import { ForbiddenError } from "@/core/errors/application/forbidden-error";
+import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { Injectable } from "@nestjs/common";
 import { InvalidAddressError } from "../../enterprise/entities/errors/invalid-address-error";
@@ -7,7 +8,6 @@ import { Recipient } from "../../enterprise/entities/recipient";
 import { Address } from "../../enterprise/entities/value-objects/address";
 import { RecipientsRepository } from "../repositories/recipients-repository";
 import { RecipientNotFoundError } from "./errors/recipient-not-found.error";
-import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 
 type UpdateRecipientUseCaseRequest = {
   actorId: string | undefined;

@@ -1,12 +1,13 @@
 import { Either, left, right } from "@/core/errors/abstractions/either";
 import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
+import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
 import { Injectable } from "@nestjs/common";
-import { UserRoleAuthorizationService } from "../../../../core/security/user-role-authorization.service";
 import { User } from "../../enterprise/entities/user";
 import { Cpf } from "../../enterprise/entities/value-objects/cpf";
 import { UsersRepository } from "../repositories/users-repository";
+import { UserAlreadyExistsError } from "./errors/UserAlreadyExistsError";
 
 type UpdateUserUseCaseRequest = {
   actorId: string | undefined;
@@ -16,7 +17,7 @@ type UpdateUserUseCaseRequest = {
 };
 
 type UpdateUserUseCaseResponse = Either<
-  UserNotFoundError | UnauthorizedError | ForbiddenError,
+  UserNotFoundError | UserAlreadyExistsError | UnauthorizedError | ForbiddenError,
   { user: User }
 >;
 
@@ -55,6 +56,12 @@ export class UpdateUserUseCase {
       }
 
       user.cpf = cpfOrError.value;
+
+      const userWithSameCpf = await this.usersRepository.findByCpf(user.cpf.value);
+
+      if (userWithSameCpf) {
+        return left(new UserAlreadyExistsError("cpf", user.cpf.value));
+      }
     }
 
     if (name) {

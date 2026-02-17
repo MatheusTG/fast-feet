@@ -1,6 +1,8 @@
 import { DomainError } from "@/core/errors/abstractions/domain-error";
 import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
+import { RecipientNotFoundError } from "@/domain/logistics/application/use-cases/errors/recipient-not-found.error";
+import { InvalidAddressError } from "@/domain/logistics/enterprise/entities/errors/invalid-address-error";
 import { InvalidCredentialsError } from "@/domain/user/application/use-cases/errors/invalid-credentials-error";
 import { NewPasswordMustBeDifferentError } from "@/domain/user/application/use-cases/errors/new-password-must-be-different-error";
 import { UserNotFoundError } from "@/domain/user/application/use-cases/errors/user-not-found.error";
@@ -38,6 +40,12 @@ export class DomainErrorHttpMapper {
         return new BadRequestException(error.message);
 
       case NewPasswordMustBeDifferentError:
+        return new BadRequestException(error.message);
+
+      case RecipientNotFoundError:
+        return new NotFoundException(error.message);
+
+      case InvalidAddressError:
         return new BadRequestException(error.message);
 
       default:
