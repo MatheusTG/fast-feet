@@ -19,24 +19,54 @@ export class Recipient extends Entity<RecipientProps> {
     return this.props.name;
   }
 
+  set name(name: string) {
+    this.props.name = name;
+    this.touch();
+  }
+
   get phone() {
     return this.props.phone;
+  }
+
+  set phone(phone: string) {
+    this.props.phone = phone;
+    this.touch();
   }
 
   get email() {
     return this.props.email;
   }
 
+  set email(email: string) {
+    this.props.email = email;
+    this.touch();
+  }
+
   get address() {
     return this.props.address;
+  }
+
+  set address(address: Address) {
+    this.props.address = address;
+    this.touch();
   }
 
   get deliveryInstructions() {
     return this.props.deliveryInstructions;
   }
 
+  set deliveryInstructions(deliveryInstructions: string | undefined) {
+    this.props.deliveryInstructions = deliveryInstructions;
+    this.touch();
+  }
+
   get isProblematic() {
     return this.props.isProblematic;
+  }
+
+  set isProblematic(isProblematic: boolean | undefined) {
+    this.props.isProblematic = isProblematic;
+    this.touch();
   }
 
   get createdAt() {
@@ -45,6 +75,10 @@ export class Recipient extends Entity<RecipientProps> {
 
   get updatedAt() {
     return this.props.updatedAt;
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date();
   }
 
   static create(
