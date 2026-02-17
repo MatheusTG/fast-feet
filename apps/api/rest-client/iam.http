@@ -1,0 +1,93 @@
+@baseUrl = http://localhost:3333
+@authToken = {{ authenticate.response.body.access_token }}
+
+# =========================================================
+# REGISTER
+# =========================================================
+
+# @name register
+POST {{ baseUrl }}/accounts
+Content-Type: application/json
+
+{
+  "name": "Matheus",
+  "cpf": "110.105.370-40",
+  "password": "123456"
+}
+
+###
+
+# =========================================================
+# AUTH
+# =========================================================
+
+# @name authenticate
+POST {{ baseUrl }}/sessions
+Content-Type: application/json
+
+{
+  "cpf": "234.205.000-33",
+  "password": "123456"
+}
+
+###
+
+# =========================================================
+# READ (LIST / FILTER)
+# =========================================================
+
+GET {{ baseUrl }}/users?role=DELIVERYMAN
+Authorization: Bearer {{ authToken }}
+
+###
+
+# =========================================================
+# UPDATE USER
+# =========================================================
+
+PATCH {{ baseUrl }}/users/{{ register.response.body.id }}
+Content-Type: application/json
+Authorization: Bearer {{ authToken }}
+
+{
+  "name": "Amanda",
+  "cpf": "234.205.000-33"
+}
+
+###
+
+# =========================================================
+# CHANGE USER PASSWORD
+# =========================================================
+
+PATCH {{ baseUrl }}/users/{{ register.response.body.id }}/password
+Content-Type: application/json
+Authorization: Bearer {{ authToken }}
+
+{
+  "currentPassword": "123456",
+  "newPassword": "654321"
+}
+
+###
+
+# =========================================================
+# CHANGE USER ROLE
+# =========================================================
+
+PATCH {{ baseUrl }}/users/{{ register.response.body.id }}/role
+Content-Type: application/json
+Authorization: Bearer {{ authToken }}
+
+{
+  "role": "ADMIN"
+}
+
+###
+
+# =========================================================
+# DELETE USER
+# =========================================================
+
+DELETE {{ baseUrl }}/users/{{ register.response.body.id }}/delete
+Authorization: Bearer {{ authToken }}

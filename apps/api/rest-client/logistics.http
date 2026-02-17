@@ -1,0 +1,83 @@
+@baseUrl = http://localhost:3333
+@authToken = {{ authenticate.response.body.access_token }}
+
+# =========================================================
+# AUTH
+# =========================================================
+
+# @name authenticate
+POST {{ baseUrl }}/sessions
+Content-Type: application/json
+
+{
+  "cpf": "234.205.000-33",
+  "password": "123456"
+}
+
+###
+
+# =========================================================
+# CREATE RECIPIENT
+# =========================================================
+
+# @name create_recipient
+POST {{ baseUrl }}/recipients
+Authorization: Bearer {{ authToken }}
+Content-Type: application/json
+
+{
+  "name": "João da Silva",
+  "phone": "44999999999",
+  "email": "joao@email.com",
+  "address": {
+    "street": "Rua das Flores",
+    "number": "123",
+    "complement": "Casa",
+    "neighborhood": "Centro",
+    "city": "Campo Mourão",
+    "state": "PR",
+    "zipCode": "87300000",
+    "latitude": -24.0462,
+    "longitude": -52.3781
+  },
+  "deliveryInstructions": "Deixar com o porteiro",
+  "isProblematic": false
+}
+
+###
+
+# =========================================================
+# READ (LIST / FILTER)
+# =========================================================
+
+GET {{ baseUrl }}/recipients?page=1
+Authorization: Bearer {{ authToken }}
+
+###
+
+# =========================================================
+# UPDATE RECIPIENT
+# =========================================================
+
+PATCH {{ baseUrl }}/recipients/{{ create_recipient.response.body.id }}
+Authorization: Bearer {{ authToken }}
+Content-Type: application/json
+
+{
+  "name": "João da Silva Atualizado",
+  "address": {
+    "street": "Rua Nova",
+    "number": "456",
+    "city": "Maringá"
+  },
+  "deliveryInstructions": "Chamar no portão"
+}
+
+###
+
+# =========================================================
+# DELETE RECIPIENT
+# =========================================================
+
+DELETE {{ baseUrl }}/recipients/{{ create_recipient.response.body.id }}
+Authorization: Bearer {{ authToken }}
