@@ -72,7 +72,7 @@ describe("Update order", () => {
       order: { status: "DELIVERED" },
     });
 
-    expect(result.isLeft()).toBe(false);
+    expect(result.isLeft()).toBe(true);
     expect(result.value).toBeInstanceOf(ForbiddenError);
   });
 });

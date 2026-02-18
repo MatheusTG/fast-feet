@@ -3,13 +3,16 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Optional } from "@/core/types/optional";
 import { Address } from "./value-objects/address";
 
-export type OrderStatus =
-  | "PENDING"
-  | "PICKED_UP"
-  | "IN_TRANSIT"
-  | "DELIVERED"
-  | "RETURNED"
-  | "CANCELED";
+export const ORDER_STATUS = [
+  "PENDING",
+  "PICKED_UP",
+  "IN_TRANSIT",
+  "DELIVERED",
+  "RETURNED",
+  "CANCELED",
+] as const;
+
+export type OrderStatus = (typeof ORDER_STATUS)[number];
 
 export interface OrderProps {
   recipientId: UniqueEntityId;

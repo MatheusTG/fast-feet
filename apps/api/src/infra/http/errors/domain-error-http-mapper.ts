@@ -1,6 +1,7 @@
 import { DomainError } from "@/core/errors/abstractions/domain-error";
 import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
+import { OrderNotFoundError } from "@/domain/logistics/application/use-cases/errors/order-not-found-error";
 import { RecipientNotFoundError } from "@/domain/logistics/application/use-cases/errors/recipient-not-found-error";
 import { InvalidAddressError } from "@/domain/logistics/enterprise/entities/errors/invalid-address-error";
 import { InvalidCredentialsError } from "@/domain/user/application/use-cases/errors/invalid-credentials-error";
@@ -43,6 +44,9 @@ export class DomainErrorHttpMapper {
         return new BadRequestException(error.message);
 
       case RecipientNotFoundError:
+        return new NotFoundException(error.message);
+
+      case OrderNotFoundError:
         return new NotFoundException(error.message);
 
       case InvalidAddressError:
