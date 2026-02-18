@@ -73,8 +73,8 @@ export class InMemoryRecipientsRepository implements RecipientsRepository {
   }
 
   async delete(recipient: Recipient): Promise<void> {
-    const userIndex = this.items.findIndex((item) => item.id === recipient.id);
+    const recipientIndex = this.items.findIndex((item) => item.id === recipient.id);
 
-    this.items.splice(userIndex, 1);
+    this.items.splice(recipientIndex, 1);
   }
 }

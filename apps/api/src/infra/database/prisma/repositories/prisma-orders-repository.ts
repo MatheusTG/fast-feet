@@ -40,4 +40,12 @@ export class PrismaOrdersRepository implements OrdersRepository {
       data,
     });
   }
+
+  async delete(order: Order): Promise<void> {
+    await this.prisma.order.delete({
+      where: {
+        id: order.id.toString(),
+      },
+    });
+  }
 }
