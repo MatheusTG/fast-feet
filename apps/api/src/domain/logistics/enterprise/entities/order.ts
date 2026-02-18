@@ -1,20 +1,22 @@
 import { Entity } from "@/core/entities/entity";
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { Optional } from "@/core/types/optional";
+import { Address } from "./value-objects/address";
 
 export type OrderStatus =
-  | "pending"
-  | "picked_up"
-  | "in_transit"
-  | "delivered"
-  | "returned"
-  | "canceled";
+  | "PENDING"
+  | "PICKED_UP"
+  | "IN_TRANSIT"
+  | "DELIVERED"
+  | "RETURNED"
+  | "CANCELED";
 
 export interface OrderProps {
   recipientId: UniqueEntityId;
   deliverymanId?: UniqueEntityId;
 
   status: OrderStatus;
+  deliveryAddress: Address;
 
   postedAt: Date;
   pickedUpAt?: Date;
@@ -48,6 +50,15 @@ export class Order extends Entity<OrderProps> {
 
   set status(status: OrderStatus) {
     this.props.status = status;
+    this.touch();
+  }
+
+  get deliveryAddress() {
+    return this.props.deliveryAddress;
+  }
+
+  set deliveryAddress(deliveryAddress: Address) {
+    this.props.deliveryAddress = deliveryAddress;
     this.touch();
   }
 
@@ -119,7 +130,7 @@ export class Order extends Entity<OrderProps> {
     const order = new Order(
       {
         ...props,
-        status: props.status ?? "pending",
+        status: props.status ?? "PENDING",
         postedAt: props.postedAt ?? new Date(),
         createdAt: props.createdAt ?? new Date(),
       },
