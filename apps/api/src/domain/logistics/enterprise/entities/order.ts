@@ -1,0 +1,131 @@
+import { Entity } from "@/core/entities/entity";
+import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { Optional } from "@/core/types/optional";
+
+export type OrderStatus =
+  | "pending"
+  | "picked_up"
+  | "in_transit"
+  | "delivered"
+  | "returned"
+  | "canceled";
+
+export interface OrderProps {
+  recipientId: UniqueEntityId;
+  deliverymanId?: UniqueEntityId;
+
+  status: OrderStatus;
+
+  postedAt: Date;
+  pickedUpAt?: Date;
+  deliveredAt?: Date;
+  returnedAt?: Date;
+  canceledAt?: Date;
+
+  notes?: string;
+
+  createdAt: Date;
+  updatedAt?: Date;
+}
+
+export class Order extends Entity<OrderProps> {
+  get recipientId() {
+    return this.props.recipientId;
+  }
+
+  get deliverymanId() {
+    return this.props.deliverymanId;
+  }
+
+  set deliverymanId(id: UniqueEntityId | undefined) {
+    this.props.deliverymanId = id;
+    this.touch();
+  }
+
+  get status() {
+    return this.props.status;
+  }
+
+  set status(status: OrderStatus) {
+    this.props.status = status;
+    this.touch();
+  }
+
+  get postedAt() {
+    return this.props.postedAt;
+  }
+
+  get pickedUpAt() {
+    return this.props.pickedUpAt;
+  }
+
+  set pickedUpAt(date: Date | undefined) {
+    this.props.pickedUpAt = date;
+    this.touch();
+  }
+
+  get deliveredAt() {
+    return this.props.deliveredAt;
+  }
+
+  set deliveredAt(date: Date | undefined) {
+    this.props.deliveredAt = date;
+    this.touch();
+  }
+
+  get returnedAt() {
+    return this.props.returnedAt;
+  }
+
+  set returnedAt(date: Date | undefined) {
+    this.props.returnedAt = date;
+    this.touch();
+  }
+
+  get canceledAt() {
+    return this.props.canceledAt;
+  }
+
+  set canceledAt(date: Date | undefined) {
+    this.props.canceledAt = date;
+    this.touch();
+  }
+
+  get notes() {
+    return this.props.notes;
+  }
+
+  set notes(notes: string | undefined) {
+    this.props.notes = notes;
+    this.touch();
+  }
+
+  get createdAt() {
+    return this.props.createdAt;
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt;
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date();
+  }
+
+  static create(
+    props: Optional<OrderProps, "createdAt" | "status" | "postedAt">,
+    id?: UniqueEntityId
+  ) {
+    const order = new Order(
+      {
+        ...props,
+        status: props.status ?? "pending",
+        postedAt: props.postedAt ?? new Date(),
+        createdAt: props.createdAt ?? new Date(),
+      },
+      id
+    );
+
+    return order;
+  }
+}

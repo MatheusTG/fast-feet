@@ -91,7 +91,7 @@ Functional requirements describe what the system must do.
 - [x] **FR002 - Authentication:** The system must allow users to authenticate using CPF and password.
 - [x] **FR003 - Authentication:** The system must identify the authenticated user across requests (e.g., JWT tokens).
 - [x] **FR004 - Users:** The system must allow listing, updating, and deleting deliverymen (admin only).
-- [ ] **FR005 - Recipients:** The system must allow CRUD operations for recipients (admin only).
+- [x] **FR005 - Recipients:** The system must allow CRUD operations for recipients (admin only).
 - [ ] **FR006 - Orders:** The system must allow CRUD operations for orders (admin only).
 - [ ] **FR007 - Orders:** The system must allow assigning a deliveryman to an order.
 - [ ] **FR008 - Orders:** The system must allow marking an order as “waiting” (available for pickup).
