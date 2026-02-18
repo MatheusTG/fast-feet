@@ -4,7 +4,7 @@ import { UnauthorizedError } from "@/core/errors/application/unauthorized-error"
 import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { Injectable } from "@nestjs/common";
 import { RecipientsRepository } from "../repositories/recipients-repository";
-import { RecipientNotFoundError } from "./errors/recipient-not-found.error";
+import { RecipientNotFoundError } from "./errors/recipient-not-found-error";
 
 type DeleteRecipientUseCaseRequest = {
   actorId: string | undefined;

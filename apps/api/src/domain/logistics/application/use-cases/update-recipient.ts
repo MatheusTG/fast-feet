@@ -7,7 +7,7 @@ import { InvalidAddressError } from "../../enterprise/entities/errors/invalid-ad
 import { Recipient } from "../../enterprise/entities/recipient";
 import { Address } from "../../enterprise/entities/value-objects/address";
 import { RecipientsRepository } from "../repositories/recipients-repository";
-import { RecipientNotFoundError } from "./errors/recipient-not-found.error";
+import { RecipientNotFoundError } from "./errors/recipient-not-found-error";
 
 type UpdateRecipientUseCaseRequest = {
   actorId: string | undefined;

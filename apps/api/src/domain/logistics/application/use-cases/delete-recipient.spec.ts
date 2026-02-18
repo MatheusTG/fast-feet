@@ -6,7 +6,7 @@ import { InMemoryRecipientsRepository } from "@test/repositories/in-memory-recip
 import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
 import { expect } from "vitest";
 import { DeleteRecipientUseCase } from "./delete-recipient";
-import { RecipientNotFoundError } from "./errors/recipient-not-found.error";
+import { RecipientNotFoundError } from "./errors/recipient-not-found-error";
 
 describe("Delete recipients", () => {
   let recipientsRepository: InMemoryRecipientsRepository;

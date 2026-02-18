@@ -5,7 +5,7 @@ import { makeUser } from "@test/factories/make-user";
 import { InMemoryRecipientsRepository } from "@test/repositories/in-memory-recipients-repository";
 import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
 import { expect } from "vitest";
-import { RecipientNotFoundError } from "./errors/recipient-not-found.error";
+import { RecipientNotFoundError } from "./errors/recipient-not-found-error";
 import { UpdateRecipientUseCase } from "./update-recipient";
 
 describe("Update recipient", () => {
