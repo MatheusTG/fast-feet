@@ -1,6 +1,7 @@
 import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { CreateOrderUseCase } from "@/domain/logistics/application/use-cases/create-order";
 import { CreateRecipientUseCase } from "@/domain/logistics/application/use-cases/create-recipient";
+import { DeleteOrderUseCase } from "@/domain/logistics/application/use-cases/delete-order";
 import { DeleteRecipientUseCase } from "@/domain/logistics/application/use-cases/delete-recipient";
 import { FetchRecipientsUseCase } from "@/domain/logistics/application/use-cases/fetch-recipients";
 import { UpdateOrderUseCase } from "@/domain/logistics/application/use-cases/update-order";
@@ -24,6 +25,7 @@ import { RegisterController } from "./controllers/iam/register.controller";
 import { UpdateUserController } from "./controllers/iam/update-user.controller";
 import { CreateOrderController } from "./controllers/logistics/create-order.controller";
 import { CreateRecipientController } from "./controllers/logistics/create-recipient.controller";
+import { DeleteOrderController } from "./controllers/logistics/delete-order.controller";
 import { DeleteRecipientController } from "./controllers/logistics/delete-recipient.controller";
 import { FetchRecipientsController } from "./controllers/logistics/fetch-recipients.controller";
 import { UpdateOrderController } from "./controllers/logistics/update-order.controller";
@@ -46,6 +48,7 @@ const controllerDependencies = [
   DeleteRecipientController,
   CreateOrderController,
   UpdateOrderController,
+  DeleteOrderController,
 ];
 const useCasesDependencies = [
   // IAM
@@ -64,6 +67,7 @@ const useCasesDependencies = [
   DeleteRecipientUseCase,
   CreateOrderUseCase,
   UpdateOrderUseCase,
+  DeleteOrderUseCase,
 ];
 const servicesDependencies = [UserRoleAuthorizationService];
 
