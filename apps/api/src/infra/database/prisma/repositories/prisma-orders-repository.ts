@@ -1,4 +1,7 @@
-import { OrdersRepository } from "@/domain/logistics/application/repositories/orders-repository";
+import {
+  OrderFilters,
+  OrdersRepository,
+} from "@/domain/logistics/application/repositories/orders-repository";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
 import { Injectable } from "@nestjs/common";
 import { PrismaOrderMapper } from "../mappers/prisma-order-mapper";
@@ -20,6 +23,18 @@ export class PrismaOrdersRepository implements OrdersRepository {
     }
 
     return PrismaOrderMapper.toDomain(order);
+  }
+
+  async findMany(filters: OrderFilters, params: { page: number }): Promise<Order[]> {
+    const where = PrismaOrderMapper.toPrismaWhere(filters);
+
+    const orders = await this.prisma.order.findMany({
+      where,
+      take: 20,
+      skip: (params.page - 1) * 20,
+    });
+
+    return orders.map(PrismaOrderMapper.toDomain);
   }
 
   async create(order: Order): Promise<void> {

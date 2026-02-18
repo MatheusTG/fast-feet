@@ -1,4 +1,5 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { OrderFilters } from "@/domain/logistics/application/repositories/orders-repository";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
 import { Address } from "@/domain/logistics/enterprise/entities/value-objects/address";
 import { Prisma, Order as PrismaOrder } from "@/generated/prisma/client";
@@ -72,5 +73,58 @@ export class PrismaOrderMapper {
       createdAt: order.createdAt,
       updatedAt: order.updatedAt,
     };
+  }
+
+  static toPrismaWhere(filters: OrderFilters): Prisma.OrderWhereInput {
+    const where: Prisma.OrderWhereInput = {};
+
+    if (filters.recipientId) {
+      where.recipientId = filters.recipientId;
+    }
+
+    if (filters.status) {
+      where.status = filters.status as any;
+    }
+
+    // createdAt
+    if (filters.createdAfter || filters.createdBefore) {
+      where.createdAt = {};
+
+      if (filters.createdAfter) {
+        where.createdAt.gte = filters.createdAfter;
+      }
+
+      if (filters.createdBefore) {
+        where.createdAt.lte = filters.createdBefore;
+      }
+    }
+
+    // postedAt
+    if (filters.postedAfter || filters.postedBefore) {
+      where.postedAt = {};
+
+      if (filters.postedAfter) {
+        where.postedAt.gte = filters.postedAfter;
+      }
+
+      if (filters.postedBefore) {
+        where.postedAt.lte = filters.postedBefore;
+      }
+    }
+
+    // deliveredAt
+    if (filters.deliveredAfter || filters.deliveredBefore) {
+      where.deliveredAt = {};
+
+      if (filters.deliveredAfter) {
+        where.deliveredAt.gte = filters.deliveredAfter;
+      }
+
+      if (filters.deliveredBefore) {
+        where.deliveredAt.lte = filters.deliveredBefore;
+      }
+    }
+
+    return where;
   }
 }

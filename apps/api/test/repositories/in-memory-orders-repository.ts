@@ -1,4 +1,7 @@
-import { OrdersRepository } from "@/domain/logistics/application/repositories/orders-repository";
+import {
+  OrderFilters,
+  OrdersRepository,
+} from "@/domain/logistics/application/repositories/orders-repository";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
 
 export class InMemoryOrdersRepository implements OrdersRepository {
@@ -8,6 +11,58 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     const order = this.items.find((recipient) => recipient.id.toString() === id);
 
     return order || null;
+  }
+
+  async findMany(filters: OrderFilters, params: { page: number }): Promise<Order[]> {
+    const pageSize = 20;
+
+    const orders = this.items
+      .filter((order) => {
+        if (filters.recipientId && order.recipientId.toString() !== filters.recipientId) {
+          return false;
+        }
+
+        if (filters.status && order.status !== filters.status) {
+          return false;
+        }
+
+        if (filters.createdAfter && order.createdAt < filters.createdAfter) {
+          return false;
+        }
+
+        if (filters.createdBefore && order.createdAt > filters.createdBefore) {
+          return false;
+        }
+
+        if (filters.postedAfter && order.postedAt && order.postedAt < filters.postedAfter) {
+          return false;
+        }
+
+        if (filters.postedBefore && order.postedAt && order.postedAt > filters.postedBefore) {
+          return false;
+        }
+
+        if (
+          filters.deliveredAfter &&
+          order.deliveredAt &&
+          order.deliveredAt < filters.deliveredAfter
+        ) {
+          return false;
+        }
+
+        if (
+          filters.deliveredBefore &&
+          order.deliveredAt &&
+          order.deliveredAt > filters.deliveredBefore
+        ) {
+          return false;
+        }
+
+        return true;
+      })
+      .slice((params.page - 1) * pageSize, params.page * pageSize);
+
+    return orders;
   }
 
   async create(order: Order): Promise<void> {
