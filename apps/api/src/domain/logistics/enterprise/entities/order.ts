@@ -66,6 +66,11 @@ export class Order extends Entity<OrderProps> {
     return this.props.postedAt;
   }
 
+  set postedAt(postedAt: Date) {
+    this.props.postedAt = postedAt;
+    this.touch();
+  }
+
   get pickedUpAt() {
     return this.props.pickedUpAt;
   }
