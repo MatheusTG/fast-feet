@@ -1,3 +1,4 @@
+import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import {
   OrderFilters,
   OrdersRepository,
@@ -75,6 +76,15 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     if (index !== -1) {
       this.items[index] = order;
     }
+  }
+
+  async assignDeliveryman(orderId: string, deliverymanId: string): Promise<void> {
+    const order = this.items.find((item) => item.id.toString() === orderId);
+
+    if (!order) return;
+
+    order.deliverymanId = new UniqueEntityId(deliverymanId);
+    order.status = "AWAITING_PICKUP";
   }
 
   async delete(order: Order): Promise<void> {

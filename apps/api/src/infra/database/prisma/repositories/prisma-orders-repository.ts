@@ -56,6 +56,16 @@ export class PrismaOrdersRepository implements OrdersRepository {
     });
   }
 
+  async assignDeliveryman(orderId: string, deliverymanId: string): Promise<void> {
+    await this.prisma.order.update({
+      where: { id: orderId },
+      data: {
+        deliverymanId,
+        status: "AWAITING_PICKUP",
+      },
+    });
+  }
+
   async delete(order: Order): Promise<void> {
     await this.prisma.order.delete({
       where: {

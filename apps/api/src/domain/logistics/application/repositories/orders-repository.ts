@@ -16,5 +16,6 @@ export abstract class OrdersRepository {
   abstract findMany(filters: OrderFilters, params: { page: number }): Promise<Order[]>;
   abstract create(order: Order): Promise<void>;
   abstract update(order: Order): Promise<void>;
+  abstract assignDeliveryman(orderId: string, deliverymanId: string): Promise<void>;
   abstract delete(order: Order): Promise<void>;
 }
