@@ -6,6 +6,7 @@ import { DeleteOrderUseCase } from "@/domain/logistics/application/use-cases/del
 import { DeleteRecipientUseCase } from "@/domain/logistics/application/use-cases/delete-recipient";
 import { FetchOrdersUseCase } from "@/domain/logistics/application/use-cases/fetch-orders";
 import { FetchRecipientsUseCase } from "@/domain/logistics/application/use-cases/fetch-recipients";
+import { PickUpOrderUseCase } from "@/domain/logistics/application/use-cases/pick-up-order";
 import { PublishOrderUseCase } from "@/domain/logistics/application/use-cases/publish-order";
 import { UpdateOrderUseCase } from "@/domain/logistics/application/use-cases/update-order";
 import { UpdateRecipientUseCase } from "@/domain/logistics/application/use-cases/update-recipient";
@@ -33,6 +34,7 @@ import { DeleteOrderController } from "./controllers/logistics/delete-order.cont
 import { DeleteRecipientController } from "./controllers/logistics/delete-recipient.controller";
 import { FetchOrdersController } from "./controllers/logistics/fetch-orders.controller";
 import { FetchRecipientsController } from "./controllers/logistics/fetch-recipients.controller";
+import { PickUpOrderController } from "./controllers/logistics/pick-up-order.controller";
 import { PublishOrderController } from "./controllers/logistics/publish-order.controller";
 import { UpdateOrderController } from "./controllers/logistics/update-order.controller";
 import { UpdateRecipientController } from "./controllers/logistics/update-recipient.controller";
@@ -58,6 +60,7 @@ const controllerDependencies = [
   FetchOrdersController,
   AssignDeliverymanController,
   PublishOrderController,
+  PickUpOrderController,
 ];
 const useCasesDependencies = [
   // IAM
@@ -80,6 +83,7 @@ const useCasesDependencies = [
   FetchOrdersUseCase,
   AssignDeliverymanToOrderUseCase,
   PublishOrderUseCase,
+  PickUpOrderUseCase,
 ];
 const servicesDependencies = [UserRoleAuthorizationService];
 

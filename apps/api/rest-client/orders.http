@@ -93,5 +93,15 @@ Content-Type: application/json
 # =========================================================
 # Publish order
 # =========================================================
+
 PATCH {{ baseUrl }}/orders/{{ orderId }}/waiting
 Authorization: Bearer {{ authToken }}
+
+###
+
+# =========================================================
+# PICK UP ORDER
+# =========================================================
+
+PATCH {{ baseUrl }}/orders/{{ orderId }}/pick-up
+Authorization: Bearer {{ deliverymanToken }}

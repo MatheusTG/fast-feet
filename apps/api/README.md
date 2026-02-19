@@ -55,7 +55,7 @@ src/
 │   └── errors/
 │
 ├── domain/                  # Business domain (bounded contexts)
-│   └── forum/
+│   └── logistics/
 │       ├── enterprise/      # Pure domain logic
 │       │   ├── entities/
 │       │   ├── value-objects/
@@ -95,7 +95,7 @@ Functional requirements describe what the system must do.
 - [x] **FR006 - Orders:** The system must allow CRUD operations for orders (admin only).
 - [x] **FR007 - Orders:** The system must allow assigning a deliveryman to an order.
 - [x] **FR008 - Orders:** The system must allow marking an order as “waiting” (available for pickup).
-- [ ] **FR009 - Orders:** The system must allow a deliveryman to pick up an order.
+- [x] **FR009 - Orders:** The system must allow a deliveryman to pick up an order.
 - [ ] **FR010 - Orders:** The system must allow a deliveryman to mark an order as delivered, requiring a photo upload.
 - [ ] **FR011 - Orders:** The system must allow marking an order as returned.
 - [ ] **FR012 - Orders:** The system must allow listing orders near the deliveryman’s location.
