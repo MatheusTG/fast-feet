@@ -86,3 +86,12 @@ Content-Type: application/json
 {
   "deliverymanId": "{{ deliverymanId }}"
 }
+
+
+###
+
+# =========================================================
+# Publish order
+# =========================================================
+PATCH {{ baseUrl }}/orders/{{ orderId }}/waiting
+Authorization: Bearer {{ authToken }}
