@@ -52,6 +52,7 @@ model Recipient {
 
 enum OrderStatus {
   PENDING
+  AVAILABLE_FOR_PICKUP
   AWAITING_PICKUP
   PICKED_UP
   IN_TRANSIT

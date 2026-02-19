@@ -5,6 +5,7 @@ import { Address } from "./value-objects/address";
 
 export const ORDER_STATUS = [
   "PENDING",
+  "AVAILABLE_FOR_PICKUP",
   "AWAITING_PICKUP",
   "PICKED_UP",
   "IN_TRANSIT",
