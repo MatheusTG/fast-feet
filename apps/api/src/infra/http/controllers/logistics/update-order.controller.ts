@@ -47,8 +47,6 @@ export class UpdateOrderController {
       order: body,
     });
 
-    console.log(result);
-
     resolveUseCase(result);
   }
 }

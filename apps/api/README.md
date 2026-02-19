@@ -93,7 +93,7 @@ Functional requirements describe what the system must do.
 - [x] **FR004 - Users:** The system must allow listing, updating, and deleting deliverymen (admin only).
 - [x] **FR005 - Recipients:** The system must allow CRUD operations for recipients (admin only).
 - [x] **FR006 - Orders:** The system must allow CRUD operations for orders (admin only).
-- [ ] **FR007 - Orders:** The system must allow assigning a deliveryman to an order.
+- [x] **FR007 - Orders:** The system must allow assigning a deliveryman to an order.
 - [ ] **FR008 - Orders:** The system must allow marking an order as “waiting” (available for pickup).
 - [ ] **FR009 - Orders:** The system must allow a deliveryman to pick up an order.
 - [ ] **FR010 - Orders:** The system must allow a deliveryman to mark an order as delivered, requiring a photo upload.
@@ -109,7 +109,7 @@ Functional requirements describe what the system must do.
 Business rules define mandatory constraints and behaviors.
 
 - [x] **BR001 - Roles:** Only users with the `admin` role can manage deliverymen, recipients, and orders.
-- [ ] **BR002 - Ownership:** An order must be assigned to exactly one deliveryman.
+- [x] **BR002 - Ownership:** An order must be assigned to exactly one deliveryman.
 - [ ] **BR003 - Delivery Proof:** To mark an order as delivered, a delivery photo is mandatory.
 - [ ] **BR004 - Delivery Control:** Only the assigned deliveryman can mark an order as delivered.
 - [ ] **BR005 - Visibility:** A deliveryman must not see orders assigned to other deliverymen.

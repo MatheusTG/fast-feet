@@ -33,7 +33,7 @@ type UpdateRecipientBodySchema = z.infer<typeof updateRecipientBodySchema>;
 
 @Controller("/recipients/:id")
 export class UpdateRecipientController {
-  constructor(private updaterecipientUseCase: UpdateRecipientUseCase) {}
+  constructor(private updateRecipientUseCase: UpdateRecipientUseCase) {}
 
   @Patch()
   @HttpCode(204)
@@ -42,7 +42,7 @@ export class UpdateRecipientController {
     @Param("id") recipientId: string,
     @CurrentUser() user: UserPayload
   ) {
-    const result = await this.updaterecipientUseCase.execute({
+    const result = await this.updateRecipientUseCase.execute({
       actorId: user?.sub,
       recipientId,
       recipient: body,

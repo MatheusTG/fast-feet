@@ -72,3 +72,17 @@ Authorization: Bearer {{ authToken }}
 # =========================================================
 GET {{ baseUrl }}/orders?page=1&status=PENDING
 Authorization: Bearer {{ authToken }}
+
+###
+
+# =========================================================
+# ASSIGN DELIVERYMAN TO ORDER
+# =========================================================
+
+PATCH {{ baseUrl }}/orders/{{ orderId }}/assign
+Authorization: Bearer {{ authToken }}
+Content-Type: application/json
+
+{
+  "deliverymanId": "{{ deliverymanId }}"
+}

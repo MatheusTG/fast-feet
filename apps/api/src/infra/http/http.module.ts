@@ -1,4 +1,5 @@
 import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
+import { AssignDeliverymanToOrderUseCase } from "@/domain/logistics/application/use-cases/assign-deliveryman-to-order";
 import { CreateOrderUseCase } from "@/domain/logistics/application/use-cases/create-order";
 import { CreateRecipientUseCase } from "@/domain/logistics/application/use-cases/create-recipient";
 import { DeleteOrderUseCase } from "@/domain/logistics/application/use-cases/delete-order";
@@ -24,6 +25,7 @@ import { DeleteUserController } from "./controllers/iam/delete-user.controller";
 import { FetchUsersController } from "./controllers/iam/fetch-users.controller";
 import { RegisterController } from "./controllers/iam/register.controller";
 import { UpdateUserController } from "./controllers/iam/update-user.controller";
+import { AssignDeliverymanController } from "./controllers/logistics/assign-deliveryman.controller";
 import { CreateOrderController } from "./controllers/logistics/create-order.controller";
 import { CreateRecipientController } from "./controllers/logistics/create-recipient.controller";
 import { DeleteOrderController } from "./controllers/logistics/delete-order.controller";
@@ -52,6 +54,7 @@ const controllerDependencies = [
   UpdateOrderController,
   DeleteOrderController,
   FetchOrdersController,
+  AssignDeliverymanController,
 ];
 const useCasesDependencies = [
   // IAM
@@ -72,6 +75,7 @@ const useCasesDependencies = [
   UpdateOrderUseCase,
   DeleteOrderUseCase,
   FetchOrdersUseCase,
+  AssignDeliverymanToOrderUseCase,
 ];
 const servicesDependencies = [UserRoleAuthorizationService];
 
