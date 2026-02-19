@@ -71,11 +71,6 @@ export class Order extends Entity<OrderProps> {
     return this.props.postedAt;
   }
 
-  set postedAt(postedAt: Date) {
-    this.props.postedAt = postedAt;
-    this.touch();
-  }
-
   get pickedUpAt() {
     return this.props.pickedUpAt;
   }
@@ -127,6 +122,12 @@ export class Order extends Entity<OrderProps> {
 
   get updatedAt() {
     return this.props.updatedAt;
+  }
+
+  public markAsAvailable() {
+    this.status = "AVAILABLE_FOR_PICKUP";
+    this.props.postedAt = new Date();
+    this.touch();
   }
 
   private touch() {
