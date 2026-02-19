@@ -94,7 +94,7 @@ Functional requirements describe what the system must do.
 - [x] **FR005 - Recipients:** The system must allow CRUD operations for recipients (admin only).
 - [x] **FR006 - Orders:** The system must allow CRUD operations for orders (admin only).
 - [x] **FR007 - Orders:** The system must allow assigning a deliveryman to an order.
-- [ ] **FR008 - Orders:** The system must allow marking an order as “waiting” (available for pickup).
+- [x] **FR008 - Orders:** The system must allow marking an order as “waiting” (available for pickup).
 - [ ] **FR009 - Orders:** The system must allow a deliveryman to pick up an order.
 - [ ] **FR010 - Orders:** The system must allow a deliveryman to mark an order as delivered, requiring a photo upload.
 - [ ] **FR011 - Orders:** The system must allow marking an order as returned.

@@ -130,6 +130,11 @@ export class Order extends Entity<OrderProps> {
     this.touch();
   }
 
+  public pickUp() {
+    this.status = "PICKED_UP";
+    this.touch();
+  }
+
   private touch() {
     this.props.updatedAt = new Date();
   }
