@@ -64,3 +64,11 @@ Content-Type: application/json
 
 DELETE {{ baseUrl }}/orders/{{ create_order.response.body.id }}
 Authorization: Bearer {{ authToken }}
+
+###
+
+# =========================================================
+# FETCH ORDERS
+# =========================================================
+GET {{ baseUrl }}/orders?page=1&status=PENDING
+Authorization: Bearer {{ authToken }}
