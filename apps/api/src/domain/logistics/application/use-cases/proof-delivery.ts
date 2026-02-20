@@ -40,9 +40,11 @@ export class ProofDeliveryUseCase {
       return left(new InvalidProofDeliveryPhotoTypeError(file.fileType));
     }
 
-    const { url } = await this.uploader.upload(file);
-
     const order = await this.ordersRepository.findById(orderId);
+
+    if (!order) {
+      return left(new OrderNotFoundError("id", orderId));
+    }
 
     if (!actorId) {
       return left(new UnauthorizedError());
@@ -52,10 +54,7 @@ export class ProofDeliveryUseCase {
       return left(new NotAllowedDeliverymanError(actorId));
     }
 
-    if (!order) {
-      return left(new OrderNotFoundError("id", orderId));
-    }
-
+    const { url } = await this.uploader.upload(file);
     order.deliver(file.fileName, url);
 
     await this.ordersRepository.update(order);
