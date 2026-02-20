@@ -1,10 +1,14 @@
+import { config } from "dotenv";
+
 import { PrismaClient } from "@/generated/prisma/client";
 import { envSchema } from "@/infra/env/env";
 import { PrismaPg } from "@prisma/adapter-pg";
-import "dotenv/config";
 import { execSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { Pool } from "pg";
+
+config({ path: ".env", override: true });
+config({ path: ".env.test", override: true });
 
 const env = envSchema.parse(process.env);
 

@@ -163,6 +163,7 @@ eslint-report.html
 .env
 .env.*
 !.env.example
+!.env.test.example
 
 # ======================================================
 # Serverless / Cloud Providers
