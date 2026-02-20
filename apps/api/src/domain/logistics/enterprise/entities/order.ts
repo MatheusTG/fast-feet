@@ -22,6 +22,8 @@ export interface OrderProps {
 
   status: OrderStatus;
   deliveryAddress: Address;
+  proofOfDeliveryName: string;
+  proofOfDeliveryUrl: string;
 
   postedAt: Date;
   pickedUpAt?: Date;
@@ -65,6 +67,14 @@ export class Order extends Entity<OrderProps> {
   set deliveryAddress(deliveryAddress: Address) {
     this.props.deliveryAddress = deliveryAddress;
     this.touch();
+  }
+
+  get proofOfDeliveryName() {
+    return this.props.proofOfDeliveryName;
+  }
+
+  get proofOfDeliveryUrl() {
+    return this.props.proofOfDeliveryUrl;
   }
 
   get postedAt() {
@@ -132,6 +142,14 @@ export class Order extends Entity<OrderProps> {
 
   public pickUp() {
     this.status = "PICKED_UP";
+    this.touch();
+  }
+
+  public deliver(fileName: string, url: string) {
+    this.status = "DELIVERED";
+    this.deliveredAt = new Date();
+    this.props.proofOfDeliveryName = fileName;
+    this.props.proofOfDeliveryUrl = url;
     this.touch();
   }
 
