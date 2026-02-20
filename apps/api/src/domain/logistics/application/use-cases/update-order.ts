@@ -4,7 +4,7 @@ import { UnauthorizedError } from "@/core/errors/application/unauthorized-error"
 import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { Injectable } from "@nestjs/common";
 import { InvalidAddressError } from "../../enterprise/entities/errors/invalid-address-error";
-import { Order, OrderStatus } from "../../enterprise/entities/order";
+import { Order } from "../../enterprise/entities/order";
 import { Address } from "../../enterprise/entities/value-objects/address";
 import { OrdersRepository } from "../repositories/orders-repository";
 import { OrderNotFoundError } from "./errors/order-not-found-error";
@@ -24,9 +24,7 @@ type UpdateOrderUseCaseRequest = {
       latitude?: number;
       longitude?: number;
     };
-    postedAt?: Date;
-    deliveredAt?: Date | null;
-    status?: OrderStatus;
+    notes: string;
   };
 };
 
@@ -80,16 +78,8 @@ export class UpdateOrderUseCase {
       order.deliveryAddress = addressOrError.value;
     }
 
-    if (orderData.postedAt !== undefined) {
-      order.postedAt = orderData.postedAt;
-    }
-
-    if (orderData.deliveredAt !== undefined) {
-      order.deliveredAt = orderData.deliveredAt ?? undefined;
-    }
-
-    if (orderData.status !== undefined) {
-      order.status = orderData.status;
+    if (orderData.notes !== undefined) {
+      order.notes = orderData.notes;
     }
 
     await this.ordersRepository.update(order);

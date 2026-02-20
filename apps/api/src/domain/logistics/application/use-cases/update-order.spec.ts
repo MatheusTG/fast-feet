@@ -34,13 +34,21 @@ describe("Update order", () => {
       actorId: user.id.toString(),
       orderId: order.id.toString(),
       order: {
-        status: "DELIVERED",
+        deliveryAddress: {
+          city: "New York",
+        },
+        notes: "Sample exampl",
       },
     });
 
     expect(result.isRight()).toBe(true);
     expect(result.value).toEqual({
-      order: expect.objectContaining({ status: "DELIVERED" }),
+      order: expect.objectContaining({
+        deliveryAddress: expect.objectContaining({
+          city: "New York",
+        }),
+        notes: "Sample exampl",
+      }),
     });
   });
 
@@ -52,7 +60,7 @@ describe("Update order", () => {
     const result = await sut.execute({
       actorId: user.id.toString(),
       orderId: "invalid_id",
-      order: { status: "DELIVERED" },
+      order: { notes: "Sample example" },
     });
 
     expect(result.isLeft()).toBe(true);
@@ -69,7 +77,7 @@ describe("Update order", () => {
     const result = await sut.execute({
       actorId: user.id.toString(),
       orderId: order.id.toString(),
-      order: { status: "DELIVERED" },
+      order: { notes: "Sample example" },
     });
 
     expect(result.isLeft()).toBe(true);
