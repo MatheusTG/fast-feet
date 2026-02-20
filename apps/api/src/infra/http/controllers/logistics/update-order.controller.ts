@@ -1,5 +1,4 @@
 import { UpdateOrderUseCase } from "@/domain/logistics/application/use-cases/update-order";
-import { ORDER_STATUS } from "@/domain/logistics/enterprise/entities/order";
 import { CurrentUser } from "@/infra/auth/current-user-decorator";
 import { UserPayload } from "@/infra/auth/jwt.strategy";
 import { Body, Controller, HttpCode, Param, Patch } from "@nestjs/common";
@@ -21,9 +20,7 @@ const updateOrderBodySchema = z.object({
       longitude: z.number().optional(),
     })
     .optional(),
-  postedAt: z.coerce.date().optional(),
-  deliveredAt: z.coerce.date().nullable().optional(),
-  status: z.enum(ORDER_STATUS).optional(),
+  notes: z.string(),
 });
 
 const bodyValidationPipe = new ZodValidationsPipe(updateOrderBodySchema);

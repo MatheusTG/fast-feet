@@ -7,6 +7,7 @@ import { DeleteRecipientUseCase } from "@/domain/logistics/application/use-cases
 import { FetchOrdersUseCase } from "@/domain/logistics/application/use-cases/fetch-orders";
 import { FetchRecipientsUseCase } from "@/domain/logistics/application/use-cases/fetch-recipients";
 import { PickUpOrderUseCase } from "@/domain/logistics/application/use-cases/pick-up-order";
+import { ProofDeliveryUseCase } from "@/domain/logistics/application/use-cases/proof-delivery";
 import { PublishOrderUseCase } from "@/domain/logistics/application/use-cases/publish-order";
 import { UpdateOrderUseCase } from "@/domain/logistics/application/use-cases/update-order";
 import { UpdateRecipientUseCase } from "@/domain/logistics/application/use-cases/update-recipient";
@@ -20,6 +21,7 @@ import { UpdateUserUseCase } from "@/domain/user/application/use-cases/update-us
 import { Module } from "@nestjs/common";
 import { CryptographyModule } from "../cryptography/cryptography.module";
 import { DatabaseModule } from "../database/database.module";
+import { StorageModule } from "../storage/storage.module";
 import { AuthenticateController } from "./controllers/iam/authenticate.controller";
 import { ChangeUserPasswordController } from "./controllers/iam/change-user-password.controller";
 import { ChangeUserRoleController } from "./controllers/iam/change-user-role.controller";
@@ -35,6 +37,7 @@ import { DeleteRecipientController } from "./controllers/logistics/delete-recipi
 import { FetchOrdersController } from "./controllers/logistics/fetch-orders.controller";
 import { FetchRecipientsController } from "./controllers/logistics/fetch-recipients.controller";
 import { PickUpOrderController } from "./controllers/logistics/pick-up-order.controller";
+import { ProofDeliveryController } from "./controllers/logistics/proof-delivery.controller";
 import { PublishOrderController } from "./controllers/logistics/publish-order.controller";
 import { UpdateOrderController } from "./controllers/logistics/update-order.controller";
 import { UpdateRecipientController } from "./controllers/logistics/update-recipient.controller";
@@ -61,6 +64,7 @@ const controllerDependencies = [
   AssignDeliverymanController,
   PublishOrderController,
   PickUpOrderController,
+  ProofDeliveryController,
 ];
 const useCasesDependencies = [
   // IAM
@@ -84,11 +88,12 @@ const useCasesDependencies = [
   AssignDeliverymanToOrderUseCase,
   PublishOrderUseCase,
   PickUpOrderUseCase,
+  ProofDeliveryUseCase,
 ];
 const servicesDependencies = [UserRoleAuthorizationService];
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule],
   controllers: [...controllerDependencies],
   providers: [...useCasesDependencies, ...servicesDependencies],
 })

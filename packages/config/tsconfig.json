@@ -19,6 +19,6 @@
     "allowJs": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "multer"]
   }
 }
