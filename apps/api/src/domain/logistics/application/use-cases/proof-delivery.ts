@@ -1,12 +1,11 @@
 import { Either, left, right } from "@/core/errors/abstractions/either";
-import { ForbiddenError } from "@/core/errors/application/forbidden-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
-import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { Injectable } from "@nestjs/common";
 import { Order } from "../../enterprise/entities/order";
 import { OrdersRepository } from "../repositories/orders-repository";
 import { Uploader } from "../storage/uploader";
 import { InvalidProofDeliveryPhotoTypeError } from "./errors/invalid-proof-delivery-photo-type-error";
+import { NotAllowedDeliverymanError } from "./errors/not-allowed-deliveryman-error";
 import { OrderNotFoundError } from "./errors/order-not-found-error";
 
 type ProofDeliveryUseCaseRequest = {
@@ -20,7 +19,10 @@ type ProofDeliveryUseCaseRequest = {
 };
 
 type ProofDeliveryUseCaseResponse = Either<
-  InvalidProofDeliveryPhotoTypeError | OrderNotFoundError | UnauthorizedError | ForbiddenError,
+  | InvalidProofDeliveryPhotoTypeError
+  | OrderNotFoundError
+  | UnauthorizedError
+  | NotAllowedDeliverymanError,
   { order: Order }
 >;
 
@@ -28,7 +30,6 @@ type ProofDeliveryUseCaseResponse = Either<
 export class ProofDeliveryUseCase {
   constructor(
     private ordersRepository: OrdersRepository,
-    private userRoleAuthorizationService: UserRoleAuthorizationService,
     private uploader: Uploader
   ) {}
 
@@ -41,16 +42,15 @@ export class ProofDeliveryUseCase {
 
     const { url } = await this.uploader.upload(file);
 
-    const authorization = await this.userRoleAuthorizationService.ensureUserHasRole(
-      actorId,
-      "ADMIN"
-    );
+    const order = await this.ordersRepository.findById(orderId);
 
-    if (authorization.isLeft()) {
-      return left(authorization.value);
+    if (!actorId) {
+      return left(new UnauthorizedError());
     }
 
-    const order = await this.ordersRepository.findById(orderId);
+    if (actorId !== order?.deliverymanId?.toString()) {
+      return left(new NotAllowedDeliverymanError(actorId));
+    }
 
     if (!order) {
       return left(new OrderNotFoundError("id", orderId));

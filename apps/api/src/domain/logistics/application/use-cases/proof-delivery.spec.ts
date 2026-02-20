@@ -1,17 +1,15 @@
-import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { makeOrder } from "@test/factories/make-order";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryOrdersRepository } from "@test/repositories/in-memory-orders-repository";
 import { InMemoryUsersRepository } from "@test/repositories/in-memory-users-repository";
 import { FakeUploader } from "@test/storage/fake-uploader";
 import { expect } from "vitest";
-import { ProofDeliveryUseCase } from "./proof-delivery";
 import { InvalidProofDeliveryPhotoTypeError } from "./errors/invalid-proof-delivery-photo-type-error";
+import { ProofDeliveryUseCase } from "./proof-delivery";
 
 describe("Proof delivery", () => {
   let ordersRepository: InMemoryOrdersRepository;
   let usersRepository: InMemoryUsersRepository;
-  let userRoleAuthorizationService: UserRoleAuthorizationService;
   let fakeUploader: FakeUploader;
 
   let sut: ProofDeliveryUseCase;
@@ -19,10 +17,9 @@ describe("Proof delivery", () => {
   beforeEach(() => {
     ordersRepository = new InMemoryOrdersRepository();
     usersRepository = new InMemoryUsersRepository();
-    userRoleAuthorizationService = new UserRoleAuthorizationService(usersRepository);
     fakeUploader = new FakeUploader();
 
-    sut = new ProofDeliveryUseCase(ordersRepository, userRoleAuthorizationService, fakeUploader);
+    sut = new ProofDeliveryUseCase(ordersRepository, fakeUploader);
   });
 
   it("should be able to upload a photo to proof a delivery", async () => {
