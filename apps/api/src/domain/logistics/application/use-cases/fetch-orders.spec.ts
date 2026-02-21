@@ -1,6 +1,3 @@
-import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { ForbiddenError } from "@/core/errors/application/forbidden-error";
-import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
 import { makeOrder } from "@test/factories/make-order";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryOrdersRepository } from "@test/repositories/in-memory-orders-repository";
@@ -11,43 +8,42 @@ import { FetchOrdersUseCase } from "./fetch-orders";
 describe("Fetch orders", () => {
   let ordersRepository: InMemoryOrdersRepository;
   let usersRepository: InMemoryUsersRepository;
-  let authService: UserRoleAuthorizationService;
   let sut: FetchOrdersUseCase;
 
   beforeEach(() => {
     ordersRepository = new InMemoryOrdersRepository();
     usersRepository = new InMemoryUsersRepository();
-    authService = new UserRoleAuthorizationService(usersRepository);
 
-    sut = new FetchOrdersUseCase(ordersRepository, authService);
+    sut = new FetchOrdersUseCase(ordersRepository);
   });
 
   it("should be able to fetch orders", async () => {
-    const user = makeUser({ role: "ADMIN" });
-    usersRepository.items.push(user);
+    const deliveryman = makeUser({ role: "DELIVERYMAN" });
 
-    ordersRepository.items.push(makeOrder());
-    ordersRepository.items.push(makeOrder());
+    usersRepository.items.push(deliveryman);
+
+    ordersRepository.items.push(makeOrder({ deliverymanId: deliveryman.id }));
+    ordersRepository.items.push(makeOrder({ deliverymanId: deliveryman.id }));
 
     const result = await sut.execute({
-      actorId: user.id.toString(),
+      actorId: deliveryman.id.toString(),
       page: 1,
     });
 
     expect(result.isRight()).toBe(true);
-    expect(result.isRight() && result.value.orders.length).toBe(2);
+    expect(result.isRight() && result.value.orders).toHaveLength(2);
   });
 
   it("should be able to paginate orders", async () => {
-    const user = makeUser({ role: "ADMIN" });
-    usersRepository.items.push(user);
+    const deliveryman = makeUser({ role: "DELIVERYMAN" });
+    usersRepository.items.push(deliveryman);
 
     for (let i = 0; i < 21; i++) {
-      ordersRepository.items.push(makeOrder());
+      ordersRepository.items.push(makeOrder({ deliverymanId: deliveryman.id }));
     }
 
     const result = await sut.execute({
-      actorId: user.id.toString(),
+      actorId: deliveryman.id.toString(),
       page: 2,
     });
 
@@ -55,37 +51,26 @@ describe("Fetch orders", () => {
     expect(result.isRight() && result.value.orders.length).toBe(1);
   });
 
-  it("should not allow non admin", async () => {
-    const user = makeUser({ role: "DELIVERYMAN" });
-    usersRepository.items.push(user);
+  it("should not allow deliverymen to see orders from other deliverymen", async () => {
+    const deliveryman1 = makeUser({ role: "DELIVERYMAN" });
+    const deliveryman2 = makeUser({ role: "DELIVERYMAN" });
+
+    const order1 = makeOrder({ deliverymanId: deliveryman1.id });
+    const order2 = makeOrder({ deliverymanId: deliveryman2.id });
+
+    usersRepository.items.push(deliveryman1);
+    usersRepository.items.push(deliveryman2);
+
+    ordersRepository.items.push(order1);
+    ordersRepository.items.push(order2);
 
     const result = await sut.execute({
-      actorId: user.id.toString(),
+      actorId: deliveryman1.id.toString(),
       page: 1,
-    });
-
-    expect(result.isLeft()).toBe(true);
-    expect(result.value).toBeInstanceOf(ForbiddenError);
-  });
-
-  it("should filter by recipientId", async () => {
-    const user = makeUser({ role: "ADMIN" });
-    usersRepository.items.push(user);
-
-    const orderA = makeOrder({ recipientId: new UniqueEntityId("recipient-1") });
-    const orderB = makeOrder({ recipientId: new UniqueEntityId("recipient-2") });
-
-    ordersRepository.items.push(orderA, orderB);
-
-    const result = await sut.execute({
-      actorId: user.id.toString(),
-      page: 1,
-      filters: { recipientId: "recipient-1" },
     });
 
     expect(result.isRight()).toBe(true);
-    expect(result.isRight() && result.value.orders).toEqual([
-      expect.objectContaining({ recipientId: new UniqueEntityId("recipient-1") }),
-    ]);
+    expect(result.isRight() && result.value.orders).toHaveLength(1);
+    expect(result.isRight() && result.value.orders).toEqual([order1]);
   });
 });

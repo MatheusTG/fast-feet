@@ -22,6 +22,9 @@ export class InMemoryOrdersRepository implements OrdersRepository {
         if (filters.recipientId && order.recipientId.toString() !== filters.recipientId) {
           return false;
         }
+        if (filters.deliverymanId && order.deliverymanId?.toString() !== filters.deliverymanId) {
+          return false;
+        }
 
         if (filters.status && order.status !== filters.status) {
           return false;

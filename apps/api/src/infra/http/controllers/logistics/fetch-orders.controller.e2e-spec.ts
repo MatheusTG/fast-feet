@@ -36,13 +36,27 @@ describe("Update recipient (E2E)", () => {
   });
 
   test("[GET] /orders", async () => {
-    const user = await userFactory.makePrismaUser({ role: "ADMIN" });
-    const accessToken = jwtService.sign({ sub: user.id.toString() });
+    const deliveryman1 = await userFactory.makePrismaUser({ role: "DELIVERYMAN" });
+    const deliveryman2 = await userFactory.makePrismaUser({ role: "DELIVERYMAN" });
+    const accessToken = jwtService.sign({ sub: deliveryman1.id.toString() });
 
     const recipient = await recipientFactory.makePrismaRecipient();
 
-    await orderFactory.makePrismaOrder({ recipientId: recipient.id, status: "PENDING" });
-    await orderFactory.makePrismaOrder({ recipientId: recipient.id, status: "DELIVERED" });
+    await orderFactory.makePrismaOrder({
+      recipientId: recipient.id,
+      deliverymanId: deliveryman1.id,
+      status: "PENDING",
+    });
+    await orderFactory.makePrismaOrder({
+      recipientId: recipient.id,
+      deliverymanId: deliveryman1.id,
+      status: "CANCELED",
+    });
+    await orderFactory.makePrismaOrder({
+      recipientId: recipient.id,
+      deliverymanId: deliveryman2.id,
+      status: "DELIVERED",
+    });
 
     const response = await request(app.getHttpServer())
       .get("/orders?status=PENDING")
