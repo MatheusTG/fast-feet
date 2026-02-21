@@ -153,6 +153,11 @@ export class Order extends Entity<OrderProps> {
     this.touch();
   }
 
+  public return() {
+    this.status = "RETURNED";
+    this.touch();
+  }
+
   private touch() {
     this.props.updatedAt = new Date();
   }
