@@ -17,7 +17,7 @@ describe("Pick up order", () => {
 
   it("should allow deliveryman to pick up", async () => {
     const order = makeOrder({
-      status: "AVAILABLE_FOR_PICKUP",
+      status: "AWAITING_PICKUP",
       deliverymanId: new UniqueEntityId("deliveryman-1"),
     });
 
@@ -34,7 +34,7 @@ describe("Pick up order", () => {
 
   it("should not allow other deliveryman", async () => {
     const order = makeOrder({
-      status: "AVAILABLE_FOR_PICKUP",
+      status: "AWAITING_PICKUP",
       deliverymanId: new UniqueEntityId("deliveryman-1"),
     });
 

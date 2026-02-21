@@ -39,7 +39,7 @@ export class PickUpOrderUseCase {
       return left(new OrderNotAssignedToDeliverymanError());
     }
 
-    if (order.status !== "AVAILABLE_FOR_PICKUP") {
+    if (order.status !== "AWAITING_PICKUP") {
       return left(new InvalidOrderStatusForPickupError(order.status));
     }
 

@@ -99,7 +99,7 @@ Functional requirements describe what the system must do.
 - [x] **FR010 - Orders:** The system must allow a deliveryman to mark an order as delivered, requiring a photo upload.
 - [ ] **FR011 - Orders:** The system must allow marking an order as returned.
 - [ ] **FR012 - Orders:** The system must allow listing orders near the deliveryman’s location.
-- [ ] **FR013 - Orders:** The system must allow a deliveryman to list only their own deliveries.
+- [x] **FR013 - Orders:** The system must allow a deliveryman to list only their own deliveries.
 - [ ] **FR014 - Notifications:** The system must notify the recipient whenever the order status changes.
 
 ---
@@ -112,10 +112,10 @@ Business rules define mandatory constraints and behaviors.
 - [x] **BR002 - Ownership:** An order must be assigned to exactly one deliveryman.
 - [x] **BR003 - Delivery Proof:** To mark an order as delivered, a delivery photo is mandatory.
 - [x] **BR004 - Delivery Control:** Only the assigned deliveryman can mark an order as delivered.
-- [ ] **BR005 - Visibility:** A deliveryman must not see orders assigned to other deliverymen.
-- [ ] **BR006 - Password Management:** Only admins can change another user’s password.
-- [ ] **BR007 - Pickup Flow:** An order must be marked as “waiting” before it can be picked up.
-- [ ] **BR008 - Status Flow:** Order status must follow a valid lifecycle (waiting → picked up → delivered/returned).
+- [x] **BR005 - Visibility:** A deliveryman must not see orders assigned to other deliverymen.
+- [x] **BR006 - Password Management:** Only admins can change another user’s password.
+- [x] **BR007 - Pickup Flow:** An order must be marked as “waiting” before it can be picked up.
+- [x] **BR008 - Status Flow:** Order status must follow a valid lifecycle (waiting → picked up → delivered/returned).
 
 ---
 
@@ -129,5 +129,5 @@ Non-functional requirements describe how the system should operate.
 - [x] **NFR004 - Data Management:** Data must be persisted in a relational database.
 - [x] **NFR005 - Maintainability:** The codebase must be clean, modular, and maintainable.
 - [x] **NFR006 - Testability:** The application must support automated unit and integration tests.
-- [ ] **NFR007 - File Storage:** Delivery photos must be stored using a scalable storage solution.
+- [x] **NFR007 - File Storage:** Delivery photos must be stored using a scalable storage solution.
 - [x] **NFR008 - Performance:** The API must handle concurrent requests efficiently.
