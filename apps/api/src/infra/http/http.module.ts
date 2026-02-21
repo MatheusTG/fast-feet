@@ -9,6 +9,7 @@ import { FetchRecipientsUseCase } from "@/domain/logistics/application/use-cases
 import { PickUpOrderUseCase } from "@/domain/logistics/application/use-cases/pick-up-order";
 import { ProofDeliveryUseCase } from "@/domain/logistics/application/use-cases/proof-delivery";
 import { PublishOrderUseCase } from "@/domain/logistics/application/use-cases/publish-order";
+import { ReturnOrderUseCase } from "@/domain/logistics/application/use-cases/return-order";
 import { UpdateOrderUseCase } from "@/domain/logistics/application/use-cases/update-order";
 import { UpdateRecipientUseCase } from "@/domain/logistics/application/use-cases/update-recipient";
 import { AuthenticateUseCase } from "@/domain/user/application/use-cases/authenticate";
@@ -39,6 +40,7 @@ import { FetchRecipientsController } from "./controllers/logistics/fetch-recipie
 import { PickUpOrderController } from "./controllers/logistics/pick-up-order.controller";
 import { ProofDeliveryController } from "./controllers/logistics/proof-delivery.controller";
 import { PublishOrderController } from "./controllers/logistics/publish-order.controller";
+import { ReturnOrderController } from "./controllers/logistics/return-order.controller";
 import { UpdateOrderController } from "./controllers/logistics/update-order.controller";
 import { UpdateRecipientController } from "./controllers/logistics/update-recipient.controller";
 
@@ -65,6 +67,7 @@ const controllerDependencies = [
   PublishOrderController,
   PickUpOrderController,
   ProofDeliveryController,
+  ReturnOrderController,
 ];
 const useCasesDependencies = [
   // IAM
@@ -89,6 +92,7 @@ const useCasesDependencies = [
   PublishOrderUseCase,
   PickUpOrderUseCase,
   ProofDeliveryUseCase,
+  ReturnOrderUseCase,
 ];
 const servicesDependencies = [UserRoleAuthorizationService];
 
