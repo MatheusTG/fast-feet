@@ -2,6 +2,7 @@ import { Order } from "../../enterprise/entities/order";
 
 export interface OrderFilters {
   recipientId?: string;
+  deliverymanId: string;
   status?: string;
   createdAfter?: Date;
   createdBefore?: Date;

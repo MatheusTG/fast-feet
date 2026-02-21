@@ -111,7 +111,7 @@ Business rules define mandatory constraints and behaviors.
 - [x] **BR001 - Roles:** Only users with the `admin` role can manage deliverymen, recipients, and orders.
 - [x] **BR002 - Ownership:** An order must be assigned to exactly one deliveryman.
 - [x] **BR003 - Delivery Proof:** To mark an order as delivered, a delivery photo is mandatory.
-- [ ] **BR004 - Delivery Control:** Only the assigned deliveryman can mark an order as delivered.
+- [x] **BR004 - Delivery Control:** Only the assigned deliveryman can mark an order as delivered.
 - [ ] **BR005 - Visibility:** A deliveryman must not see orders assigned to other deliverymen.
 - [ ] **BR006 - Password Management:** Only admins can change another user’s password.
 - [ ] **BR007 - Pickup Flow:** An order must be marked as “waiting” before it can be picked up.

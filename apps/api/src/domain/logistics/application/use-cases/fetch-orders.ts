@@ -1,13 +1,13 @@
 import { Either, left, right } from "@/core/errors/abstractions/either";
 import { UseCaseError } from "@/core/errors/abstractions/use-case-error";
-import { UserRoleAuthorizationService } from "@/core/security/user-role-authorization.service";
+import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { Injectable } from "@nestjs/common";
 import { Order } from "../../enterprise/entities/order";
 import { OrderFilters, OrdersRepository } from "../repositories/orders-repository";
 
 type FetchOrdersUseCaseRequest = {
   actorId: string | undefined;
-  filters?: OrderFilters;
+  filters?: Omit<OrderFilters, "deliverymanId">;
   page: number;
 };
 
@@ -15,24 +15,19 @@ type FetchOrdersUseCaseResponse = Either<UseCaseError, { orders: Order[] }>;
 
 @Injectable()
 export class FetchOrdersUseCase {
-  constructor(
-    private ordersRepository: OrdersRepository,
-    private userRoleAuthorizationService: UserRoleAuthorizationService
-  ) {}
+  constructor(private ordersRepository: OrdersRepository) {}
 
   async execute(request: FetchOrdersUseCaseRequest): Promise<FetchOrdersUseCaseResponse> {
     const { actorId, filters = {}, page } = request;
 
-    const authorization = await this.userRoleAuthorizationService.ensureUserHasRole(
-      actorId,
-      "ADMIN"
-    );
-
-    if (authorization.isLeft()) {
-      return left(authorization.value);
+    if (!actorId) {
+      return left(new UnauthorizedError());
     }
 
-    const orders = await this.ordersRepository.findMany(filters, { page });
+    const orders = await this.ordersRepository.findMany(
+      { ...filters, deliverymanId: actorId },
+      { page }
+    );
 
     return right({ orders });
   }

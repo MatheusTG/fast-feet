@@ -82,6 +82,10 @@ export class PrismaOrderMapper {
       where.recipientId = filters.recipientId;
     }
 
+    if (filters.deliverymanId) {
+      where.deliverymanId = filters.deliverymanId;
+    }
+
     if (filters.status) {
       where.status = filters.status as any;
     }
