@@ -1,8 +1,6 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import {
-  OrderFilters,
-  OrdersRepository,
-} from "@/domain/logistics/application/repositories/orders-repository";
+import { OrderFilters } from "@/core/repositories/order-filter";
+import { OrdersRepository } from "@/domain/logistics/application/repositories/orders-repository";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
 
 export class InMemoryOrdersRepository implements OrdersRepository {

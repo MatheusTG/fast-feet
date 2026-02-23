@@ -1,11 +1,11 @@
-import {
-  OrderFilters,
-  OrdersRepository,
-} from "@/domain/logistics/application/repositories/orders-repository";
+import { PaginationParams } from "@/core/repositories/pagination-params";
+import { OrdersRepository } from "@/domain/logistics/application/repositories/orders-repository";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
 import { Injectable } from "@nestjs/common";
 import { PrismaOrderMapper } from "../mappers/prisma-order-mapper";
 import { PrismaService } from "../prisma.service";
+import { LocationParams } from "@/core/repositories/location-params";
+import { OrderFilters } from "@/core/repositories/order-filter";
 
 @Injectable()
 export class PrismaOrdersRepository implements OrdersRepository {
