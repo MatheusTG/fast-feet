@@ -22,8 +22,8 @@ export interface OrderProps {
 
   status: OrderStatus;
   deliveryAddress: Address;
-  proofOfDeliveryName: string;
-  proofOfDeliveryUrl: string;
+  proofOfDeliveryName?: string;
+  proofOfDeliveryUrl?: string;
 
   postedAt: Date;
   pickedUpAt?: Date;

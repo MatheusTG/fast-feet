@@ -1,5 +1,5 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { OrderFilters } from "@/domain/logistics/application/repositories/orders-repository";
+import { OrderFilters } from "@/core/repositories/order-filter";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
 import { Address } from "@/domain/logistics/enterprise/entities/value-objects/address";
 import { Prisma, Order as PrismaOrder } from "@/generated/prisma/client";
@@ -31,7 +31,12 @@ export class PrismaOrderMapper {
         recipientId: new UniqueEntityId(raw.recipientId),
         deliverymanId: raw.deliverymanId ? new UniqueEntityId(raw.deliverymanId) : undefined,
         status: raw.status,
+        proofOfDeliveryName: raw.proofOfDeliveryName ?? undefined,
+        proofOfDeliveryUrl: raw.proofOfDeliveryName ?? undefined,
+
         deliveryAddress: address,
+
+        notes: raw.notes ?? undefined,
 
         postedAt: raw.postedAt,
         pickedUpAt: raw.pickedUpAt ?? undefined,
@@ -53,6 +58,8 @@ export class PrismaOrderMapper {
       deliverymanId: order.deliverymanId?.toString(),
 
       status: order.status,
+      proofOfDeliveryName: order.proofOfDeliveryName,
+      proofOfDeliveryUrl: order.proofOfDeliveryName,
 
       street: order.deliveryAddress.street,
       number: order.deliveryAddress.number,
@@ -63,6 +70,8 @@ export class PrismaOrderMapper {
       zipCode: order.deliveryAddress.zipCode,
       latitude: order.deliveryAddress.latitude,
       longitude: order.deliveryAddress.longitude,
+
+      notes: order.notes,
 
       postedAt: order.postedAt,
       pickedUpAt: order.pickedUpAt,

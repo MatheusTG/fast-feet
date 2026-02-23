@@ -29,6 +29,7 @@ export function makeOrder(override?: Override, id?: UniqueEntityId) {
         "RETURNED",
         "CANCELED",
       ]),
+      notes: faker.lorem.paragraph(),
       postedAt: faker.helpers.maybe(() => new Date()),
       createdAt: new Date(),
       updatedAt: faker.helpers.maybe(() => new Date()),
@@ -44,7 +45,7 @@ export function makeOrder(override?: Override, id?: UniqueEntityId) {
 export class OrderFactory {
   constructor(private prisma: PrismaService) {}
 
-  async makePrismaOrder(data: Partial<OrderProps> = {}): Promise<Order> {
+  async makePrismaOrder(data: Override = {}): Promise<Order> {
     const order = makeOrder(data);
 
     await this.prisma.order.create({

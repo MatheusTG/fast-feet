@@ -101,9 +101,11 @@ describe("Fetch orders", () => {
     const result = await sut.execute({
       actorId: deliverymanId,
       page: 1,
-      userLatitude: -23.0,
-      userLongitude: -51.0,
-      radiusInKm: 5,
+      locationParams: {
+        userLatitude: -23.0,
+        userLongitude: -51.0,
+        radiusInKm: 5,
+      },
     });
 
     expect(result.isRight()).toBe(true);

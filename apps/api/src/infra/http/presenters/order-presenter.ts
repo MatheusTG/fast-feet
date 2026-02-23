@@ -9,6 +9,9 @@ export class OrderPresenter {
       deliverymanId: order.deliverymanId?.toString() ?? null,
 
       status: order.status,
+      proofOfDeliveryName: order.proofOfDeliveryName,
+      proofOfDeliveryUrl: order.proofOfDeliveryUrl,
+
       deliveryAddress: {
         street: order.deliveryAddress.street,
         number: order.deliveryAddress.number,
@@ -20,6 +23,8 @@ export class OrderPresenter {
         latitude: order.deliveryAddress.latitude,
         longitude: order.deliveryAddress.longitude,
       },
+
+      notes: order.notes,
 
       postedAt: order.postedAt,
       deliveredAt: order.deliveredAt,
