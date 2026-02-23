@@ -5,6 +5,8 @@ CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'AVAILABLE_FOR_PICKUP', 'AWAITING_
 CREATE TABLE "orders" (
     "id" TEXT NOT NULL,
     "status" "OrderStatus" NOT NULL DEFAULT 'PENDING',
+    "proof_of_delivery_name" TEXT,
+    "proof_of_delivery_url"  TEXT,
     "street" TEXT NOT NULL,
     "number" TEXT NOT NULL,
     "complement" TEXT,
@@ -14,6 +16,7 @@ CREATE TABLE "orders" (
     "zip_code" TEXT NOT NULL,
     "latitude" DOUBLE PRECISION,
     "longitude" DOUBLE PRECISION,
+    "notes" TEXT,
     "posted_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "picked_up_at" TIMESTAMP(3),
     "delivered_at" TIMESTAMP(3),
