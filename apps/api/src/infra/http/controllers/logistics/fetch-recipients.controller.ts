@@ -25,7 +25,7 @@ type FetchRecipientsQuerySchema = z.infer<typeof fetchrecipientsQuerySchema>;
 
 @Controller("/recipients")
 export class FetchRecipientsController {
-  constructor(private fetchrecipientsUseCase: FetchRecipientsUseCase) {}
+  constructor(private fetchRecipientsUseCase: FetchRecipientsUseCase) {}
 
   @Get()
   async handle(
@@ -34,7 +34,7 @@ export class FetchRecipientsController {
   ) {
     const { page, ...filters } = query;
 
-    const result = await this.fetchrecipientsUseCase.execute({
+    const result = await this.fetchRecipientsUseCase.execute({
       actorId: user?.sub,
       filters,
       page,

@@ -42,9 +42,23 @@ describe("Update recipient (E2E)", () => {
 
     const recipient = await recipientFactory.makePrismaRecipient();
 
+    const selected_order = await orderFactory.makePrismaOrder({
+      notes: "selected_order",
+      recipientId: recipient.id,
+      deliverymanId: deliveryman1.id,
+      deliveryAddress: {
+        latitude: -23.55052,
+        longitude: -51.4425,
+      },
+      status: "PENDING",
+    });
     await orderFactory.makePrismaOrder({
       recipientId: recipient.id,
       deliverymanId: deliveryman1.id,
+      deliveryAddress: {
+        latitude: -32.55052,
+        longitude: -15.4425,
+      },
       status: "PENDING",
     });
     await orderFactory.makePrismaOrder({
@@ -59,11 +73,13 @@ describe("Update recipient (E2E)", () => {
     });
 
     const response = await request(app.getHttpServer())
-      .get("/orders?status=PENDING")
+      .get("/orders?status=PENDING&userLatitude=-23.55052&userLongitude=-51.44250")
       .set("Authorization", `Bearer ${accessToken}`)
       .send();
 
     expect(response.statusCode).toEqual(200);
-    expect(response.body.orders).toEqual([expect.objectContaining({ status: "PENDING" })]);
+    expect(response.body.orders).toEqual([
+      expect.objectContaining({ notes: selected_order.notes, status: "PENDING" }),
+    ]);
   });
 });

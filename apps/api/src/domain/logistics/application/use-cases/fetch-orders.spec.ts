@@ -101,7 +101,7 @@ describe("Fetch orders", () => {
     const result = await sut.execute({
       actorId: deliverymanId,
       page: 1,
-      locationParams: {
+      locationFilters: {
         userLatitude: -23.0,
         userLongitude: -51.0,
         radiusInKm: 5,

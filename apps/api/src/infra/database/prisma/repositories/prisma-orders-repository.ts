@@ -1,3 +1,5 @@
+import { LocationParams } from "@/core/repositories/location-params";
+import { OrderFilters } from "@/core/repositories/order-filter";
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { OrdersRepository } from "@/domain/logistics/application/repositories/orders-repository";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
@@ -5,8 +7,6 @@ import { Prisma } from "@/generated/prisma/client";
 import { Injectable } from "@nestjs/common";
 import { PrismaOrderMapper } from "../mappers/prisma-order-mapper";
 import { PrismaService } from "../prisma.service";
-import { LocationParams } from "@/core/repositories/location-params";
-import { OrderFilters } from "@/core/repositories/order-filter";
 
 @Injectable()
 export class PrismaOrdersRepository implements OrdersRepository {
@@ -29,9 +29,9 @@ export class PrismaOrdersRepository implements OrdersRepository {
   async findMany(
     filters: OrderFilters,
     paginationParams: PaginationParams,
-    locationParams: LocationParams
+    locationFilters: LocationParams
   ): Promise<Order[]> {
-    const { userLatitude, userLongitude, radiusInKm = 10 } = locationParams;
+    const { userLatitude, userLongitude, radiusInKm = 10 } = locationFilters;
 
     let where: Prisma.OrderWhereInput = PrismaOrderMapper.toPrismaWhere(filters);
 

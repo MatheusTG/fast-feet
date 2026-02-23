@@ -11,7 +11,7 @@ type FetchOrdersUseCaseRequest = {
   actorId: string | undefined;
   page: number;
   filters?: Omit<OrderFilters, "deliverymanId">;
-  locationParams?: LocationParams;
+  locationFilters?: LocationParams;
 };
 
 type FetchOrdersUseCaseResponse = Either<UseCaseError, { orders: Order[] }>;
@@ -21,9 +21,9 @@ export class FetchOrdersUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 
   async execute(request: FetchOrdersUseCaseRequest): Promise<FetchOrdersUseCaseResponse> {
-    const { actorId, filters = {}, page, locationParams = {} } = request;
+    const { actorId, filters = {}, page, locationFilters = {} } = request;
 
-    const { userLatitude, userLongitude, radiusInKm } = locationParams;
+    const { userLatitude, userLongitude, radiusInKm } = locationFilters;
 
     if (!actorId) {
       return left(new UnauthorizedError());

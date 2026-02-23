@@ -16,7 +16,7 @@ export class InMemoryOrdersRepository implements OrdersRepository {
   async findMany(
     filters: OrderFilters,
     paginationParams: { page: number },
-    locationParams: {
+    locationFilters: {
       userLatitude?: number;
       userLongitude?: number;
       radiusInKm?: number;
@@ -24,7 +24,7 @@ export class InMemoryOrdersRepository implements OrdersRepository {
   ): Promise<Order[]> {
     const pageSize = 20;
 
-    const { userLatitude, userLongitude, radiusInKm = 10 } = locationParams;
+    const { userLatitude, userLongitude, radiusInKm = 10 } = locationFilters;
 
     const orders = this.items
       .filter((order) => {

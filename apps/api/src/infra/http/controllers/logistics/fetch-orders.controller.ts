@@ -13,6 +13,19 @@ const fetchOrdersQuerySchema = z.object({
   recipientId: z.string().optional(),
   createdAfter: z.coerce.date().optional(),
   createdBefore: z.coerce.date().optional(),
+  userLatitude: z.coerce
+    .number()
+    .refine((value) => {
+      return Math.abs(value) <= 90;
+    })
+    .optional(),
+  userLongitude: z.coerce
+    .number()
+    .refine((value) => {
+      return Math.abs(value) <= 180;
+    })
+    .optional(),
+  radiusInKm: z.coerce.number().optional(),
 });
 
 const queryValidationPipe = new ZodValidationsPipe(fetchOrdersQuerySchema);
@@ -28,12 +41,13 @@ export class FetchOrdersController {
     @Query(queryValidationPipe) query: FetchOrdersQuerySchema,
     @CurrentUser() user: UserPayload
   ) {
-    const { page, ...filters } = query;
+    const { page, userLatitude, userLongitude, radiusInKm, ...filters } = query;
 
     const result = await this.fetchOrdersUseCase.execute({
       actorId: user?.sub,
-      filters,
       page,
+      filters,
+      locationFilters: { userLatitude, userLongitude, radiusInKm },
     });
 
     const { orders } = resolveUseCase(result);
