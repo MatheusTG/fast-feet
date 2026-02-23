@@ -2,6 +2,7 @@ import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { OrderFilters } from "@/core/repositories/order-filter";
 import { OrdersRepository } from "@/domain/logistics/application/repositories/orders-repository";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
+import { getDistanceBetweenCoordinates } from "@test/utils/get-distance-beteween-coordinates";
 
 export class InMemoryOrdersRepository implements OrdersRepository {
   items: Order[] = [];
@@ -12,8 +13,18 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     return order || null;
   }
 
-  async findMany(filters: OrderFilters, params: { page: number }): Promise<Order[]> {
+  async findMany(
+    filters: OrderFilters,
+    paginationParams: { page: number },
+    locationParams: {
+      userLatitude?: number;
+      userLongitude?: number;
+      radiusInKm?: number;
+    }
+  ): Promise<Order[]> {
     const pageSize = 20;
+
+    const { userLatitude, userLongitude, radiusInKm = 10 } = locationParams;
 
     const orders = this.items
       .filter((order) => {
@@ -60,9 +71,31 @@ export class InMemoryOrdersRepository implements OrdersRepository {
           return false;
         }
 
+        if (
+          userLatitude !== undefined &&
+          userLongitude !== undefined &&
+          order.deliveryAddress.latitude !== undefined &&
+          order.deliveryAddress.longitude !== undefined
+        ) {
+          const distance = getDistanceBetweenCoordinates(
+            {
+              latitude: userLatitude,
+              longitude: userLongitude,
+            },
+            {
+              latitude: order.deliveryAddress.latitude,
+              longitude: order.deliveryAddress.longitude,
+            }
+          );
+
+          if (distance > radiusInKm) {
+            return false;
+          }
+        }
+
         return true;
       })
-      .slice((params.page - 1) * pageSize, params.page * pageSize);
+      .slice((paginationParams.page - 1) * pageSize, paginationParams.page * pageSize);
 
     return orders;
   }

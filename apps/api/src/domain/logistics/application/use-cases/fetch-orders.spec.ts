@@ -1,3 +1,4 @@
+import { UniqueEntityId } from "@/core/entities/unique-entity-id";
 import { makeOrder } from "@test/factories/make-order";
 import { makeUser } from "@test/factories/make-user";
 import { InMemoryOrdersRepository } from "@test/repositories/in-memory-orders-repository";
@@ -72,5 +73,43 @@ describe("Fetch orders", () => {
     expect(result.isRight()).toBe(true);
     expect(result.isRight() && result.value.orders).toHaveLength(1);
     expect(result.isRight() && result.value.orders).toEqual([order1]);
+  });
+
+  it("should filter orders by location when latitude and longitude are provided", async () => {
+    const deliverymanId = "deliveryman-1";
+
+    // Pedido próximo (~mesma coordenada)
+    const nearbyOrder = makeOrder({
+      deliverymanId: new UniqueEntityId(deliverymanId),
+      deliveryAddress: {
+        latitude: -23.0,
+        longitude: -51.0,
+      },
+    });
+
+    // Pedido longe
+    const farOrder = makeOrder({
+      deliverymanId: new UniqueEntityId(deliverymanId),
+      deliveryAddress: {
+        latitude: -10.0,
+        longitude: -40.0,
+      },
+    });
+
+    ordersRepository.items.push(nearbyOrder, farOrder);
+
+    const result = await sut.execute({
+      actorId: deliverymanId,
+      page: 1,
+      userLatitude: -23.0,
+      userLongitude: -51.0,
+      radiusInKm: 5,
+    });
+
+    expect(result.isRight()).toBe(true);
+    expect(result.isRight() && result.value.orders).toHaveLength(1);
+    expect(result.isRight() && result.value.orders[0]?.id.toString()).toBe(
+      nearbyOrder.id.toString()
+    );
   });
 });
