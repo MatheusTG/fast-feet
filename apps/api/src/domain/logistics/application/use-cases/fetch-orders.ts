@@ -10,6 +10,9 @@ type FetchOrdersUseCaseRequest = {
   actorId: string | undefined;
   filters?: Omit<OrderFilters, "deliverymanId">;
   page: number;
+  userLatitude?: number;
+  userLongitude?: number;
+  radiusInKm?: number;
 };
 
 type FetchOrdersUseCaseResponse = Either<UseCaseError, { orders: Order[] }>;
@@ -19,7 +22,7 @@ export class FetchOrdersUseCase {
   constructor(private ordersRepository: OrdersRepository) {}
 
   async execute(request: FetchOrdersUseCaseRequest): Promise<FetchOrdersUseCaseResponse> {
-    const { actorId, filters = {}, page } = request;
+    const { actorId, filters = {}, page, userLatitude, userLongitude, radiusInKm } = request;
 
     if (!actorId) {
       return left(new UnauthorizedError());
@@ -27,7 +30,8 @@ export class FetchOrdersUseCase {
 
     const orders = await this.ordersRepository.findMany(
       { ...filters, deliverymanId: actorId },
-      { page }
+      { page },
+      { userLatitude, userLongitude, radiusInKm }
     );
 
     return right({ orders });

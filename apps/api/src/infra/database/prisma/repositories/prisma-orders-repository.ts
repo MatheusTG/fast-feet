@@ -1,6 +1,7 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { OrdersRepository } from "@/domain/logistics/application/repositories/orders-repository";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
+import { Prisma } from "@/generated/prisma/client";
 import { Injectable } from "@nestjs/common";
 import { PrismaOrderMapper } from "../mappers/prisma-order-mapper";
 import { PrismaService } from "../prisma.service";
@@ -25,13 +26,37 @@ export class PrismaOrdersRepository implements OrdersRepository {
     return PrismaOrderMapper.toDomain(order);
   }
 
-  async findMany(filters: OrderFilters, params: { page: number }): Promise<Order[]> {
-    const where = PrismaOrderMapper.toPrismaWhere(filters);
+  async findMany(
+    filters: OrderFilters,
+    paginationParams: PaginationParams,
+    locationParams: LocationParams
+  ): Promise<Order[]> {
+    const { userLatitude, userLongitude, radiusInKm = 10 } = locationParams;
+
+    let where: Prisma.OrderWhereInput = PrismaOrderMapper.toPrismaWhere(filters);
+
+    if (userLatitude && userLongitude) {
+      const latDelta = radiusInKm / 111;
+
+      const lonDelta = radiusInKm / (111 * Math.cos((userLatitude * Math.PI) / 180));
+
+      where = {
+        ...where,
+        latitude: {
+          gte: userLatitude - latDelta,
+          lte: userLatitude + latDelta,
+        },
+        longitude: {
+          gte: userLongitude - lonDelta,
+          lte: userLongitude + lonDelta,
+        },
+      };
+    }
 
     const orders = await this.prisma.order.findMany({
       where,
       take: 20,
-      skip: (params.page - 1) * 20,
+      skip: (paginationParams.page - 1) * 20,
     });
 
     return orders.map(PrismaOrderMapper.toDomain);
