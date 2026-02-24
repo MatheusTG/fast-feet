@@ -1,4 +1,5 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
+import { DomainEvents } from "@/core/events/domain-events";
 import { OrderFilters } from "@/core/repositories/order-filter";
 import { OrdersRepository } from "@/domain/logistics/application/repositories/orders-repository";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
@@ -106,6 +107,10 @@ export class InMemoryOrdersRepository implements OrdersRepository {
 
   async update(order: Order): Promise<void> {
     const index = this.items.findIndex((r) => r.id === order.id);
+
+    if (order.status) {
+      DomainEvents.dispatchEventsForAggregate(order.id);
+    }
 
     if (index !== -1) {
       this.items[index] = order;
