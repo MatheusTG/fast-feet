@@ -98,7 +98,7 @@ Functional requirements describe what the system must do.
 - [x] **FR009 - Orders:** The system must allow a deliveryman to pick up an order.
 - [x] **FR010 - Orders:** The system must allow a deliveryman to mark an order as delivered, requiring a photo upload.
 - [x] **FR011 - Orders:** The system must allow marking an order as returned.
-- [ ] **FR012 - Orders:** The system must allow listing orders near the deliveryman’s location.
+- [x] **FR012 - Orders:** The system must allow listing orders near the deliveryman’s location.
 - [x] **FR013 - Orders:** The system must allow a deliveryman to list only their own deliveries.
 - [ ] **FR014 - Notifications:** The system must notify the recipient whenever the order status changes.
 
