@@ -11,4 +11,4 @@ CREATE TABLE "notifications" (
 );
 
 -- AddForeignKey
-ALTER TABLE "notifications" ADD CONSTRAINT "notifications_recipient_at_fkey" FOREIGN KEY ("recipient_at") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "notifications" ADD CONSTRAINT "notifications_recipient_at_fkey" FOREIGN KEY ("recipient_at") REFERENCES "recipients"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

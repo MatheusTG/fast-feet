@@ -21,8 +21,7 @@ model User {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
 
-  orders        Order[]
-  notifications Notification[]
+  orders Order[]
 
   @@map("users")
 }
@@ -45,9 +44,10 @@ model Recipient {
   latitude     Float?
   longitude    Float?
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  orders    Order[]
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime?      @updatedAt @map("updated_at")
+  orders        Order[]
+  notifications Notification[]
 
   @@map("recipients")
 }
@@ -109,7 +109,7 @@ model Notification {
   readAt    DateTime? @map("read_at")
   createdAt DateTime  @default(now()) @map("created_at")
 
-  recipient User @relation(fields: [recipientId], references: [id])
+  recipient Recipient @relation(fields: [recipientId], references: [id])
 
   @@map("notifications")
 }
