@@ -1,6 +1,8 @@
 import { makeOrder } from "@test/factories/make-order";
+import { FakeEmailSender } from "@test/mail/fake-email-sender";
 import { InMemoryNotificationsRepository } from "@test/repositories/in-memory-notifications.repository";
 import { InMemoryOrdersRepository } from "@test/repositories/in-memory-orders-repository";
+import { InMemoryRecipientsRepository } from "@test/repositories/in-memory-recipients-repository";
 import { MockInstance } from "vitest";
 import {
   SendNotificationUseCase,
@@ -11,8 +13,10 @@ import { OnOrderStatusChanged } from "./on-order-status-changed";
 
 describe("On order status changed", () => {
   let inMemoryOrdersRepository: InMemoryOrdersRepository;
+  let inMemoryRecipientRepository: InMemoryRecipientsRepository;
   let notificationsRepository: InMemoryNotificationsRepository;
   let sendNotification: SendNotificationUseCase;
+  let fakeEmailSender: FakeEmailSender;
 
   let sendNotificationExecuteSpy: MockInstance<
     (request: SendNotificationUseCaseRequest) => Promise<SendNotificationUseCaseResponse>
@@ -20,8 +24,14 @@ describe("On order status changed", () => {
 
   beforeEach(() => {
     inMemoryOrdersRepository = new InMemoryOrdersRepository();
+    inMemoryRecipientRepository = new InMemoryRecipientsRepository();
     notificationsRepository = new InMemoryNotificationsRepository();
-    sendNotification = new SendNotificationUseCase(notificationsRepository);
+    fakeEmailSender = new FakeEmailSender();
+    sendNotification = new SendNotificationUseCase(
+      notificationsRepository,
+      inMemoryRecipientRepository,
+      fakeEmailSender
+    );
 
     sendNotificationExecuteSpy = vi.spyOn(sendNotification, "execute");
 
