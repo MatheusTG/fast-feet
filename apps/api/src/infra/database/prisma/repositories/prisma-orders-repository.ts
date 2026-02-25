@@ -1,5 +1,6 @@
+import { DomainEvents } from "@/core/events/domain-events";
 import { LocationParams } from "@/core/repositories/location-params";
-import { OrderFilters } from "@/core/repositories/order-filter";
+import { OrderFilters } from "@/core/repositories/order-filters";
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { OrdersRepository } from "@/domain/logistics/application/repositories/orders-repository";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
@@ -72,6 +73,10 @@ export class PrismaOrdersRepository implements OrdersRepository {
 
   async update(order: Order): Promise<void> {
     const data = PrismaOrderMapper.toPrisma(order);
+
+    if (data.status) {
+      DomainEvents.dispatchEventsForAggregate(order.id);
+    }
 
     await this.prisma.order.update({
       where: {
