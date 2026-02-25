@@ -2,7 +2,7 @@ import { AggregateRoot } from "../entities/aggregate-root";
 import { UniqueEntityId } from "../entities/unique-entity-id";
 import { DomainEvent } from "./domain-event";
 
-type DomainEventCallback<T extends DomainEvent = DomainEvent> = (event: T) => void;
+type DomainEventCallback<T extends DomainEvent = DomainEvent> = (event: T) => Promise<void>;
 
 export class DomainEvents {
   private static handlersMap: Record<string, DomainEventCallback[]> = {};
@@ -18,8 +18,10 @@ export class DomainEvents {
     }
   }
 
-  private static dispatchAggregateEvents(aggregate: AggregateRoot<unknown>) {
-    aggregate.domainEvents.forEach((event: DomainEvent) => this.dispatch(event));
+  private static async dispatchAggregateEvents(aggregate: AggregateRoot<unknown>) {
+    for (const event of aggregate.domainEvents) {
+      await this.dispatch(event);
+    }
   }
 
   private static removeAggregateFromMarkedDispatchList(aggregate: AggregateRoot<unknown>) {
@@ -34,11 +36,11 @@ export class DomainEvents {
     return this.markedAggregates.find((aggregate) => aggregate.id.equals(id));
   }
 
-  public static dispatchEventsForAggregate(id: UniqueEntityId) {
+  public static async dispatchEventsForAggregate(id: UniqueEntityId) {
     const aggregate = this.findMarkedAggregateByID(id);
 
     if (aggregate) {
-      this.dispatchAggregateEvents(aggregate);
+      await this.dispatchAggregateEvents(aggregate);
       aggregate.clearEvents();
       this.removeAggregateFromMarkedDispatchList(aggregate);
     }
@@ -65,7 +67,7 @@ export class DomainEvents {
     this.markedAggregates = [];
   }
 
-  private static dispatch(event: DomainEvent) {
+  private static async dispatch(event: DomainEvent) {
     const eventClassName: string = event.constructor.name;
 
     const isEventRegistered = eventClassName in this.handlersMap;
@@ -79,7 +81,7 @@ export class DomainEvents {
 
       if (handlers) {
         for (const handler of handlers) {
-          handler(event);
+          await handler(event);
         }
       }
     }

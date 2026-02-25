@@ -74,16 +74,16 @@ export class PrismaOrdersRepository implements OrdersRepository {
   async update(order: Order): Promise<void> {
     const data = PrismaOrderMapper.toPrisma(order);
 
-    if (data.status) {
-      DomainEvents.dispatchEventsForAggregate(order.id);
-    }
-
     await this.prisma.order.update({
       where: {
         id: order.id.toString(),
       },
       data,
     });
+
+    if (data.status) {
+      await DomainEvents.dispatchEventsForAggregate(order.id);
+    }
   }
 
   async assignDeliveryman(orderId: string, deliverymanId: string): Promise<void> {
