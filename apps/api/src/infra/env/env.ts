@@ -15,6 +15,16 @@ export const envSchema = z.object({
   AWS_ACCESS_KEY_ID: z.string(),
   AWS_SECRET_ACCESS_KEY: z.string(),
 
+  EMAIL_HOST: z.string(),
+  EMAIL_PORT: z.coerce.number(),
+  EMAIL_SECURE: z.enum(["true", "false"]).transform((value) => value === "true"),
+
+  EMAIL_USER: z.email(),
+  EMAIL_PASS: z.string(),
+
+  EMAIL_FROM_NAME: z.string(),
+  EMAIL_FROM_ADDRESS: z.email(),
+
   JWT_PRIVATE_KEY: z.string(),
   JWT_PUBLIC_KEY: z.string(),
 });
