@@ -1,5 +1,5 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id";
-import { OrderFilters } from "@/core/repositories/order-filter";
+import { OrderFilters } from "@/core/repositories/order-filters";
 import { Order } from "@/domain/logistics/enterprise/entities/order";
 import { Address } from "@/domain/logistics/enterprise/entities/value-objects/address";
 import { Prisma, Order as PrismaOrder } from "@/generated/prisma/client";

@@ -2,7 +2,7 @@ import { Either, left, right } from "@/core/errors/abstractions/either";
 import { UseCaseError } from "@/core/errors/abstractions/use-case-error";
 import { UnauthorizedError } from "@/core/errors/application/unauthorized-error";
 import { LocationParams } from "@/core/repositories/location-params";
-import { OrderFilters } from "@/core/repositories/order-filter";
+import { OrderFilters } from "@/core/repositories/order-filters";
 import { Injectable } from "@nestjs/common";
 import { Order } from "../../enterprise/entities/order";
 import { OrdersRepository } from "../repositories/orders-repository";

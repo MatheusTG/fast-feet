@@ -1,5 +1,5 @@
 import { LocationParams } from "@/core/repositories/location-params";
-import { OrderFilters } from "@/core/repositories/order-filter";
+import { OrderFilters } from "@/core/repositories/order-filters";
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { Order } from "../../enterprise/entities/order";
 
