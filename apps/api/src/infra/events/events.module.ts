@@ -2,9 +2,10 @@ import { OnOrderStatusChanged } from "@/domain/notification/application/subscrib
 import { SendNotificationUseCase } from "@/domain/notification/application/use-cases/send-notification";
 import { Module } from "@nestjs/common";
 import { DatabaseModule } from "../database/database.module";
+import { MailModule } from "../mail/mail.module";
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, MailModule],
   providers: [OnOrderStatusChanged, SendNotificationUseCase],
 })
 export class EventsModule {}

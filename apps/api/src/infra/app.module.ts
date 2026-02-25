@@ -6,6 +6,7 @@ import { EnvModule } from "./env/env.module";
 import { EnvService } from "./env/env.service";
 import { EventsModule } from "./events/events.module";
 import { HttpModule } from "./http/http.module";
+import { MailModule } from "./mail/mail.module";
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { HttpModule } from "./http/http.module";
       isGlobal: true,
     }),
     EnvModule,
+    MailModule,
     HttpModule,
     AuthModule,
     EventsModule,

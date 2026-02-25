@@ -9,7 +9,6 @@ export class PrismaNotificationMapper {
         title: raw.title,
         content: raw.content,
         recipientId: new UniqueEntityId(raw.recipientId),
-        readAt: raw.readAt ?? undefined,
         createdAt: raw.createdAt,
       },
       new UniqueEntityId(raw.id)
@@ -22,7 +21,6 @@ export class PrismaNotificationMapper {
       recipientId: notification.recipientId.toString(),
       title: notification.title,
       content: notification.content,
-      readAt: notification.readAt,
       createdAt: notification.createdAt,
     };
   }

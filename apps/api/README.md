@@ -100,7 +100,7 @@ Functional requirements describe what the system must do.
 - [x] **FR011 - Orders:** The system must allow marking an order as returned.
 - [x] **FR012 - Orders:** The system must allow listing orders near the deliveryman’s location.
 - [x] **FR013 - Orders:** The system must allow a deliveryman to list only their own deliveries.
-- [ ] **FR014 - Notifications:** The system must notify the recipient whenever the order status changes.
+- [x] **FR014 - Notifications:** The system must notify the recipient whenever the order status changes.
 
 ---
 

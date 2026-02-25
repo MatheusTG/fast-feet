@@ -17,7 +17,10 @@ export const envSchema = z.object({
 
   EMAIL_HOST: z.string(),
   EMAIL_PORT: z.coerce.number(),
-  EMAIL_SECURE: z.enum(["true", "false"]).transform((value) => value === "true"),
+  EMAIL_SECURE: z
+    .enum(["true", "false"])
+    .transform((value) => value === "true")
+    .pipe(z.boolean()),
 
   EMAIL_USER: z.email(),
   EMAIL_PASS: z.string(),

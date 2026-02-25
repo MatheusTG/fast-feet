@@ -1,5 +1,6 @@
 import { OrdersRepository } from "@/domain/logistics/application/repositories/orders-repository";
 import { RecipientsRepository } from "@/domain/logistics/application/repositories/recipients-repository";
+import { NotificationsRepository } from "@/domain/notification/application/repositories/notifications-repository";
 import { UsersRepository } from "@/domain/user/application/repositories/users-repository";
 import { Module } from "@nestjs/common";
 import { EnvModule } from "../env/env.module";
@@ -8,7 +9,6 @@ import { PrismaNotificationsRepository } from "./prisma/repositories/prisma-noti
 import { PrismaOrdersRepository } from "./prisma/repositories/prisma-orders-repository";
 import { PrismaRecipientsRepository } from "./prisma/repositories/prisma-recipients-repository";
 import { PrismaUsersRepository } from "./prisma/repositories/prisma-users-repository";
-import { NotificationsRepository } from "@/domain/notification/application/repositories/notifications-repository";
 
 @Module({
   imports: [EnvModule],

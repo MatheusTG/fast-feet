@@ -12,6 +12,7 @@ import { PublishOrderUseCase } from "@/domain/logistics/application/use-cases/pu
 import { ReturnOrderUseCase } from "@/domain/logistics/application/use-cases/return-order";
 import { UpdateOrderUseCase } from "@/domain/logistics/application/use-cases/update-order";
 import { UpdateRecipientUseCase } from "@/domain/logistics/application/use-cases/update-recipient";
+import { SendNotificationUseCase } from "@/domain/notification/application/use-cases/send-notification";
 import { AuthenticateUseCase } from "@/domain/user/application/use-cases/authenticate";
 import { ChangeUserPasswordUseCase } from "@/domain/user/application/use-cases/change-user-password";
 import { ChangeUserRoleUseCase } from "@/domain/user/application/use-cases/change-user-role";
@@ -22,6 +23,7 @@ import { UpdateUserUseCase } from "@/domain/user/application/use-cases/update-us
 import { Module } from "@nestjs/common";
 import { CryptographyModule } from "../cryptography/cryptography.module";
 import { DatabaseModule } from "../database/database.module";
+import { MailModule } from "../mail/mail.module";
 import { StorageModule } from "../storage/storage.module";
 import { AuthenticateController } from "./controllers/iam/authenticate.controller";
 import { ChangeUserPasswordController } from "./controllers/iam/change-user-password.controller";
@@ -93,11 +95,12 @@ const useCasesDependencies = [
   PickUpOrderUseCase,
   ProofDeliveryUseCase,
   ReturnOrderUseCase,
+  SendNotificationUseCase,
 ];
 const servicesDependencies = [UserRoleAuthorizationService];
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule, StorageModule],
+  imports: [DatabaseModule, CryptographyModule, StorageModule, MailModule],
   controllers: [...controllerDependencies],
   providers: [...useCasesDependencies, ...servicesDependencies],
 })
