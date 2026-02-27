@@ -18,5 +18,13 @@ services:
       POSTGRESQL_PASSWORD: docker
       POSTGRESQL_DATABASE: fastfeet
 
+  cache:
+    container_name: fast-feet-cache
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+
 volumes:
   node_modules:
