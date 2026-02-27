@@ -51,7 +51,7 @@ export class PrismaUsersRepository implements UsersRepository {
     if (cacheHit) {
       const cachedData = JSON.parse(cacheHit);
 
-      return cachedData;
+      return cachedData.map(PrismaUserMapper.toDomain);
     }
 
     const users = await this.prisma.user.findMany({
@@ -60,10 +60,9 @@ export class PrismaUsersRepository implements UsersRepository {
       skip: (params.page - 1) * 20,
     });
 
+    await this.cache.set(cacheKey, JSON.stringify(users));
+
     const usersDomain = users.map(PrismaUserMapper.toDomain);
-
-    await this.cache.set(cacheKey, JSON.stringify(usersDomain));
-
     return usersDomain;
   }
 
