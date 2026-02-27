@@ -175,6 +175,7 @@ eslint-report.html
 # Docker
 .docker/
 docker-compose.override.yml
+**/.devcontainer/data/
 
 # ======================================================
 # Bundlers / Tooling Caches

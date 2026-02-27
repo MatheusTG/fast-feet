@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import { PrismaClient } from "@/generated/prisma/client";
 import { envSchema } from "@/infra/env/env";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { Redis } from "ioredis";
 import { execSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { Pool } from "pg";
@@ -36,10 +37,18 @@ const adapter = new PrismaPg(pool, { schema: SCHEMA });
 
 let prisma: PrismaClient;
 
+const redis = new Redis({
+  host: env.REDIS_HOST,
+  port: env.REDIS_PORT,
+  db: env.REDIS_DB,
+});
+
 process.env.DATABASE_URL = databaseUrl;
 process.env.DATABASE_SCHEMA = SCHEMA;
 
 beforeAll(async () => {
+  await redis.flushdb();
+
   execSync("pnpm prisma db push");
 
   prisma = new PrismaClient({
