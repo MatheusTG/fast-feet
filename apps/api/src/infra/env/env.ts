@@ -28,6 +28,10 @@ export const envSchema = z.object({
   EMAIL_FROM_NAME: z.string(),
   EMAIL_FROM_ADDRESS: z.email(),
 
+  REDIS_HOST: z.string().optional().default("127.0.0.1"),
+  REDIS_PORT: z.coerce.number().optional().default(3333),
+  REDIS_DB: z.coerce.number().optional().default(0),
+
   JWT_PRIVATE_KEY: z.string(),
   JWT_PUBLIC_KEY: z.string(),
 });
