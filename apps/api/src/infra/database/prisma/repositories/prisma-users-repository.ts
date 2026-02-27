@@ -1,13 +1,17 @@
 import { PaginationParams } from "@/core/repositories/pagination-params";
 import { UsersRepository } from "@/domain/user/application/repositories/users-repository";
 import { User, UserRole } from "@/domain/user/enterprise/entities/user";
+import { CacheRepository } from "@/infra/cache/cache-repository";
 import { Injectable } from "@nestjs/common";
 import { PrismaUserMapper } from "../mappers/prisma-user-mapper";
 import { PrismaService } from "../prisma.service";
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private cache: CacheRepository
+  ) {}
 
   async findByCpf(cpf: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
@@ -40,13 +44,27 @@ export class PrismaUsersRepository implements UsersRepository {
   async findMany(filters: { role: UserRole }, params: PaginationParams): Promise<User[]> {
     const { role } = filters;
 
+    const cacheKey = `users:${role ?? "all"}:page:${params.page}`;
+
+    const cacheHit = await this.cache.get(cacheKey);
+
+    if (cacheHit) {
+      const cachedData = JSON.parse(cacheHit);
+
+      return cachedData;
+    }
+
     const users = await this.prisma.user.findMany({
       where: role ? { role } : undefined,
       take: 20,
       skip: (params.page - 1) * 20,
     });
 
-    return users.map(PrismaUserMapper.toDomain);
+    const usersDomain = users.map(PrismaUserMapper.toDomain);
+
+    await this.cache.set(cacheKey, JSON.stringify(usersDomain));
+
+    return usersDomain;
   }
 
   async create(user: User): Promise<void> {
@@ -55,6 +73,8 @@ export class PrismaUsersRepository implements UsersRepository {
     await this.prisma.user.create({
       data,
     });
+
+    await this.cache.delete("users:*");
   }
 
   async update(user: User): Promise<void> {
@@ -66,6 +86,8 @@ export class PrismaUsersRepository implements UsersRepository {
       },
       data,
     });
+
+    await this.cache.delete("users:*");
   }
 
   async delete(user: User): Promise<void> {
@@ -74,5 +96,7 @@ export class PrismaUsersRepository implements UsersRepository {
         id: user.id.toString(),
       },
     });
+
+    await this.cache.delete("users:*");
   }
 }
