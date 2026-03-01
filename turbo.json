@@ -25,6 +25,11 @@
       "cache": false
     },
 
+    // Sutup
+    "setup": {
+      "cache": false
+    },
+
     // Code Quality
     "lint": {
       "outputs": []
