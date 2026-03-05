@@ -1,0 +1,27 @@
+ARG NODE_TAG=24-alpine
+ARG PNPM_VERSION=10.27.0
+ARG TERRAFORM_VERSION=1.14.6
+
+FROM node:${NODE_TAG}
+
+ARG PNPM_VERSION
+ARG TERRAFORM_VERSION
+
+RUN apk add --no-cache \
+  git \
+  curl \
+  unzip \
+  ca-certificates \
+  aws-cli
+
+RUN corepack enable pnpm && corepack install -g pnpm@${PNPM_VERSION}
+
+RUN curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip \
+  && unzip terraform.zip \
+  && mv terraform /usr/local/bin/ \
+  && rm terraform.zip
+
+ENV GIT_DIR=/fast-feet/.git
+ENV GIT_WORK_TREE=/fast-feet
+
+WORKDIR /fast-feet

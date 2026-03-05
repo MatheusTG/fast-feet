@@ -2,10 +2,11 @@ services:
   devcontainer:
     build:
       context: ..
-      dockerfile: docker/Dockerfile.cli
+      dockerfile: docker/Dockerfile.dev
     volumes:
       - ..:/fast-feet
       - node_modules:/fast-feet/node_modules
+      - ~/.aws:/root/.aws
     working_dir: /fast-feet
     command: sh -c "tail -f /dev/null"
 
