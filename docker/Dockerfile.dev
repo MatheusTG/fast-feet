@@ -12,7 +12,9 @@ RUN apk add --no-cache \
   curl \
   unzip \
   ca-certificates \
-  aws-cli
+  aws-cli \
+  docker-cli \
+  docker-cli-buildx
 
 RUN corepack enable pnpm && corepack install -g pnpm@${PNPM_VERSION}
 
