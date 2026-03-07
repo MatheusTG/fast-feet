@@ -222,3 +222,31 @@ vite.config.ts.timestamp-*
 .temp
 .tmp
 tmp
+
+# ======================================================
+# Terraform
+# ======================================================
+
+*.tfstate
+*.tfstate.*
+
+.terraform/
+
+crash.log
+crash.*.log
+
+*.tfvars
+*.tfvars.json
+
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+.terraformrc
+terraform.rc
+
+*.tfplan
+*.plan
+
+secrets.tfvars
