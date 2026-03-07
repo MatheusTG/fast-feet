@@ -11,6 +11,7 @@
   "customizations": {
     "vscode": {
       "extensions": [
+        "hashicorp.terraform",
         "prisma.prisma",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
