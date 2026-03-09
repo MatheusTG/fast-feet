@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  description = "Nome do ECS Cluster"
+  description = "Name of the ECS cluster where container workloads will run"
   type        = string
   default     = "fast-feet-cluster"
 }

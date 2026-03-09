@@ -1,31 +1,45 @@
 variable "family" {
-  type = string
+  description = "Name of the ECS task definition family"
+  type        = string
+  default     = "fast-feet-task-definition"
 }
 
 variable "execution_role_arn" {
-  type = string
+  description = "IAM role ARN used by ECS tasks to pull images and write logs"
+  type        = string
 }
 
 variable "cpu" {
-  type = string
+  description = "CPU units used by the ECS task"
+  type        = string
+  default     = "256"
 }
 
 variable "memory" {
-  type = string
+  description = "Amount of memory (in MiB) used by the ECS task"
+  type        = string
+  default     = "512"
 }
 
 variable "container_name" {
-  type = string
+  description = "Name of the container running inside the ECS task"
+  type        = string
+  default     = "fast-feet-container"
 }
 
 variable "container_image" {
-  type = string
+  description = "Docker image used by the ECS container"
+  type        = string
 }
 
 variable "container_port" {
-  type = number
+  description = "Port exposed by the container"
+  type        = number
+  default     = 3000
 }
 
 variable "container_memory" {
-  type = number
+  description = "Memory allocated to the container in MiB"
+  type        = number
+  default     = 512
 }

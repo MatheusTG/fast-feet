@@ -7,21 +7,21 @@ resource "aws_security_group" "lb_sg" {
     from_port   = var.http_port
     to_port     = var.http_port
     protocol    = "tcp"
-    cidr_blocks = var.allowed_cidr
+    cidr_blocks = var.allowed_cidrs
   }
 
   ingress {
     from_port   = var.https_port
     to_port     = var.https_port
     protocol    = "tcp"
-    cidr_blocks = var.allowed_cidr
+    cidr_blocks = var.allowed_cidrs
   }
 
   ingress {
     from_port   = var.app_port
     to_port     = var.app_port
     protocol    = "tcp"
-    cidr_blocks = var.allowed_cidr
+    cidr_blocks = var.allowed_cidrs
   }
 
   egress {
