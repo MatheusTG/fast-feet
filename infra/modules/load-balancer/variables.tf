@@ -13,7 +13,7 @@ variable "target_group_name" {
 variable "target_port" {
   description = "Port on which the application container receives traffic"
   type        = number
-  default     = 3000
+  default     = 3333
 }
 
 variable "vpc_id" {

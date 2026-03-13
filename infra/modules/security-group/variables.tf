@@ -30,7 +30,7 @@ variable "https_port" {
 variable "app_port" {
   description = "Application port used by containers running in ECS"
   type        = number
-  default     = 3000
+  default     = 3333
 }
 
 variable "allowed_cidrs" {

@@ -44,7 +44,7 @@ variable "container_name" {
 variable "container_port" {
   description = "Port exposed by the container that receives traffic from the load balancer"
   type        = number
-  default     = 3000
+  default     = 3333
 }
 
 variable "listener_arn" {
