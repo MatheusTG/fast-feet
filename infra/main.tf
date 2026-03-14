@@ -40,3 +40,11 @@ module "ecs_service" {
   target_group_arn  = module.load_balancer.target_group_arn
   listener_arn      = module.load_balancer.lb_arn
 }
+
+module "api_secrets" {
+  source = "./modules/secrets-manager"
+
+  secret_name = "fast-feet-api-secrets"
+
+  secret_values = var.secret_values
+}

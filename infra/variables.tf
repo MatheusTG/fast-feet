@@ -23,3 +23,8 @@ variable "container_image" {
   description = "Docker image used by the application"
   type        = string
 }
+
+variable "secret_values" {
+  description = "Key-value map containing secret data for the application"
+  type        = map(string)
+}
