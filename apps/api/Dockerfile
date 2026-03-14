@@ -36,7 +36,7 @@ RUN apk add --no-cache curl
 
 COPY --from=builder /out ./
 
-CMD ["node", "dist/main"]
+CMD ["node", "dist/src/infra/main"]
 
 
 

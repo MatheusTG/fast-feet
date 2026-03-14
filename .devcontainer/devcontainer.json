@@ -6,9 +6,12 @@
 
   "shutdownAction": "stopCompose",
 
+  "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
+
   "customizations": {
     "vscode": {
       "extensions": [
+        "hashicorp.terraform",
         "prisma.prisma",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
